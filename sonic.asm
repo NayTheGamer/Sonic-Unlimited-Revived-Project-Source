@@ -47,11 +47,10 @@ AddressSRAM	  = 3	; 0 = odd+even; 2 = even only; 3 = odd only
 ; ALWAYS BE SET TO REVISION 1
 
 Revision	  = 1
-Sonic_Retro_Splash_Recr = 0
 ClownMDEmu_Compatibility = 1 ; This Doesn't work because the Creator is Lazy to fix it (NaylenFresh)
 Sonic_Hacking_Contest_Splash = 0 ; Sonic Hacking Contest Splash Screen
 Skip_Checksum = 1 ; Skip The Checksum If Enabled
-DebugTools = 1 ; Debugging tools For the Developer aka Me :D        (NaylenFresh Was Here :-)
+DebugTools = 0 ; Debugging tools For the Developer aka Me :D        (NaylenFresh Was Here :-)
 ZoneCount	  = 6	; discrete zones are: GHZ, MZ, SYZ, LZ, SLZ, and SBZ
 
  include	"Debugger.asm" ; Vladikomper's Debugger for KDebug
@@ -1938,30 +1937,37 @@ GM_Sega:
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
 		bsr.w	PaletteFadeOut
-;		bsr.w	PaletteWhiteOut
 		lea	(vdp_control_port).l,a6
 		move.w	#$8004,(a6)	; use 8-colour mode
 		move.w	#$8200+(vram_fg>>10),(a6) ; set foreground nametable address
 		move.w	#$8400+(vram_bg>>13),(a6) ; set background nametable address
-;		move.w	#$8700,(a6)	; set background colour (palette entry 0)
 		move.w	#$8B00,(a6)	; full-screen vertical scrolling
 		clr.b	(f_wtr_state).w
 		disable_ints
 		move.w	d0,(vdp_control_port).l		
 		bsr.w	ClearScreen
         ResetDMAQueue
-;	    clr.w	(VDP_Command_Buffer).w
-;	    move.l	#VDP_Command_Buffer,(VDP_Command_Buffer_Slot).w		
-		locVRAM $4000
+		locVRAM $100
+		lea	(Nem_SegaForeground).l,a0 ; load Sega	logo patterns
+		bsr.w	NemDec
+		lea	($FF0000).l,a1
+		lea	(SegaForeground).l,a0 ; load Sega	logo mappings
+		move.w	#0,d0
+		bsr.w	EniDec
+
+		copyTilemapNew	v_256x256&$FFFFFF,vram_fg+$510,24,8			
+		
+Sega_Screen_Background_Graphics:
+		
+		locVRAM $2000
 		lea	(Nem_SegaBackground).l,a0 ; load Sega	logo patterns
 		bsr.w	NemDec
 		lea	($FF0000).l,a1
 		lea	(SegaBackground).l,a0 ; load Sega	logo mappings
 		move.w	#0,d0
-		bsr.w	EniDec
-
-		copyTilemap	$FF0000,$C000,$34,$1C
-		copyTilemap	$FF0000,$C000,$34,$1C		
+		bsr.w	EniDec	
+		
+;		copyTilemapNew	v_256x256&$FFFFFF,vram_bg+$510,52,52	
 
 		if Revision<>0
 ;			tst.b   (v_megadrive).w	; is console Japanese?
@@ -2002,9 +2008,6 @@ Sega_WaitEnd:
 
 Sega_GotoTitle:
         move.b  #id_Title,($FFFFF600).w
-
-;		rts
-				; return
 SegaScreen_Scroll:
 		moveq	#$00,d4					; set no X movement redraw
 		move.w	($FFFFF73C).w,d5			; load Y movement
@@ -2043,7 +2046,10 @@ SegaScreenDeform:	dc.w	$A800,  $55				; top 70 scroll
 		dc.w	$A804,  $50				; bottom 70 scroll
 		dc.w	$0000
 		
-		rts		
+		rts				
+
+;		rts
+				; return
 
 ;		include	"SSRG/SSRG.asm"		
 
@@ -8538,6 +8544,13 @@ Nem_SegaBackground: binclude "artnem/SegaParallaxBG.bin"
 	    even
 SegaBackground: binclude "artnem/SegaParallaxBG.bin"
 	    even
+		
+Nem_SegaForeground: binclude "artnem/SegaParallaxFG.bin"
+	    even
+SegaForeground: binclude "artnem/SegaParallaxFG.bin"
+	    even
+
+		
 Nem_SRetro:	binclude	"artnem/Sonic Retro.bin" ; large Sega logo
 		even
 Eni_SRetro:	binclude	"tilemaps/Sonic Retro.bin" ; large Sega logo (mappings)

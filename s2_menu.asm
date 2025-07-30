@@ -546,15 +546,14 @@ Offset_0x027098:
         rts
 ;-------------------------------------------------------------------------------                    
 Dynamic_Menu: 
-        jsr    InitDMAQueue                  
-        jsr  SegaScreen_Scroll ; Scrolling for the Sega Screen Background			
+        jsr    InitDMAQueue                  	
         subq.b  #$01, ($FFFFF7B9).w          ; Decrementa em 1 o Tempo
         bpl.s   Exit_Dinamic_Menu            ; Se for maior ou igual a 0 sai da fun��o	
         move.b  #$07, ($FFFFF7B9).w          ; Inicializa o tempo de dura��o de cada frame
         move.b  ($FFFFF7B8).w, D0            ; Carrega o Id do Frame Atual em D0
         addq.b  #$01, ($FFFFF7B8).w          ; Carrega o pr�ximo frame em $FFFFFFB8
         andi.w  #$001F, D0		
-;        move.b  Sonic_Miles_Frame_Select(PC, D0), D0  ; Carrega o Id do frame em D0
+        move.b  Sonic_Miles_Frame_Select(PC, D0), D0  ; Carrega o Id do frame em D0
               ; muls.w  #$0140, D0           ; Multiplica o Id pelo tamanho em bytes de cada frame
         lsl.w   #$06, D0
         lea     ($00C00000).l, A6

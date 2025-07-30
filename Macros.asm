@@ -10,6 +10,15 @@ locVRAM:	macro loc,controlport
 		move.l	#($40000000+((loc&$3FFF)<<16)+((loc&$C000)>>14)),controlport
 		endif
 		endm
+		
+locVRAMnew:	macro loc,controlport
+		if ("controlport"=="")
+		move.l	#($40000000+(((loc)&$3FFF)<<16)+(((loc)&$C000)>>14)),(vdp_control_port).l
+		else
+		move.l	#($40000000+(((loc)&$3FFF)<<16)+(((loc)&$C000)>>14)),controlport
+		endif
+		endm		
+
 
 ; ---------------------------------------------------------------------------
 ; DMA copy data from 68K (ROM/RAM) to the VRAM
@@ -67,6 +76,14 @@ copyTilemap:	macro source,loc,width,height
 		moveq	#height,d2
 		bsr.w	TilemapToVRAM
 		endm
+		
+copyTilemapNew:	macro source,destination,width,height
+		lea	(source).l,a1
+		locVRAMnew	destination,d0
+		moveq	#(width)-1,d1
+		moveq	#(height)-1,d2
+		bsr.w	TilemapToVRAM
+		endm		
 
 ; ---------------------------------------------------------------------------
 ; stop the Z80
