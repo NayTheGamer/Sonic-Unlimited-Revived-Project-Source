@@ -3868,8 +3868,6 @@ GM_Credits:
 		clr.b	(f_wtr_state).w
 		bsr.w	ClearScreen
         ResetDMAQueue		
-;	    clr.w	(VDP_Command_Buffer).w
-;	    move.l	#VDP_Command_Buffer,(VDP_Command_Buffer_Slot).w				
 
 		lea	(v_objspace).w,a1
 		moveq	#0,d0
