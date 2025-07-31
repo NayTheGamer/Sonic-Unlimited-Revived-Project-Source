@@ -146,9 +146,9 @@ loc_E0:
 		dc.l ErrorTrap
 	endif
 		dc.b "SEGA MEGA DRIVE " ; Hardware system ID (Console name)
-		dc.b "NAYFRESH2024.DEC" ; Copyright holder and release date (generally year)	
-		dc.b "SONIC THE HEDGEHOG UNLIMITED                    " ; Domestic name
-		dc.b "SONIC THE HEDGEHOG UNLIMITED                    " ; International name
+		dc.b "NAYFRESH2025    " ; Copyright holder and release date (generally year)	
+		dc.b "SONIC THE HEDGEHOG UNLIMITED - REVIVED PROJECT -" ; Domestic name
+		dc.b "SONIC THE HEDGEHOG UNLIMITED - REVIVED PROJECT -" ; International name
 		if Revision=0
 		dc.b "GM 00015119-00"   ; Serial/version number (Rev 0)
 		else
@@ -1947,7 +1947,7 @@ GM_Sega:
 		move.w	d0,(vdp_control_port).l		
 		bsr.w	ClearScreen
         ResetDMAQueue
-		locVRAM $100
+		locVRAMnew $100
 		lea	(Nem_SegaForeground).l,a0 ; load Sega	logo patterns
 		bsr.w	NemDec
 		lea	($FF0000).l,a1
@@ -1959,7 +1959,7 @@ GM_Sega:
 		
 Sega_Screen_Background_Graphics:
 		
-		locVRAM $2000
+		locVRAMnew $2000
 		lea	(Nem_SegaBackground).l,a0 ; load Sega	logo patterns
 		bsr.w	NemDec
 		lea	($FF0000).l,a1

@@ -1,0 +1,18 @@
+Operating system: Microsoft Windows NT 6.2.9200.0
+Opening INI file "D:\Rom Hacking (Sonic)\Sonic Rom Hack Makers\Sonic Disassemblies ---MAIN---\Github-Projects\Sonic-Unlimited-Revived-Project\Sonic-Unlimited-Revived-Project-Source\SonPLN.ini"...
+Game type is S1.
+Loading Level Select Background...
+Loading plane mappings from file "Level_Select/LevelSel_Background_Mappings.eni", using compression Enigma...
+Loading palette file "Data/menu/menu.pal"...
+Source: 0 Destination: 0 Length: 64
+Loading 8x8 tiles from file "Level_Select/Level_Select.dat ", using compression Uncompressed...
+Mappings data size does not match given width/height. Expected: 1496 (34x22*2) Actual: 0.
+Load completed.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at SonicRetro.SonLVL.API.BitmapBits.FromTile(Byte[] art, Int32 index) in C:\Programs\SonLVL\SonLVLAPI\BitmapBits.cs:line 536
+   at SonicRetro.SonLVL.SonPLN.MainForm.TileSelector_SelectedIndexChanged(Object sender, EventArgs e) in C:\Programs\SonLVL\SonPLN\MainForm.cs:line 1563
+   at System.EventHandler.Invoke(Object sender, EventArgs e)
+   at SonicRetro.SonLVL.API.TileList.set_SelectedIndex(Int32 value) in C:\Programs\SonLVL\SonLVLAPI\TileList.cs:line 24
+   at SonicRetro.SonLVL.SonPLN.MainForm.backgroundLevelLoader_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e) in C:\Programs\SonLVL\SonPLN\MainForm.cs:line 506
+   at System.ComponentModel.BackgroundWorker.OnRunWorkerCompleted(RunWorkerCompletedEventArgs e)
+   at System.ComponentModel.BackgroundWorker.AsyncOperationCompleted(Object arg)

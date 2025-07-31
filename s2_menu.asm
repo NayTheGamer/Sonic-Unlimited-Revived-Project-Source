@@ -77,26 +77,19 @@ Offset_0x026ADA:
 ;-------------------------------------------------------------------------------        
 ; Carrega o Mapeamento do Fundo Sonic/Miles               
 ;-------------------------------------------------------------------------------
-        lea     ($FFFF0000).l, A1
-        lea     (Menu_Art).l, A0
-        move.w  #$6000, D0
-        bsr.w   Menu_EnigmaDec
+        locVRAM $4000
+        lea (LevelSel_Background).l,a0         
+		bsr.w   Menu_NemesisDec				
+		lea	($FF0000).l,a1
+		lea	(LevelSel_Background_Mappings).l,a0 
+		move.w	#0,d0
+        move.w  #$0000, D0		
+		bsr.w	Menu_EnigmaDec	
         lea     ($FFFF0000).l, A1
         move.l  #$60000003, D0
         moveq   #$27, D1
-        moveq   #$1B, D2
+        moveq   #$1B, D2		
         bsr.w   Menu_ShowVDPGraphics
-
-
-;        lea     ($FFFF0000).l, A1
- ;               lea     (Menu_Mappings).l, A0
-  ;              move.w  #$6000, D0
-   ;             bsr.w   Menu_EnigmaDec
-   ;             lea     ($FFFF0000).l, A1
-    ;            move.l  #$60000003, D0
-     ;           moveq   #$27, D1
-      ;          moveq   #$1B, D2
-       ;         bsr.w   Menu_ShowVDPGraphics        
 ;-------------------------------------------------------------------------------        
 ; Carrega o Texto do Menu de Sele��o de Fases               
 ;-------------------------------------------------------------------------------
@@ -181,7 +174,7 @@ Menu_Loop_Load_Wings:
         dbf      D1, Menu_Loop_Next_Line
 ;-------------------------------------------------------------------------------        
 ; Carrega o Mapeamento dos �cones               
-;-------------------------------------------------------------------------------                    
+;-------------------------------------------------------------------------------		
         lea     ($FFFF08C0).l, A1
         lea     (Icons_Mappings).l, A0
         move.w  #$0090, D0
@@ -547,28 +540,8 @@ Offset_0x027098:
 ;-------------------------------------------------------------------------------                    
 Dynamic_Menu: 
         jsr    InitDMAQueue                  	
-        subq.b  #$01, ($FFFFF7B9).w          ; Decrementa em 1 o Tempo
-        bpl.s   Exit_Dinamic_Menu            ; Se for maior ou igual a 0 sai da fun��o	
-        move.b  #$07, ($FFFFF7B9).w          ; Inicializa o tempo de dura��o de cada frame
-        move.b  ($FFFFF7B8).w, D0            ; Carrega o Id do Frame Atual em D0
-        addq.b  #$01, ($FFFFF7B8).w          ; Carrega o pr�ximo frame em $FFFFFFB8
-        andi.w  #$001F, D0		
-        move.b  Sonic_Miles_Frame_Select(PC, D0), D0  ; Carrega o Id do frame em D0
-              ; muls.w  #$0140, D0           ; Multiplica o Id pelo tamanho em bytes de cada frame
-        lsl.w   #$06, D0
-        lea     ($00C00000).l, A6
-        move.l  #$40200000, $0004(A6)
-        lea     (Sonic_Miles_Spr).l, A1
-        lea     $00(A1, D0.w), A1
-        move.w  #$0009, D0           ; Tiles-1 a serem carregados por vez 
+        rts
 Menu_Loop_Load_Tiles:
-        move.l  (A1)+, (A6)
-        move.l  (A1)+, (A6)     
-        move.l  (A1)+, (A6)     
-        move.l  (A1)+, (A6)     
-        move.l  (A1)+, (A6)     
-        move.l  (A1)+, (A6)
-        move.l  (A1)+, (A6)
         move.l  (A1)+, (A6)
         dbf     D0, Menu_Loop_Load_Tiles
 Exit_Dinamic_Menu:        
@@ -723,14 +696,12 @@ Level_Icons:
         binclude  "data/menu/levelico.nem"
 Menu_Art:
         binclude  "data/menu/menubg A.eni"
-;Menu_Mappings:
- ;               binclude  "data/menu/menulayout.bin"        
+LevelSel_Background_Mappings:
+        binclude  "Level_Select/LevelSel_Background_Mappings.eni"        
 Icons_Mappings:
         binclude  "data/menu/iconsmap.eni"
-Sonic_Miles_Spr:                         
-        binclude  "data/menu/soncmils.dat"
-;Menu_BGChunks:
- ;               binclude  "map256//LS.bin"
+LevelSel_Background:                         
+        binclude  "Level_Select/LevelSel_Background.nem"
 ;===============================================================================
 ; Menu do Sonic 2 No Sonic 1 reprogramado por Esrael L. G. Neto
 ; [ Fim ]
