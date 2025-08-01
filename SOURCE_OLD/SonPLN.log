@@ -1,0 +1,33 @@
+Operating system: Microsoft Windows NT 6.2.9200.0
+Opening INI file "D:\Rom Hacking (Sonic)\Sonic Rom Hack Makers\Sonic Disassemblies ---MAIN---\Github-Projects\Sonic-Unlimited-Revived-Project\Sonic-Unlimited-Revived-Project-Source\SonPLN.ini"...
+Game type is S1.
+Loading Level Select Background...
+Loading plane mappings from file "Level_Select/LevelSel_Background_Mappings.eni", using compression Enigma...
+Loading palette file "Data/menu/menu.pal"...
+Source: 0 Destination: 0 Length: 64
+Loading 8x8 tiles from file "Level_Select/Level_Select.dat ", using compression Uncompressed...
+Unable to read file "Level_Select/LevelSel_Background_Mappings.eni" with compression Enigma:
+System.AggregateException: One or more errors occurred. ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+   at SonicRetro.KensSharp.NeutralEndian.Read1(Stream stream)
+   at SonicRetro.KensSharp.Enigma.Decode(Stream input, Stream output, Endianness endianness)
+   at SonicRetro.KensSharp.Enigma.Decompress(Stream input, Stream output, Endianness endianness)
+   at SonicRetro.KensSharp.Enigma.Decompress(String sourceFilePath, Endianness endianness)
+   at SonicRetro.SonLVL.API.Compression.Decompress(String file, CompressionType cmp) in C:\Programs\SonLVL\SonLVLAPI\Compression.cs:line 51
+   at SonicRetro.SonLVL.SonPLN.MainForm.LoadLevelLayout() in C:\Programs\SonLVL\SonPLN\MainForm.cs:line 400
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.FastWaitAll(Task[] tasks)
+   at System.Threading.Tasks.Parallel.Invoke(ParallelOptions parallelOptions, Action[] actions)
+   at System.Threading.Tasks.Parallel.Invoke(Action[] actions)
+   at SonicRetro.SonLVL.SonPLN.MainForm.backgroundLevelLoader_DoWork(Object sender, DoWorkEventArgs e) in C:\Programs\SonLVL\SonPLN\MainForm.cs:line 323
+---> (Inner Exception #0) System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+   at SonicRetro.KensSharp.NeutralEndian.Read1(Stream stream)
+   at SonicRetro.KensSharp.Enigma.Decode(Stream input, Stream output, Endianness endianness)
+   at SonicRetro.KensSharp.Enigma.Decompress(Stream input, Stream output, Endianness endianness)
+   at SonicRetro.KensSharp.Enigma.Decompress(String sourceFilePath, Endianness endianness)
+   at SonicRetro.SonLVL.API.Compression.Decompress(String file, CompressionType cmp) in C:\Programs\SonLVL\SonLVLAPI\Compression.cs:line 51
+   at SonicRetro.SonLVL.SonPLN.MainForm.LoadLevelLayout() in C:\Programs\SonLVL\SonPLN\MainForm.cs:line 400
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
