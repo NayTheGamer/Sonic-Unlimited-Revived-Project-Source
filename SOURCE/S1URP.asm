@@ -1888,8 +1888,6 @@ WaitForVBla:
 		endif
 		include	"_incObj/sub CalcAngle.asm"
 
-    include "GM_OptionsCustom.asm"		
-
 ; ---------------------------------------------------------------------------
 ; Sega screen
 ; ---------------------------------------------------------------------------
@@ -1902,8 +1900,7 @@ GM_Sega:
 	else
 	endif
 
-        bsr.w SegaScreen_Scroll ; Scrolling for the Sega Screen Background
-		move.b	#bgm_Stop,d0
+ 		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
 		bsr.w	PaletteFadeOut
@@ -1912,39 +1909,20 @@ GM_Sega:
 		move.w	#$8200+(vram_fg>>10),(a6) ; set foreground nametable address
 		move.w	#$8400+(vram_bg>>13),(a6) ; set background nametable address
 		move.w	#$8B00,(a6)	; full-screen vertical scrolling
-		clr.b	(f_wtr_state).w
-		disable_ints
+		clr.b	(f_wtr_state).w			
+		disable_ints			
 		move.w	d0,(vdp_control_port).l		
 		bsr.w	ClearScreen
-        ResetDMAQueue
-		locVRAMnew $20
-		lea	(Nem_SegaForeground).l,a0 ; load Sega logo patterns
+        ResetDMAQueue		
+		locVRAM	0
+		lea	(Nem_SegaLogo).l,a0 ; load Sega	logo patterns
 		bsr.w	NemDec
 		lea	($FF0000).l,a1
-		lea	(SegaForeground).l,a0 ; load Sega logo mappings
+		lea	(mappingsSega).l,a0 ; load Sega	logo mappings
 		move.w	#0,d0
-		bsr.w	EniDec
+		bsr.w	EniDec		
 
-		copyTilemapNew	v_256x256&$FFFFFF,vram_fg+$510,24,8			
-		
-Sega_Screen_Background_Graphics:
-		
-		locVRAMnew $2000
-		lea	(Nem_SegaBackground).l,a0 ; load Sega	logo patterns
-		bsr.w	NemDec
-		lea	($FF0000).l,a1
-		lea	(SegaBackground).l,a0 ; load Sega	logo mappings
-		move.w	#0,d0
-		bsr.w	EniDec	
-		
-;		copyTilemapNew	v_256x256&$FFFFFF,vram_bg+$510,52,52	
-
-		if Revision<>0
-;			tst.b   (v_megadrive).w	; is console Japanese?
-;			bmi.s   .loadpal
-;			copyTilemap	$FF0A40,$C53A,2,1 ; hide "TM" with a white rectangle
-		endif
-
+		copyTilemap	$FF0000,vram_bg,$27,$1B
 
 .loadpal:
 		moveq	#palid_SegaBG,d0
@@ -1953,16 +1931,14 @@ Sega_Screen_Background_Graphics:
 		move.w	(v_vdp_buffer1).l,d0		
 		ori.b	#$40,d0
 		move.w	d0,(vdp_control_port).l	
-		bsr.w	PaletteFadeIn		
+		bsr.w	PaletteFadeIn
 
 Sega_WaitPal:
 		move.b	#2,(v_vbla_routine).w
 		bsr.w	WaitForVBla
-;		bsr.w	PalCycle_Sega
 		bne.s	Sega_WaitPal
 
 		move.b	#sfx_Sega,d0
-;		move.b	#sfx_Ring,d0
 		bsr.w	PlaySound_Special	; play "SEGA" sound				
 		move.b	#$14,(v_vbla_routine).w
 		bsr.w	WaitForVBla
@@ -1978,43 +1954,6 @@ Sega_WaitEnd:
 
 Sega_GotoTitle:
         move.b  #id_Title,($FFFFF600).w
-SegaScreen_Scroll:
-		moveq	#$00,d4					; set no X movement redraw
-		move.w	($FFFFF73C).w,d5			; load Y movement
-		ext.l	d5					; extend to long-word
-		asl.l	#$06,d5					; multiply by 100, then divide by 2
-		bsr.w	ScrollBlock2				; perform redraw for Y
-		move.w	($FFFFF70C).w,($FFFFF618).w		; save as VSRAM BG scroll position
-
-		move.w	($FFFFF700).w,d0			; load X position
-		neg.w	d0					; reverse direction
-		move.w	($FFFFFE0E).w,d0			; load X position
-		asr.w	#$03,d0					; divide by 8
-		move.w	d0,($FFFFA800).w			; set speed 1
-
-		move.w	($FFFFF700).w,d0			; load X position
-		neg.w	d0					; reverse direction
-		move.w	($FFFFFE0E).w,d0			; load X position
-		asr.w	#$02,d0					; divide by 4
-		move.w	d0,($FFFFA802).w			; set speed 2
-
-		move.w	($FFFFF700).w,d0			; load X position
-		neg.w	d0					; reverse direction
-		move.w	($FFFFFE0E).w,d0			; load X position
-		asr.w	#$01,d0					; divide by 4
-		move.w	d0,($FFFFA804).w			; set speed 2
-
-		lea	SegaScreenDeform(pc),a0			; load scroll data to use
-		bra.w	DeformScroll				; continue
-
-; ---------------------------------------------------------------------------
-; Scroll data
-; ---------------------------------------------------------------------------
-
-SegaScreenDeform:	dc.w	$A800,  $55				; top 70 scroll
-		dc.w	$A802,  $22				; bottom 70 scroll
-		dc.w	$A804,  $50				; bottom 70 scroll
-		dc.w	$0000
 		
 		rts				
 
@@ -3966,8 +3905,7 @@ TryAgainEnd:
 		move.w	#$8B03,(a6)	; line scroll mode
 		move.w	#$8720,(a6)	; set background colour (line 3; colour 0)
 		clr.b	(f_wtr_state).w
-		bsr.w	ClearScreen
-        ResetDMAQueue		
+		bsr.w	ClearScreen		
 
 		lea	(v_objspace).w,a1
 		moveq	#0,d0
@@ -3986,7 +3924,7 @@ TryAg_ClrPal:
 		move.l	d0,(a1)+
 		dbf	d1,TryAg_ClrPal ; fill palette with black
 
-		moveq	#palid_Ending,d0
+		moveq	#palid_Sonic,d0
 		bsr.w	PalLoad1	; load ending palette
 		clr.w	(v_pal_dry_dup+$40).w
 		move.b	#id_EndEggman,(v_objspace+$80).w ; load Eggman object
@@ -8510,15 +8448,13 @@ mappingsSega:	binclude	"tilemaps/Sega Logo (JP1).bin" ; large Sega logo (mapping
 		
 Nem_SegaBackground: binclude "artnem/SegaParallaxBG.bin"
 	    even
-SegaBackground: binclude "artnem/SegaParallaxBG.bin"
+SegaBackground: binclude "tilemaps/SegaParallaxBG.bin"
 	    even
 		
 Nem_SegaForeground: binclude "artnem/SegaParallaxFG.bin"
 	    even
 SegaForeground: binclude "artnem/SegaParallaxFG.bin"
-	    even
-
-		
+	    even		
 Nem_SRetro:	binclude	"artnem/Sonic Retro.bin" ; large Sega logo
 		even
 Eni_SRetro:	binclude	"tilemaps/Sonic Retro.bin" ; large Sega logo (mappings)
