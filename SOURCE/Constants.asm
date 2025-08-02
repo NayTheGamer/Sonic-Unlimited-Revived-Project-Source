@@ -7,11 +7,7 @@
 vdp_data_port:		equ $C00000
 vdp_control_port:	equ $C00004
 vdp_counter:		equ $C00008
-
-;VDP_Command_Buffer:	equ  $FFFFC800 	; stores 18 ($12) VDP commands to issue the next time ProcessDMAQueue is called
-
 psg_input:		equ $C00011
-
 ; Z80 addresses
 z80_ram:		equ $A00000	; start of Z80 RAM
 z80_ram_end:		equ $A02000	; end of non-reserved Z80 RAM
@@ -26,9 +22,7 @@ ym2612_a0:		equ $A04000
 ym2612_d0:		equ $A04001
 ym2612_a1:		equ $A04002
 ym2612_d1:		equ $A04003
-
 security_addr:		equ $A14000
-
 f_victorypose   = $FFFFF622
 TrackPlaybackControl:	equ 0		; All tracks
 TrackVoiceControl:	equ 1		; All tracks
@@ -58,7 +52,6 @@ TrackFeedbackAlgo:	equ $1F		; FM only
 TrackVoicePtr:		equ $20		; FM SFX only (4 bytes)
 TrackLoopCounters:	equ $24		; All tracks (multiple bytes)
 TrackGoSubStack:	equ TrackSz	; All tracks (multiple bytes. This constant won't get to be used because of an optimisation that just uses zTrackSz)
-
 TrackSz:	equ $30
 ; VRAM data
 vram_fg:	equ $C000	; foreground namespace
@@ -66,7 +59,6 @@ vram_bg:	equ $E000	; background namespace
 vram_sonic:	equ $F000	; Sonic graphics
 vram_sprites:	equ $F800	; sprite table
 vram_hscroll:	equ $FC00	; horizontal scroll table
-
 ; Game modes
 id_Sega:	equ ptr_GM_Sega-GameModeArray	; $00
 id_Title:	equ ptr_GM_Title-GameModeArray	; $04
@@ -77,7 +69,6 @@ id_Continue:	equ ptr_GM_Cont-GameModeArray	; $14
 id_Ending:	equ ptr_GM_Ending-GameModeArray	; $18
 id_Credits:	equ ptr_GM_Credits-GameModeArray; $1C
 id_Options:	equ ptr_GM_Options-GameModeArray	; $00
-
 ; Levels
 id_GHZ:		equ 0
 id_LZ:		equ 1
@@ -87,7 +78,6 @@ id_SYZ:		equ 4
 id_SBZ:		equ 5
 id_EndZ:	equ 6
 id_SS:		equ 7
-
 ; Colours
 cBlack:		equ $000		; colour black
 cWhite:		equ $EEE		; colour white
@@ -97,10 +87,7 @@ cRed:		equ $00E		; colour red
 cYellow:	equ cGreen+cRed		; colour yellow
 cAqua:		equ cGreen+cBlue	; colour aqua
 cMagenta:	equ cBlue+cRed		; colour magenta
-
 ArtTile_DashDust:			equ $7F0
-ArtTile_Menu_Font           equ $10 
-
 ; Joypad input
 btnStart:	equ %10000000 ; Start button	($80)
 btnA:		equ %01000000 ; A		($40)
@@ -120,7 +107,6 @@ bitR:		equ 3
 bitL:		equ 2
 bitDn:		equ 1
 bitUp:		equ 0
-
 ; Object variables
 obRender:	equ 1	; bitfield for x/y flip, display mode
 obGfx:		equ 2	; palette line & VRAM setting (2 bytes)
@@ -152,13 +138,11 @@ obSubtype:	equ $28	; object subtype
 obSolid:	equ ob2ndRout ; solid status flag
 spindash_flag: equ $39
 obStatus2nd:	equ $40			; secondary status counter
-
 ; Object variables used by Sonic
 flashtime:	equ $30	; time between flashes after getting hit
 invtime:	equ $32	; time left for invincibility
 shoetime:	equ $34	; time left for speed shoes
 standonobject:	equ $3D	; object Sonic stands on
-
 ; Object variables (Sonic 2 disassembly nomenclature)
 render_flags:	equ 1	; bitfield for x/y flip, display mode
 art_tile:	equ 2	; palette line & VRAM setting (2 bytes)
@@ -184,7 +168,6 @@ routine:	equ $24	; routine number
 routine_secondary: equ $25 ; secondary routine number
 angle:		equ $26	; angle
 subtype:	equ $28	; object subtype
-
 ; Animation flags
 afEnd:		equ $FF	; return to beginning of animation
 afBack:		equ $FE	; go back (specified number) bytes
@@ -192,7 +175,6 @@ afChange:	equ $FD	; run specified animation
 afRoutine:	equ $FC	; increment routine counter
 afReset:	equ $FB	; reset animation and 2nd object routine counter
 af2ndRoutine:	equ $FA	; increment 2nd routine counter
-
 obDoubleJumpFlag:	equ	$2F				; Flag noting double jump status. 0 - not triggered. 1 - triggered. 2 - post-instashield (Begin Drop Dash revving). 3 - Drop Dash Cancelled.
 obDoubleJumpProp:	equ $25				; Counter for Sonic's Drop Dash (if enabled). Can also be utilized for remaining frames of flight / 2 for Tails, gliding-related for Knuckles.
 sta2ndInvinc:		equ	1
@@ -208,9 +190,7 @@ staFlipY:		equ 1 ; status FlipY is set if the sprite is flipped vertically. Clea
 maskFlipX:		equ 1<<staFlipX			; $01
 maskFlipY:		equ 1<<staFlipY			; $02
 maskFacing:		equ 1<<staFacing		; $01
-
 obID:			equ 0			; object ID number
-
 priority0:	equ	v_spritequeue
 priority1:	equ	v_spritequeue+$80
 priority2:	equ	v_spritequeue+$100
@@ -219,16 +199,5 @@ priority4:	equ	v_spritequeue+$200
 priority5:	equ	v_spritequeue+$280
 priority6:	equ	v_spritequeue+$300
 priority7:	equ	v_spritequeue+$380
-
-
-
-
-
-;flg__First:	equ $E0
-;bgm_Fade:	equ ((ptr_flgE0-Sound_ExIndex)/4)+flg__First
-;sfx_Sega:	equ ((ptr_flgE1-Sound_ExIndex)/4)+flg__First
-;bgm_Speedup:	equ ((ptr_flgE2-Sound_ExIndex)/4)+flg__First
-;bgm_Slowdown:	equ ((ptr_flgE3-Sound_ExIndex)/4)+flg__First
-;bgm_Stop:	equ ((ptr_flgE4-Sound_ExIndex)/4)+flg__First
 
 

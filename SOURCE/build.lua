@@ -17,7 +17,7 @@ local common = require "build_tools.lua.common"
 
 -- Assemble the ROM.
 local compression = improved_dac_driver_compression and "kosinski-optimised" or "kosinski"
-local message, abort = common.build_rom("sonic", "s1unlimitedbuilt", "", "-p=FF -z=0," .. compression .. ",Size_of_DAC_driver_guess,after", false, "https://github.com/sonicretro/s1disasm")
+local message, abort = common.build_rom("S1URP", "S1URP_BIN", "", "-p=FF -z=0," .. compression .. ",Size_of_DAC_driver_guess,after", false, "https://github.com/sonicretro/s1disasm")
 
 if message then
     exit_code = false
@@ -29,7 +29,7 @@ end
 
 local compression = improved_dac_driver_compression and "kosinski-optimised" or "kosinski"
 -- Buld DEBUG ROM
-message, abort = common.build_rom("sonic", "s1unlimitedbuilt.debug", "-D __DEBUG__ -OLIST sonic.debug.lst", "-p=FF -z=0," .. compression .. ",Size_of_DAC_driver_guess,after", false, "https://github.com/sonicretro/s1disasm")
+message, abort = common.build_rom("S1URP", "S1URP_BIN.DEBUG", "-D __DEBUG__ -OLIST S1URP.DEBUG.lst", "-p=FF -z=0," .. compression .. ",Size_of_DAC_driver_guess,after", false, "https://github.com/sonicretro/s1disasm")
 
 if message then
     exit_code = false
@@ -44,10 +44,10 @@ local extra_tools = common.find_tools("debug symbol generator", "https://github.
 if not extra_tools then
     os.exit(false)
 end
-os.execute(extra_tools.convsym .. " sonic.debug.lst s1unlimitedbuilt.debug.bin -input as_lst -range 0 FFFFFF -exclude -filter \"z[A-Z].+\" -a")
+os.execute(extra_tools.convsym .. " S1URP.DEBUG.lst S1URP_BIN.DEBUG.bin -input as_lst -range 0 FFFFFF -exclude -filter \"z[A-Z].+\" -a")
 
 -- Correct the ROM's header with a proper checksum and end-of-ROM value.
-common.fix_header("s1unlimitedbuilt.bin")
-common.fix_header("s1unlimitedbuilt.debug.bin")
+common.fix_header("S1URP_BIN.bin")
+common.fix_header("S1URP_BIN.DEBUG.bin")
 
 os.exit(exit_code, false)
