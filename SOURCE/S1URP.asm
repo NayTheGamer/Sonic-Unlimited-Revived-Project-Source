@@ -1926,11 +1926,11 @@ GM_Sega:
 		move.w	d0,(vdp_control_port).l		
 		bsr.w	ClearScreen
         ResetDMAQueue
-		locVRAMnew $100
-		lea	(Nem_SegaForeground).l,a0 ; load Sega	logo patterns
+		locVRAMnew $20
+		lea	(Nem_SegaForeground).l,a0 ; load Sega logo patterns
 		bsr.w	NemDec
 		lea	($FF0000).l,a1
-		lea	(SegaForeground).l,a0 ; load Sega	logo mappings
+		lea	(SegaForeground).l,a0 ; load Sega logo mappings
 		move.w	#0,d0
 		bsr.w	EniDec
 
@@ -2265,9 +2265,9 @@ loc_3230:
 
 Tit_ChkLevSel:
         tst.b    (f_levselcheat).w ; check if level select code is on
-        beq.w    GM_Level    ; if not, play level     ; if not, play level
+        beq.w    PlayLevel    ; -- Fixed an Issue with lifes displaying "0" by replacing GM_Level with PlayLevel // NaylenFresh
         btst    #bitA,(v_jpadhold1).w ; check if A is pressed
-        beq.w    GM_Level    ; if not, play level     ; if not, play level
+        beq.w    PlayLevel     ; -- Fixed an Issue with lifes displaying "0" by replacing GM_Level with PlayLevel // NaylenFresh
         jmp    (Level_Select_Menu).l    ; if yes, go to Sonic 2 level select
         moveq    #palid_LevelSel,d0
         bsr.w    PalLoad2    ; load level select palette
