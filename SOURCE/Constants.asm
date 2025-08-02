@@ -68,7 +68,6 @@ id_Special:	equ ptr_GM_Special-GameModeArray; $10
 id_Continue:	equ ptr_GM_Cont-GameModeArray	; $14
 id_Ending:	equ ptr_GM_Ending-GameModeArray	; $18
 id_Credits:	equ ptr_GM_Credits-GameModeArray; $1C
-id_Options:	equ ptr_GM_Options-GameModeArray	; $00
 ; Levels
 id_GHZ:		equ 0
 id_LZ:		equ 1

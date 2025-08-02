@@ -1,0 +1,2 @@
+- Change The "Bonus" Text to match the HUD Font.
+- Fix the ending issue/bug.

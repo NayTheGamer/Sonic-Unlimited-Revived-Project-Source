@@ -388,22 +388,13 @@ MainGameLoop:
 GameModeArray:
 
 ptr_GM_Sega:	bra.w	GM_Sega		; Sega Screen ($00)
-
 ptr_GM_Title:	bra.w	GM_Title	; Title	Screen ($04)
-
 ptr_GM_Demo:	bra.w	GM_Level	; Demo Mode ($08)
-
 ptr_GM_Level:	bra.w	GM_Level	; Normal Level ($0C)
-
 ptr_GM_Special:	bra.w	GM_Special	; Special Stage	($10)
-
 ptr_GM_Cont:	bra.w	GM_Continue	; Continue Screen ($14)
-
 ptr_GM_Ending:	bra.w	GM_Ending	; End of game sequence ($18)
-
 ptr_GM_Credits:	bra.w	GM_Credits	; Credits ($1C)
-
-ptr_GM_Options:	bra.w	GM_Options	; Options Screen ($1E)
 
 		rts	
 ; ===========================================================================
@@ -9333,7 +9324,7 @@ ObjPos_Null:	dc.b $FF, $FF, 0, 0, 0,	0
 
 		include "Sonic-2-Clone-Driver-v2/engine/Sonic 2 Clone Driver v2.asm"
 SHC:    binclude "SHC/SHC_Sonic12.bin"
-		include "s2_menu.asm"	
+		include "Level_Select_Menu.asm"	
                 even
 				
         include   "ErrorHandler.asm"				
