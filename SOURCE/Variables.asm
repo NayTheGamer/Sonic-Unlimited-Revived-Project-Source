@@ -21,11 +21,18 @@ v_objspace	= ramaddr ( $FFFFD000 )	; object variable space ($40 bytes per object
 v_player	= v_objspace	; object variable space for Sonic ($40 bytes)
 v_lvlobjspace	= ramaddr ( $FFFFD800 )	; level object variable space ($1800 bytes)
 v_snddriver_ram  = ramaddr ( $FFFFF000 )	; start of RAM for the sound driver data ($5C0 bytes)
+
+; =================================================================================
+; From here on, no longer relative to sound driver RAM
+; =================================================================================
+
 v_gamemode	= ramaddr ( $FFFFF600 )	; game mode (00=Sega; 04=Title; 08=Demo; 0C=Level; 10=SS; 14=Cont; 18=End; 1C=Credit; +8C=PreLevel)
+
 v_jpadhold2	= ramaddr ( $FFFFF602 )	; joypad input - held, duplicate
 v_jpadpress2	= ramaddr ( $FFFFF603 )	; joypad input - pressed, duplicate
 v_jpadhold1	= ramaddr ( $FFFFF604 )	; joypad input - held
 v_jpadpress1	= ramaddr ( $FFFFF605 )	; joypad input - pressed
+
 v_vdp_buffer1	= ramaddr ( $FFFFF60C )	; VDP instruction buffer (2 bytes)
 v_demolength	= ramaddr ( $FFFFF614 )	; the length of a demo in frames (2 bytes)
 v_scrposy_dup	= ramaddr ( $FFFFF616 )	; screen position y (duplicate) (2 bytes)
@@ -37,6 +44,7 @@ v_bg3screenposx_dup_unused	= ramaddr ( $FFFFF620 )	; (2 bytes)
 v_hbla_hreg	= ramaddr ( $FFFFF624 )	; VDP H.interrupt register buffer (8Axx) (2 bytes)
 v_hbla_line	= ramaddr ( $FFFFF625 )	; screen line where water starts and palette is changed by HBlank
 v_pfade_start	= ramaddr ( $FFFFF626 )	; palette fading - start position in bytes
+
 v_pfade_size	= ramaddr ( $FFFFF627 )	; palette fading - number of colours
 v_vbla_routine	= ramaddr ( $FFFFF62A )	; VBlank - routine counter
 v_spritecount	= ramaddr ( $FFFFF62C )	; number of sprites on-screen
@@ -52,6 +60,7 @@ v_waterpos3	= ramaddr ( $FFFFF64A )	; water height, next target (2 bytes)
 f_water	= ramaddr ( $FFFFF64C )	; flag set for water
 v_wtr_routine	= ramaddr ( $FFFFF64D )	; water event - routine counter
 f_wtr_state	= ramaddr ( $FFFFF64E )	; water palette state when water is above/below the screen (00 = partly/all dry; 01 = all underwater)
+
 v_pal_buffer	= ramaddr ( $FFFFF650 )	; palette data buffer (used for palette cycling) ($30 bytes)
 v_plc_buffer	= ramaddr ( $FFFFF680 )	; pattern load cues buffer (maximum $10 PLCs) ($60 bytes)
 v_ptrnemcode	= ramaddr ( $FFFFF6E0 )	; pointer for nemesis decompression code ($1502 or $150C) (4 bytes)
@@ -76,6 +85,7 @@ v_limitleft3	= ramaddr ( $FFFFF732 )	; left level boundary, at the end of an act
 v_scrshiftx	= ramaddr ( $FFFFF73A )	; x-screen shift (new - last) * $100
 v_scrshifty	= ramaddr ( $FFFFF73C )	; y-screen shift (new - last) * $100
 v_lookshift	= ramaddr ( $FFFFF73E )	; screen shift when Sonic looks up/down (2 bytes)
+
 v_dle_routine	= ramaddr ( $FFFFF742 )	; dynamic level event - routine counter
 f_nobgscroll	= ramaddr ( $FFFFF744 )	; flag set to cancel background scrolling
 v_fg_xblock	= ramaddr ( $FFFFF74A )	; foreground x-block parity (for redraw)
@@ -108,6 +118,7 @@ v_collindex	= ramaddr ( $FFFFF796 )	; ROM address for collision index of current
 v_palss_num	= ramaddr ( $FFFFF79A )	; palette cycling in Special Stage - reference number (2 bytes)
 v_palss_time	= ramaddr ( $FFFFF79C )	; palette cycling in Special Stage - time until next change (2 bytes)
 v_obj31ypos	= ramaddr ( $FFFFF7A4 )	; y-position of object 31 (MZ stomper) (2 bytes)
+
 v_bossstatus	= ramaddr ( $FFFFF7A7 )	; status of boss and prison capsule (01 = boss defeated; 02 = prison opened)
 v_trackpos	= ramaddr ( $FFFFF7A8 )	; position tracking reference number (2 bytes)
 v_trackbyte	= ramaddr ( $FFFFF7A9 )	; low byte for position tracking
@@ -154,6 +165,7 @@ v_pal_dry_dup	= ramaddr ( $FFFFFB80 )	; duplicate palette, used for transitions 
 v_objstate	= ramaddr ( $FFFFFC00 )	; object state list ($200 bytes)
 v_systemstack	= ramaddr ( $FFFFFE00 )
 f_restart	= ramaddr ( $FFFFFE02 )	; restart level flag (2 bytes)
+
 v_framecount	= ramaddr ( $FFFFFE04 )	; frame counter (adds 1 every frame) (2 bytes)
 v_framebyte	= v_framecount+1; low byte for frame counter
 v_debugitem	= ramaddr ( $FFFFFE06 )	; debug item currently selected (NOT the object number of the item)
@@ -208,6 +220,7 @@ v_ani1_time	= ramaddr ( $FFFFFEC2 )	; synchronised sprite animation 1 - time unt
 v_ani1_frame	= ramaddr ( $FFFFFEC3 )	; synchronised sprite animation 1 - current frame
 v_ani2_time	= ramaddr ( $FFFFFEC4 )	; synchronised sprite animation 2 - time until next frame
 v_ani2_frame	= ramaddr ( $FFFFFEC5 )	; synchronised sprite animation 2 - current frame
+
 v_ani3_time	= ramaddr ( $FFFFFEC6 )	; synchronised sprite animation 3 - time until next frame
 v_ani3_frame	= ramaddr ( $FFFFFEC7 )	; synchronised sprite animation 3 - current frame
 v_ani3_buf	= ramaddr ( $FFFFFEC8 )	; synchronised sprite animation 3 - info buffer (2 bytes)
@@ -233,6 +246,7 @@ v_scorelife	= ramaddr ( $FFFFFFC0 )	; points required for an extra life (4 bytes
 f_levselcheat	= ramaddr ( $FFFFFFE0 )	; level select cheat flag
 f_slomocheat	= ramaddr ( $FFFFFFE1 )	; slow motion & frame advance cheat flag
 f_debugcheat	= ramaddr ( $FFFFFFE2 )	; debug mode cheat flag
+
 f_creditscheat	= ramaddr ( $FFFFFFE3 )	; hidden credits & press start cheat flag
 v_title_dcount	= ramaddr ( $FFFFFFE4 )	; number of times the d-pad is pressed on title screen (2 bytes)
 v_title_ccount	= ramaddr ( $FFFFFFE6 )	; number of times C is pressed on title screen (2 bytes)

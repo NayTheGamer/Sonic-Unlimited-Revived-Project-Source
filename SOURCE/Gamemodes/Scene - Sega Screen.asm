@@ -2,14 +2,6 @@
 ; Sega screen
 ; ---------------------------------------------------------------------------
 GM_Sega:
-
-    if ClownMDEmu_Compatibility=0
-	KDebug.WriteLine "Starting to measure performance of GM_Sega..."
-	KDebug.StartTimer
-	KDebug.EndTimer 	; this will print number of cycles measured
-	else
-	endif
-
  		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
@@ -64,8 +56,7 @@ Sega_WaitEnd:
 		beq.s	Sega_WaitEnd	; if not, branch
 
 Sega_GotoTitle:
-        move.b  #id_Title,($FFFFF600).w
-		
+        move.b  #id_Title,(v_gamemode).w		
 		rts					
 
 ; ===========================================================================

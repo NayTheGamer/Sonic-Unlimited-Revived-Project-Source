@@ -145,7 +145,7 @@ TryAgainEnd:
 		move.w	#$8B03,(a6)	; line scroll mode
 		move.w	#$8720,(a6)	; set background colour (line 3; colour 0)
 		clr.b	(f_wtr_state).w
-		bsr.w	ClearScreen		
+		bsr.w	ClearScreen
 
 		lea	(v_objspace).w,a1
 		moveq	#0,d0
@@ -164,7 +164,7 @@ TryAg_ClrPal:
 		move.l	d0,(a1)+
 		dbf	d1,TryAg_ClrPal ; fill palette with black
 
-		moveq	#palid_Sonic,d0
+		moveq	#palid_Ending,d0
 		bsr.w	PalLoad1	; load ending palette
 		clr.w	(v_pal_dry_dup+$40).w
 		move.b	#id_EndEggman,(v_objspace+$80).w ; load Eggman object
@@ -189,7 +189,7 @@ TryAg_MainLoop:
 		cmpi.b	#id_Credits,(v_gamemode).w
 		beq.s	TryAg_MainLoop
 
-TryAg_Exit: 
+TryAg_Exit:
 		move.b	#id_Sega,(v_gamemode).w ; goto Sega screen
 		rts	
 
@@ -219,12 +219,7 @@ Demo_EndSBZ2:	binclude	"demodata/Ending - SBZ2.bin"
 		even
 Demo_EndGHZ2:	binclude	"demodata/Ending - GHZ2.bin"
 		even
-
-		if Revision=0
-		include	"_inc/LevelSizeLoad & BgScrollSpeed.asm"
-		include	"_inc/DeformLayers.asm"
-		else
+		
 		include	"_inc/LevelSizeLoad & BgScrollSpeed (JP1).asm"
 		include	"_inc/DeformLayers (JP1).asm"
-		endif
 

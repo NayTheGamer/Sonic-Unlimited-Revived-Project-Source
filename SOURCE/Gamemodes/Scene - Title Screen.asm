@@ -14,7 +14,6 @@ GM_Title:
 		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
-		bsr.w	PaletteFadeOut
 		disable_ints
 		bsr.w	SoundDriverLoad
 		lea	(vdp_control_port).l,a6
