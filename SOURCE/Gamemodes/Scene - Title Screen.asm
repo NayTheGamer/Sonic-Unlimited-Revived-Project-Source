@@ -14,6 +14,7 @@ GM_Title:
 		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
+		bsr.w	PaletteFadeOut
 		disable_ints
 		bsr.w	SoundDriverLoad
 		lea	(vdp_control_port).l,a6
@@ -68,9 +69,6 @@ Tit_ClrPal:
 		bsr.w	PaletteFadeIn
 		disable_ints
 		bsr.w	DeformLayers		
-		bsr.w   PaletteWhiteOut
-		move.b   #sfx_TransitionLmao,d0
-		jsr     PlaySound_Special
 		locVRAM	$4000
 		lea	(Nem_TitleFg).l,a0 ; load title	screen patterns
 		bsr.w	NemDec
