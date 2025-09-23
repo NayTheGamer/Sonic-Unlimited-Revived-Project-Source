@@ -27,7 +27,7 @@ AddressSRAM	  = 3	; 0 = odd+even; 2 = even only; 3 = odd only
 
 Revision	  = 1
 ClownMDEmu_Compatibility = 1 ; This Doesn't work because the Creator is Lazy to fix it (NaylenFresh)
-Sonic_Hacking_Contest_Splash = 0 ; Sonic Hacking Contest Splash Screen
+Sonic_Hacking_Contest_Splash = 1; Sonic Hacking Contest Splash Screen
 Skip_Checksum = 1 ; Skip The Checksum If Enabled
 DebugTools = 0 ; Debugging tools For the Developer aka Me :D        (NaylenFresh Was Here :-)
 ZoneCount	  = 6	; discrete zones are: GHZ, MZ, SYZ, LZ, SLZ, and SBZ

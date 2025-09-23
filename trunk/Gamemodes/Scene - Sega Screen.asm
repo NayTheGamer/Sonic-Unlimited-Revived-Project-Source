@@ -2,9 +2,13 @@
 ; Sega screen
 ; ---------------------------------------------------------------------------
 GM_Sega:
+		move.b	#0,(v_gamemode).w	
  		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
+		move.b	#0,(v_scrposy_dup).w	
+		move.b	#0,(v_bgscrposy_dup).w	
+		move.b	#0,(v_scrposx_dup).w	
 		bsr.w	PaletteFadeOut
 		lea	(vdp_control_port).l,a6
 		move.w	#$8004,(a6)	; use 8-colour mode

@@ -3,14 +3,6 @@
 ; ---------------------------------------------------------------------------
 
 GM_Title:
-
-    if ClownMDEmu_Compatibility=0
-	KDebug.WriteLine "Starting to measure performance of GM_Title..."
-	KDebug.StartTimer
-	KDebug.EndTimer 	; this will print number of cycles measured
-	else
-	endif
-
 		move.b	#bgm_Stop,d0
 		bsr.w	PlaySound_Special ; stop music
 		bsr.w	ClearPLC
@@ -89,6 +81,7 @@ Tit_LoadText:
 		move.w	#(id_GHZ<<8),(v_zone).w	; set level to GHZ (00)
 		move.w	#0,(v_pcyc_time).w ; disable palette cycling
 		bsr.w	LevelSizeLoad
+		bsr.w	DeformLayers		
 		lea	(v_16x16).w,a1
 		lea	(Blk16_TS).l,a0 ; load	GHZ 16x16 mappings
 		move.w	#0,d0
