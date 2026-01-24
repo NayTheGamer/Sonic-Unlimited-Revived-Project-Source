@@ -87,7 +87,7 @@ Offset_0x026ADA:
 		bsr.w	Menu_EnigmaDec	
         lea     ($FFFF0000).l, A1
         move.l  #$60000003, D0
-        moveq   #$27, D1
+        moveq   #$4F, D1
         moveq   #$1B, D2		
         bsr.w   Menu_ShowVDPGraphics
 ;-------------------------------------------------------------------------------        
@@ -509,22 +509,23 @@ Offset_0x027040:
         bra.w   Offset_0x027050
 Offset_0x027048:
         bsr.w   Offset_0x026ED8
-        bra.w   Offset_0x027050
+        bra.w   Offset_0x027050	
 Offset_0x027050:
         move.w  ($FFFFFF82).w, D0
+        jsr    Deform_LevelSelect			
         lea     (Menu_Icon_List).l, A3
         lea     $00(A3, D0.w), A3
         lea     ($FFFF08C0).l, A1
         moveq   #$00, D0
         move.b  (A3), D0
-        lsl.w   #$03, D0
+        lsl.w   #$03, D0		
         move.w  D0, D1
         add.w   D0, D0
-        add.w   D1, D0
+        add.w   D1, D0			
         lea     $00(A1, D0.w), A1
         move.l  #$4B360003, D0        ; Posi��o Horizontal dos �cones
         moveq   #$03, D1
-        moveq   #$02, D2
+        moveq   #$02, D2	
         bsr.w   Menu_ShowVDPGraphics
         lea     (Icon_Palettes).l, A1
         moveq   #$00, D0
@@ -532,14 +533,14 @@ Offset_0x027050:
         lsl.w   #$05, D0
         lea     $00(A1, D0.w), A1
         lea     ($FFFFFB40).w, A2
-        moveq   #$07, D1
+       moveq   #$07, D1
 Offset_0x027098:        
         move.l  (A1)+, (A2)+
         dbf     D1, Offset_0x027098
         rts
 ;-------------------------------------------------------------------------------                    
 Dynamic_Menu: 
-        jsr    InitDMAQueue                  	
+        jsr    InitDMAQueue		
         rts
 Menu_Loop_Load_Tiles:
         move.l  (A1)+, (A6)

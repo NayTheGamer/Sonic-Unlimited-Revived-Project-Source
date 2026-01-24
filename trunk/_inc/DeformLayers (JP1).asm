@@ -54,6 +54,12 @@ DeformScroll:
 		move.w	($FFFFF70C).w,d6			; load Y position
 		move.l	($FFFFF700).w,d1			; prepare FG X position
 		neg.l	d1					; reverse position
+		
+DeformScroll_BG:
+		lea	($FFFFCC00).w,a2			; load H-scroll buffer
+		move.w	#$00E0,d7				; prepare number of scanlines
+		move.w	($FFFFF70C).w,d6			; load Y position
+		neg.l	d1					; reverse position		
 
 DS_FindStart:
 		move.w	(a0)+,d0				; load scroll speed address
@@ -95,11 +101,46 @@ DS_LastScanlines:
 
 DS_Finish:
 		rts						; return
-
-Deform_GHZ:
-        cmpi.b    #id_Sega,(v_gamemode).w
-        beq.w    Deform_Sega
 		
+Deform_LevelSelect:
+		moveq	#$00,d4					; set no X movement redraw
+		move.w	($FFFFF73C).w,d5			; load Y movement
+		ext.l	d5					; extend to long-word
+		asl.l	#$08,d5					; multiply by 100, then divide by 2
+		bsr.w	ScrollBlock2				; perform redraw for Y
+		move.w	($FFFFF70C).w,($FFFFF618).w		; save as VSRAM BG scroll position
+
+		move.w	($FFFFF708).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position		
+		asr.w	#$03,d0					; divide by 8
+		move.w	d0,($FFFFA800).w			; set speed 1
+
+		move.w	($FFFFF708).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position			
+		asr.w	#$02,d0					; divide by 4
+		move.w	d0,($FFFFA802).w			; set speed 2
+		
+		move.w	($FFFFF708).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position			
+		asr.w	#$01,d0					; divide by 4
+		move.w	d0,($FFFFA804).w			; set speed 2				
+
+		lea	DLevelSelect(pc),a0			; load scroll data to use
+		bra.w	DeformScroll_BG				; continue
+		
+; ---------------------------------------------------------------------------
+; Scroll data
+; ---------------------------------------------------------------------------
+
+DLevelSelect:	dc.w	$A800,  $60				; top 70 scroll
+		dc.w	$A802,  $22				; bottom 70 scroll
+		dc.w	$A804,  $50				; bottom 70 scroll		
+		dc.w	$0000				
+
+Deform_GHZ:		
 	; block 3 - distant mountains
 		move.w	(v_scrshiftx).w,d4
 		ext.l	d4
