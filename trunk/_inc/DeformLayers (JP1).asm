@@ -97,6 +97,9 @@ DS_Finish:
 		rts						; return
 
 Deform_GHZ:
+        cmpi.b    #id_Sega,(v_gamemode).w
+        beq.w    Deform_Sega
+		
 	; block 3 - distant mountains
 		move.w	(v_scrshiftx).w,d4
 		ext.l	d4
@@ -200,6 +203,59 @@ Deform_GHZ:
 		dbf	d1,.waterLoop
 		rts
 ; End of function Deform_GHZ
+
+Deform_Sega:
+		moveq	#$00,d4					; set no X movement redraw
+		move.w	($FFFFF73C).w,d5			; load Y movement
+		ext.l	d5					; extend to long-word
+		asl.l	#$06,d5					; multiply by 100, then divide by 2
+		bsr.w	ScrollBlock2				; perform redraw for Y
+		move.w	($FFFFF70C).w,($FFFFF618).w		; save as VSRAM BG scroll position
+
+		move.w	($FFFFF700).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position		
+		asr.w	#$03,d0					; divide by 8
+		move.w	d0,($FFFFA800).w			; set speed 1
+
+		move.w	($FFFFF700).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position			
+		asr.w	#$02,d0					; divide by 4
+		move.w	d0,($FFFFA802).w			; set speed 2
+		
+		move.w	($FFFFF700).w,d0			; load X position
+		neg.w	d0					; reverse direction
+		move.w	($FFFFFE0E).w,d0			; load X position			
+		asr.w	#$01,d0					; divide by 4
+		move.w	d0,($FFFFA804).w			; set speed 2		
+
+		lea	DSega(pc),a0			; load scroll data to use
+		bra.w	DeformScroll				; continue
+
+; ---------------------------------------------------------------------------
+; Scroll data
+; ---------------------------------------------------------------------------
+
+DSega:	dc.w	$A800,  $55				; top 70 scroll
+		dc.w	$A802,  $22				; bottom 70 scroll
+		dc.w	$A804,  $50				; bottom 70 scroll		
+		dc.w	$0000
+
+; ---------------------------------------------------------------------------
+; Scroll data
+; ---------------------------------------------------------------------------
+
+DTITLESCREEN:	dc.w	$C804,  $40				; top 70 scroll
+		dc.w	$C802,  $10				; bottom 70 scroll
+        dc.w	$C800,  $10				; top 70 scroll		
+		dc.w	$C802,  $10				; bottom 70 scroll
+        dc.w	$C800,  $10				; top 70 scroll		
+		dc.w	$C802,  $10				; bottom 70 scroll
+        dc.w	$C800,  $10				; top 70 scroll		
+		dc.w	$C802,  $10				; bottom 70 scroll	
+	    dc.w	$C804,  $40				; top 70 scroll		
+		dc.w	$0000
 
 ; ---------------------------------------------------------------------------
 ; Labyrinth Zone background layer deformation code

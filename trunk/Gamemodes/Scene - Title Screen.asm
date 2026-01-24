@@ -64,6 +64,9 @@ Tit_ClrPal:
 		locVRAM	$4000
 		lea	(Nem_TitleFg).l,a0 ; load title	screen patterns
 		bsr.w	NemDec
+		locVRAM $6000
+		lea	(Nem_TitleSonic).l,a0 ; load Sonic title screen patterns
+		bsr.w	NemDec		
 		locVRAM	$D000,4(a6)
 		lea	(Art_Text).l,a5	; load level select font
 		move.w	#$28F,d1
@@ -120,6 +123,10 @@ Tit_LoadText:
 		moveq	#0,d0
 		move.w	#7,d1
 
+		move.b	#id_TitleSonic,(v_objspace+$40).w ; load big Sonic object
+		move.b	#id_PSBTM,(v_objspace+$80).w ; load "PRESS START BUTTON" object
+		clr.b	(v_objspace+$80+obRoutine).w ; The 'Mega Games 10' version of Sonic 1 added this line, to fix the 'PRESS START BUTTON' object not appearing
+
 Tit_ChkPal4:
 		moveq	#palid_Title,d0	; load title screen palette
 		bsr.w	PalLoad1
@@ -131,6 +138,7 @@ Tit_ClrObj2:
 
 
 .isjap:
+		move.b	#id_PSBTM,(v_objspace+$100).w ; load object which hides part of Sonic
 		move.b	#2,(v_objspace+$100+obFrame).w
 		jsr	(ExecuteObjects).l
 		bsr.w	DeformLayers

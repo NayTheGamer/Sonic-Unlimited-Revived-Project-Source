@@ -17,7 +17,7 @@ zeroOffsetOptimization = 1
 	include	"Constants.asm"
 	include	"Variables.asm"
 	include	"Macros.asm"
-    include "Sonic-2-Clone-Driver-v2/Definitions.asm"		
+        include "Sonic-2-Clone-Driver-v2/Definitions.asm"		
 
 EnableSRAM	  = 0	; change to 1 to enable SRAM
 BackupSRAM	  = 1
@@ -27,7 +27,7 @@ AddressSRAM	  = 3	; 0 = odd+even; 2 = even only; 3 = odd only
 
 Revision	  = 1
 ClownMDEmu_Compatibility = 1 ; This Doesn't work because the Creator is Lazy to fix it (NaylenFresh)
-Sonic_Hacking_Contest_Splash = 1; Sonic Hacking Contest Splash Screen
+Sonic_Hacking_Contest_Splash = 0 ; Sonic Hacking Contest Splash Screen
 Skip_Checksum = 1 ; Skip The Checksum If Enabled
 DebugTools = 0 ; Debugging tools For the Developer aka Me :D        (NaylenFresh Was Here :-)
 ZoneCount	  = 6	; discrete zones are: GHZ, MZ, SYZ, LZ, SLZ, and SBZ
@@ -7507,9 +7507,9 @@ mappingsSega:	binclude	"tilemaps/Sega Logo (JP1).bin" ; large Sega logo (mapping
 			dc.b	$FF
 		endm
 		
-Nem_SegaBackground: binclude "artnem/SegaParallaxBG.bin"
+Nem_SegaBackground: binclude "artnem/Sega Logo (JP1) - BG.bin"
 	    even
-SegaBackground: binclude "tilemaps/SegaParallaxBG.bin"
+SegaBackground: binclude "tilemaps/Sega Logo (JP1) - BG.bin"
 	    even
 		
 Nem_SegaForeground: binclude "artnem/SegaParallaxFG.bin"
@@ -8320,11 +8320,11 @@ ObjPos_Null:	dc.b $FF, $FF, 0, 0, 0,	0
 		endif
 
 		include "Sonic-2-Clone-Driver-v2/engine/Sonic 2 Clone Driver v2.asm"
-SHC:    binclude "SHC/SHC_Sonic12.bin"
+SHC:            binclude "SHC/SHC_Sonic12.bin"
 		include "Level_Select/Level_Select_Menu.asm"	
                 even
 				
-        include   "ErrorHandler.asm"				
+                include   "ErrorHandler.asm"				
 
 ; end of 'ROM'
 		even
