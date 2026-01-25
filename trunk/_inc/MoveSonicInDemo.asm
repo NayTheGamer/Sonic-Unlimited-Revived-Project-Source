@@ -1,20 +1,21 @@
 ; ---------------------------------------------------------------------------
-; Subroutine to	move Sonic in demo mode
+; Subroutine to move Sonic in demo mode
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 MoveSonicInDemo:
 		tst.w	(f_demo).w	; is demo mode on?
 		bne.s	MDemo_On	; if yes, branch
-		rts	
+		rts
 ; ===========================================================================
 
 ; This is an unused subroutine for recording a demo
 
 DemoRecorder:
-		lea	($80000).l,a1
+		; This was likely intended for a deveveloper cartridge that used RAM instead of ROM.
+		lea	(EndOfRom).l,a1 ; Write past the end of the ROM.
 		move.w	(v_btnpushtime1).w,d0
 		adda.w	d0,a1
 		move.b	(v_jpadhold1).w,d0
@@ -23,14 +24,14 @@ DemoRecorder:
 		addq.b	#1,1(a1)
 		cmpi.b	#$FF,1(a1)
 		beq.s	.next
-		rts	
+		rts
 
 .next:
 		move.b	d0,2(a1)
 		move.b	#0,3(a1)
 		addq.w	#2,(v_btnpushtime1).w
 		andi.w	#$3FF,(v_btnpushtime1).w
-		rts	
+		rts
 ; ===========================================================================
 
 MDemo_On:
@@ -80,12 +81,12 @@ MDemo_On:
 		addq.w	#2,(v_btnpushtime1).w
 
 .end:
-		rts	
+		rts
 ; End of function MoveSonicInDemo
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Demo sequence	pointers
+; Demo sequence pointers
 ; ---------------------------------------------------------------------------
 DemoDataPtr:	dc.l Demo_GHZ		; demos run after the title screen
 		dc.l Demo_GHZ
@@ -105,7 +106,10 @@ DemoEndDataPtr:	dc.l Demo_EndGHZ1	; demos run during the credits
 		dc.l Demo_EndSBZ2
 		dc.l Demo_EndGHZ2
 
-		dc.b 0,	$8B, 8,	$37, 0,	$42, 8,	$5C, 0,	$6A, 8,	$5F, 0,	$2F, 8,	$2C
-		dc.b 0,	$21, 8,	3, $28,	$30, 8,	8, 0, $2E, 8, $15, 0, $F, 8, $46
-		dc.b 0,	$1A, 8,	$FF, 8,	$CA, 0,	0, 0, 0, 0, 0, 0, 0, 0,	0
+; Stray demo data is present here. It involves Sonic slowly running
+; right, jumping once, then running at full speed for a few seconds.
+; Interestingly, this lines up with our knowledge of the fabled
+; Tokyo Game Show prototype.
+; See it in action: https://youtu.be/S8_IAfQbUu0
+Demo_Unused:	binclude	"demodata/Unused Demo.bin"
 		even

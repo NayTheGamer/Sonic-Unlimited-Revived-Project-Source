@@ -1,4 +1,4 @@
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 1 - 1/24/2026 4:33:1
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 1 - 1/24/2026 21:15:42
 
 
        1/       0 :                      ;  =========================================================================
@@ -8157,7 +8157,7 @@
 (1)   99/    30DE : 4BF9 00C0 0004      		lea	(vdp_control_port).l,a5
 (1)  100/    30E4 : 4DF9 00C0 0000      		lea	(vdp_data_port).l,a6
 (1)  101/    30EA : 47F8 F708           		lea	(v_bgscreenposx).w,a3
-(1)  102/    30EE : 49F8 A440           		lea	(v_lvllayout+$40).w,a4
+(1)  102/    30EE : 49F8 A480           		lea	(v_lvllayout+$80).w,a4	; MJ: Load address of layout BG
 (1)  103/    30F2 : 343C 6000           		move.w	#$6000,d2
 (1)  104/    30F6 : 6100 4126           		bsr.w	DrawChunks
 (1)  105/    30FA : 43F9 00FF 0000      		lea	($FF0000).l,a1
@@ -9696,7 +9696,7 @@
     2483/    40A4 :                     ColIndexLoad:
     2484/    40A4 : 7000                		moveq	#0,d0
     2485/    40A6 : 1038 FE10           		move.b	(v_zone).w,d0
-    2486/    40AA : E548                		lsl.w	#2,d0
+    2486/    40AA : E748                		lsl.w	#3,d0				; MJ: multiply by 8 not 4
     2487/    40AC : 21FB 0006 F796      		move.l	ColPointers(pc,d0.w),(v_collindex).w
     2488/    40B2 : 4E75                		rts	
     2489/    40B4 :                     ; End of function ColIndexLoad
@@ -111735,7 +111735,7 @@
     8332/   FB034 :                     EndOfRom:
     8333/   FB034 :                     
     8334/   FB034 :                     		END
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 2 - 1/24/2026 4:33:2
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 2 - 1/24/2026 21:15:43
 
 
   Symbol Table (* = unused):
@@ -115787,7 +115787,7 @@
  TCha_Main :                   59BC C |  TCha_Main.chkemerald :        5A0C C |
  TCha_Main.chkloop :           5A16 C |  TCha_Main.loc_5B42 :          5A24 C |
  TCha_Main.makeemerald :       59C8 C |  TCha_Main.notgot :            5A20 C |
- TCha_Move :                   5A48 C | *TIME :                   "4:32:59" - |
+ TCha_Move :                   5A48 C | *TIME :                  "21:15:40" - |
 *TRUE :                           1 - |  TSon_Animate :                AEA2 C |
  TSon_Delay :                  AE7C C |  TSon_Delay.wait :             AE8A C |
  TSon_Index :                  AE40 C |  TSon_Main :                   AE48 C |
@@ -117682,7 +117682,7 @@
   10714 symbols
    1310 unused symbols
 
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 3 - 1/24/2026 4:33:2
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 3 - 1/24/2026 21:15:43
 
 
   Defined Macros:
@@ -117798,7 +117798,7 @@ zOutputSample                         | zonewarning
 
     214 macros
 
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 4 - 1/24/2026 4:33:2
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 4 - 1/24/2026 21:15:43
 
 
   Defined Structures/Unions:
@@ -118559,7 +118559,7 @@ SMPS_Track
  22          LoopCounters
  2E          GoSubStack
 4 structures
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 5 - 1/24/2026 4:33:2
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 5 - 1/24/2026 21:15:43
 
 
   Defined Functions:
@@ -118577,7 +118577,7 @@ planeLoc                              | tiles_to_bytes
 make_art_tile                         | ramaddr                              
 notZ80                                |
 
- AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 6 - 1/24/2026 4:33:2
+ AS V1.42 Beta [Bld 212] - Source File S1URP.asm - Page 6 - 1/24/2026 21:15:43
 
 
   Code Pages:
@@ -118587,7 +118587,7 @@ STANDARD (0 changed characters)
 
 1 code page
 
-2.85 seconds assembly time
+2.71 seconds assembly time
 
   69753 lines source file
  133919 lines incl. macro expansions

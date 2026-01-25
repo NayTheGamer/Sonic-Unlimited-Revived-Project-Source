@@ -17,7 +17,7 @@ zeroOffsetOptimization = 1
 	include	"Constants.asm"
 	include	"Variables.asm"
 	include	"Macros.asm"
-        include "Sonic-2-Clone-Driver-v2/Definitions.asm"		
+    include "Sonic-2-Clone-Driver-v2/Definitions.asm"		
 
 EnableSRAM	  = 0	; change to 1 to enable SRAM
 BackupSRAM	  = 1
@@ -31,6 +31,7 @@ Sonic_Hacking_Contest_Splash = 0 ; Sonic Hacking Contest Splash Screen
 Skip_Checksum = 1 ; Skip The Checksum If Enabled
 DebugTools = 0 ; Debugging tools For the Developer aka Me :D        (NaylenFresh Was Here :-)
 ZoneCount	  = 6	; discrete zones are: GHZ, MZ, SYZ, LZ, SLZ, and SBZ
+FixBugs		  = 0	; change to 1 to enable bugfixes
 
  include	"Debugger.asm" ; Vladikomper's Debugger for KDebug
 ; ===========================================================================
@@ -2483,23 +2484,37 @@ loc_3BC8:
 ColIndexLoad:
 		moveq	#0,d0
 		move.b	(v_zone).w,d0
-		lsl.w	#2,d0
-		move.l	ColPointers(pc,d0.w),(v_collindex).w
-		rts	
+		lsl.w	#3,d0				; MJ: multiply by 8 not 4
+		move.w	#v_collision1,(v_collindex).w
+		move.w	d0,-(sp)
+		movea.l	ColPointers(pc,d0.w),a0		; MJ: get first collision set
+		lea	(v_collision1).w,a1
+		bsr.w	KosDec
+		move.w	(sp)+,d0
+		movea.l	ColPointers+4(pc,d0.w),a0	; MJ: get second collision set
+		lea	(v_collision2).w,a1
+		bra.w	KosDec
 ; End of function ColIndexLoad
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
 ; Collision index pointers
 ; ---------------------------------------------------------------------------
-ColPointers:	dc.l Col_GHZ
-		dc.l Col_LZ
-		dc.l Col_MZ
-		dc.l Col_SLZ
-		dc.l Col_SYZ
-		dc.l Col_SBZ		
-		zonewarning ColPointers,4
-;		dc.l Col_GHZ ; Pointer for Ending is missing by default.
+ColPointers:	dc.l Col_GHZ_1	; MJ: each zone now has two entries
+		dc.l Col_GHZ_2
+		dc.l Col_LZ_1
+		dc.l Col_LZ_2
+		dc.l Col_MZ_1
+		dc.l Col_MZ_2
+		dc.l Col_SLZ_1
+		dc.l Col_SLZ_2
+		dc.l Col_SYZ_1
+		dc.l Col_SYZ_2
+		dc.l Col_SBZ_1
+		dc.l Col_SBZ_2
+		zonewarning ColPointers,8
+;  dc.l Col_GHZ_1 ; Pointers for Ending are missing by default.
+;  dc.l Col_GHZ_2
 
 		include	"_inc/Oscillatory Routines.asm"
 
@@ -2870,9 +2885,14 @@ End_LoadData:
 		bsr.w	DeformLayers
 		bset	#2,(v_fg_scroll_flags).w
         bsr.w   LoadZoneTiles   ; load level art		
-		bsr.w	LevelDataLoad
+		bsr.w	LevelDataLoad		
 		bsr.w	LoadTilesFromStart
-		move.l	#Col_GHZ,(v_collindex).w ; load collision index
+		lea	(Col_GHZ_1).l,a0 ; MJ: Set first collision for ending
+		lea	(v_collision1).w,a1
+		bsr.w	KosDec
+		lea	(Col_GHZ_2).l,a0 ; MJ: Set second collision for ending
+		lea	(v_collision2).w,a1
+		bsr.w	KosDec		
 		enable_ints
 		lea	(Kos_EndFlowers).l,a0 ;	load extra flower patterns
 		lea	($FFFF9400).w,a1 ; RAM address to buffer the patterns
@@ -2977,7 +2997,8 @@ End_SlowFade:
 		tst.w	(f_restart).w
 		beq.w	End_AllEmlds
 		clr.w	(f_restart).w
-		move.w	#$2E2F,(v_lvllayout+$80).w ; modify level layout
+		move.l	#$AAABAE9A,(v_lvllayout+$200).w ; MJ: modify level layout
+		move.l	#$ACADAFB0,(v_lvllayout+$300).w		
 		lea	(vdp_control_port).l,a5
 		lea	(vdp_data_port).l,a6
 		lea	(v_screenposx).w,a3
@@ -4041,6 +4062,7 @@ LevelLayoutLoad:
 		lea	(v_lvllayout).w,a3
 		move.w	#$1FF,d1
 		moveq	#0,d0
+		bra.w	KosDec			; MJ: decompress layout		
 
 LevLoad_ClrRam:
 		move.l	d0,(a3)+
@@ -6244,6 +6266,12 @@ ConvertCollisionArray:
 
 
 Sonic_WalkSpeed:
+		move.w	#v_collision1,(v_collindex).w	; MJ: load first collision data location
+		cmpi.b	#$C,(v_top_solid_bit).w		; MJ: is second collision set to be used?
+		beq.s	.first				; MJ: if not, branch
+		move.w	#v_collision2,(v_collindex).w	; MJ: load second collision data location
+.first:
+		move.b	(v_lrb_solid_bit).w,d5		; MJ: load L/R/B soldity bit
 		move.l	obX(a0),d3
 		move.l	obY(a0),d2
 		move.w	obVelX(a0),d1
@@ -6299,6 +6327,12 @@ loc_14D3C:
 
 
 sub_14D48:
+		move.w	#v_collision1,(v_collindex).w	; MJ: load first collision data location
+		cmpi.b	#$C,(v_top_solid_bit).w		; MJ: is second collision set to be used?
+		beq.s	.first				; MJ: if not, branch
+		move.w	#v_collision2,(v_collindex).w	; MJ: load second collision data location
+.first:
+		move.b	(v_lrb_solid_bit).w,d5		; MJ: load L/R/B soldity bit
 		move.b	d0,(v_anglebuffer).w
 		move.b	d0,($FFFFF76A).w
 		addi.b	#$20,d0
@@ -6320,6 +6354,12 @@ sub_14D48:
 
 
 Sonic_HitFloor:
+		move.w	#v_collision1,(v_collindex).w	; MJ: load first collision data location
+		cmpi.b	#$C,(v_top_solid_bit).w		; MJ: is second collision set to be used?
+		beq.s	.first				; MJ: if not, branch
+		move.w	#v_collision2,(v_collindex).w	; MJ: load second collision data location
+.first:
+		move.b	(v_top_solid_bit).w,d5		; MJ: load L/R/B soldity bit
 		move.w	obY(a0),d2
 		move.w	obX(a0),d3
 		moveq	#0,d0
@@ -6333,7 +6373,7 @@ Sonic_HitFloor:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$D,d5
-		bsr.w	FindFloor
+		bsr.w	FindFloor	; MJ: check solidity
 		move.w	d1,-(sp)
 		move.w	obY(a0),d2
 		move.w	obX(a0),d3
@@ -6348,7 +6388,7 @@ Sonic_HitFloor:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$D,d5
-		bsr.w	FindFloor
+		bsr.w	FindFloor	; MJ: check solidity
 		move.w	(sp)+,d0
 		move.b	#0,d2
 
@@ -6379,7 +6419,7 @@ loc_14DF0:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$E,d5
-		bsr.w	FindFloor
+		bsr.w	FindFloor	; MJ: check solidity
 		move.b	#0,d2
 
 loc_14E0A:
@@ -6411,7 +6451,7 @@ sub_14E50:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$E,d5
-		bsr.w	FindWall
+		bsr.w	FindWall	; MJ: check solidity
 		move.w	d1,-(sp)
 		move.w	obY(a0),d2
 		move.w	obX(a0),d3
@@ -6426,7 +6466,7 @@ sub_14E50:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$E,d5
-		bsr.w	FindWall
+		bsr.w	FindWall	; MJ: check solidity
 		move.w	(sp)+,d0
 		move.b	#-$40,d2
 		bra.w	loc_14DD0
@@ -6447,7 +6487,7 @@ loc_14EBC:
 		movea.w	#$10,a3
 		move.w	#0,d6
 		moveq	#$E,d5
-		bsr.w	FindWall
+		bsr.w	FindWall	; MJ: check solidity
 		move.b	#-$40,d2
 		bra.w	loc_14E0A
 
@@ -6467,8 +6507,8 @@ ObjHitWallRight:
 		move.b	#0,(a4)
 		movea.w	#$10,a3
 		move.w	#0,d6
-		moveq	#$E,d5
-		bsr.w	FindWall
+		moveq	#$D,d5		; MJ: set solid type to check
+		bsr.w	FindWall	; MJ: check solidity
 		move.b	(v_anglebuffer).w,d3
 		btst	#0,d3
 		beq.s	locret_14F06
@@ -6500,9 +6540,8 @@ Sonic_DontRunOnWalls:
 		add.w	d0,d3
 		lea	(v_anglebuffer).w,a4
 		movea.w	#-$10,a3
-		move.w	#$1000,d6
-		moveq	#$E,d5
-		bsr.w	FindFloor
+		move.w	#$800,d6	; MJ: $1000/2
+		bsr.w	FindFloor	; MJ: check solidity
 		move.w	d1,-(sp)
 		move.w	obY(a0),d2
 		move.w	obX(a0),d3
@@ -6534,8 +6573,8 @@ loc_14F7C:
 		lea	(v_anglebuffer).w,a4
 		movea.w	#-$10,a3
 		move.w	#$1000,d6
-		moveq	#$E,d5
-		bsr.w	FindFloor
+		move.w	#$800,d6	; MJ: $1000/2
+		bsr.w	FindFloor	; MJ: check solidity
 		move.b	#-$80,d2
 		bra.w	loc_14E0A
 
@@ -6552,9 +6591,9 @@ ObjHitCeiling:
 		eori.w	#$F,d2
 		lea	(v_anglebuffer).w,a4
 		movea.w	#-$10,a3
-		move.w	#$1000,d6
-		moveq	#$E,d5
-		bsr.w	FindFloor
+		move.w	#$800,d6	; MJ: $1000/2
+		moveq	#$D,d5		; MJ: set solid type to check
+		bsr.w	FindFloor	; MJ: check solidity
 		move.b	(v_anglebuffer).w,d3
 		btst	#0,d3
 		beq.s	locret_14FD4
@@ -6579,9 +6618,8 @@ loc_14FD6:
 		eori.w	#$F,d3
 		lea	(v_anglebuffer).w,a4
 		movea.w	#-$10,a3
-		move.w	#$800,d6
-		moveq	#$E,d5
-		bsr.w	FindWall
+		move.w	#$400,d6	; MJ: $800/2
+		bsr.w	FindWall	; MJ: check solidity
 		move.w	d1,-(sp)
 		move.w	obY(a0),d2
 		move.w	obX(a0),d3
@@ -6595,9 +6633,8 @@ loc_14FD6:
 		eori.w	#$F,d3
 		lea	($FFFFF76A).w,a4
 		movea.w	#-$10,a3
-		move.w	#$800,d6
-		moveq	#$E,d5
-		bsr.w	FindWall
+		move.w	#$400,d6	; MJ: $800/2
+		bsr.w	FindWall	; MJ: check solidity
 		move.w	(sp)+,d0
 		move.b	#$40,d2
 		bra.w	loc_14DD0
@@ -6618,9 +6655,8 @@ loc_1504A:
 		eori.w	#$F,d3
 		lea	(v_anglebuffer).w,a4
 		movea.w	#-$10,a3
-		move.w	#$800,d6
-		moveq	#$E,d5
-		bsr.w	FindWall
+		move.w	#$400,d6	; MJ: $800/2
+		bsr.w	FindWall	; MJ: check solidity
 		move.b	#$40,d2
 		bra.w	loc_14E0A
 ; End of function Sonic_HitWall
@@ -6642,9 +6678,9 @@ ObjHitWallLeft:
 		lea	(v_anglebuffer).w,a4
 		move.b	#0,(a4)
 		movea.w	#-$10,a3
-		move.w	#$800,d6
-		moveq	#$E,d5
-		bsr.w	FindWall
+		move.w	#$400,d6	; MJ: $800/2
+		moveq	#$D,d5		; MJ: set solid type to check
+		bsr.w	FindWall	; MJ: check solidity
 		move.b	(v_anglebuffer).w,d3
 		btst	#0,d3
 		beq.s	locret_15098
@@ -8025,49 +8061,45 @@ Art_MzTorch:	binclude	"artunc/MZ Background Torch.bin"
 Art_SbzSmoke:	binclude	"artunc/SBZ Background Smoke.bin"
 		even
 
-; ---------------------------------------------------------------------------
-; Level	layout index
-; ---------------------------------------------------------------------------
 Level_Index:
 		; GHZ
-		dc.w Level_GHZ1-Level_Index, Level_GHZbg-Level_Index, byte_68D70-Level_Index
-		dc.w Level_GHZ2-Level_Index, Level_GHZbg-Level_Index, byte_68E3C-Level_Index
-		dc.w Level_GHZ3-Level_Index, Level_GHZbg-Level_Index, byte_68F84-Level_Index
-		dc.w byte_68F88-Level_Index, byte_68F88-Level_Index, byte_68F88-Level_Index
+		dc.w Level_GHZ1-Level_Index
+		dc.w Level_GHZ2-Level_Index
+		dc.w Level_GHZ3-Level_Index
+		dc.w Level_Null-Level_Index
 		; LZ
-		dc.w Level_LZ1-Level_Index, Level_LZbg-Level_Index, byte_69190-Level_Index
-		dc.w Level_LZ2-Level_Index, Level_LZbg-Level_Index, byte_6922E-Level_Index
-		dc.w Level_LZ3-Level_Index, Level_LZbg-Level_Index, byte_6934C-Level_Index
-		dc.w Level_SBZ3-Level_Index, Level_LZbg-Level_Index, byte_6940A-Level_Index
+		dc.w Level_LZ1-Level_Index
+		dc.w Level_LZ2-Level_Index
+		dc.w Level_LZ3-Level_Index
+		dc.w Level_SBZ3-Level_Index
 		; MZ
-		dc.w Level_MZ1-Level_Index, Level_MZ1bg-Level_Index, Level_MZ1-Level_Index
-		dc.w Level_MZ2-Level_Index, Level_MZ2bg-Level_Index, byte_6965C-Level_Index
-		dc.w Level_MZ3-Level_Index, Level_MZ3bg-Level_Index, byte_697E6-Level_Index
-		dc.w byte_697EA-Level_Index, byte_697EA-Level_Index, byte_697EA-Level_Index
+		dc.w Level_MZ1-Level_Index
+		dc.w Level_MZ2-Level_Index
+		dc.w Level_MZ3-Level_Index
+		dc.w Level_Null-Level_Index
 		; SLZ
-		dc.w Level_SLZ1-Level_Index, Level_SLZbg-Level_Index, byte_69B84-Level_Index
-		dc.w Level_SLZ2-Level_Index, Level_SLZbg-Level_Index, byte_69B84-Level_Index
-		dc.w Level_SLZ3-Level_Index, Level_SLZbg-Level_Index, byte_69B84-Level_Index
-		dc.w byte_69B84-Level_Index, byte_69B84-Level_Index, byte_69B84-Level_Index
+		dc.w Level_SLZ1-Level_Index
+		dc.w Level_SLZ2-Level_Index
+		dc.w Level_SLZ3-Level_Index
+		dc.w Level_Null-Level_Index
 		; SYZ
-		dc.w Level_SYZ1-Level_Index, Level_SYZbg-Level_Index, byte_69C7E-Level_Index
-		dc.w Level_SYZ2-Level_Index, Level_SYZbg-Level_Index, byte_69D86-Level_Index
-		dc.w Level_SYZ3-Level_Index, Level_SYZbg-Level_Index, byte_69EE4-Level_Index
-		dc.w byte_69EE8-Level_Index, byte_69EE8-Level_Index, byte_69EE8-Level_Index
+		dc.w Level_SYZ1-Level_Index
+		dc.w Level_SYZ2-Level_Index
+		dc.w Level_SYZ3-Level_Index
+		dc.w Level_Null-Level_Index
 		; SBZ
-		dc.w Level_SBZ1-Level_Index, Level_SBZ1bg-Level_Index, Level_SBZ1bg-Level_Index
-		dc.w Level_SBZ2-Level_Index, Level_SBZ2bg-Level_Index, Level_SBZ2bg-Level_Index
-		dc.w Level_SBZ2-Level_Index, Level_SBZ2bg-Level_Index, byte_6A2F8-Level_Index
-		dc.w byte_6A2FC-Level_Index, byte_6A2FC-Level_Index, byte_6A2FC-Level_Index
-		; HPZ		
-;		dc.w Level_HPZ1-Level_Index, Level_HPZbg-Level_Index, byte_68D70-Level_Index	
-;		dc.w byte_68F88-Level_Index, byte_68F88-Level_Index, byte_68F88-Level_Index		
-		zonewarning Level_Index,24
+		dc.w Level_SBZ1-Level_Index
+		dc.w Level_SBZ2-Level_Index
+		dc.w Level_SBZ2-Level_Index
+		dc.w Level_Null-Level_Index
+		zonewarning Level_Index,8
 		; Ending
-		dc.w Level_End-Level_Index, Level_GHZbg-Level_Index, byte_6A320-Level_Index
-		dc.w Level_End-Level_Index, Level_GHZbg-Level_Index, byte_6A320-Level_Index
-		dc.w byte_6A320-Level_Index, byte_6A320-Level_Index, byte_6A320-Level_Index
-		dc.w byte_6A320-Level_Index, byte_6A320-Level_Index, byte_6A320-Level_Index
+		dc.w Level_End-Level_Index
+		dc.w Level_End-Level_Index
+		dc.w Level_Null-Level_Index
+		dc.w Level_Null-Level_Index
+
+Level_Null:
 
 Level_GHZ1:	binclude	"levels/ghz1.bin"
 		even
@@ -8322,9 +8354,8 @@ ObjPos_Null:	dc.b $FF, $FF, 0, 0, 0,	0
 		include "Sonic-2-Clone-Driver-v2/engine/Sonic 2 Clone Driver v2.asm"
 SHC:            binclude "SHC/SHC_Sonic12.bin"
 		include "Level_Select/Level_Select_Menu.asm"	
-                even
-				
-                include   "ErrorHandler.asm"				
+                even		
+        include   "ErrorHandler.asm"				
 
 ; end of 'ROM'
 		even

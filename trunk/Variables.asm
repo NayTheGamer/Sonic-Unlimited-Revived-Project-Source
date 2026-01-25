@@ -9,6 +9,7 @@ v_spbuffer	= ramaddr ( $FFFFFC40 )	; stores most recent sp address (4 bytes)
 v_errortype	= ramaddr ( $FFFFFC44 )	; error type
 v_256x256	= ramaddr (   $FF0000 )	; 256x256 tile mappings ($A400 bytes)
 v_lvllayout	= ramaddr ( $FFFFA400 )	; level and background layouts ($400 bytes)
+
 v_bgscroll_buffer	= ramaddr( $FFFFA800 )	; background scroll buffer ($200 bytes)
 v_ngfx_buffer	= ramaddr ( $FFFFAA00 )	; Nemesis graphics decompression buffer ($200 bytes)
 v_spritequeue	= ramaddr ( $FFFFAC00 )	; sprite display queue, in order of priority ($400 bytes)
