@@ -15,7 +15,7 @@ MDis_Index:	dc.w MDis_Main-MDis_Index
 MDis_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_MisDissolve,obMap(a0)
-		move.w	#$41C,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Missile_Disolve,0,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#1,obPriority(a0)
 		move.b	#0,obColType(a0)
@@ -23,7 +23,7 @@ MDis_Main:	; Routine 0
 		move.b	#9,obTimeFrame(a0)
 		move.b	#0,obFrame(a0)
 		move.w	#sfx_A5,d0
-		jsr	(PlaySound_Special).l		 ; play sound
+		jsr	(QueueSound2).l		 ; play sound
 
 MDis_Animate:	; Routine 2
 		subq.b	#1,obTimeFrame(a0) ; subtract 1 from frame duration
@@ -38,7 +38,7 @@ MDis_Animate:	; Routine 2
 ; ===========================================================================
 
 ; ---------------------------------------------------------------------------
-; Object 27 - explosion	from a destroyed enemy or monitor
+; Object 27 - explosion from a destroyed enemy or monitor
 ; ---------------------------------------------------------------------------
 
 ExplosionItem:
@@ -56,15 +56,15 @@ ExItem_Animal:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		bsr.w	FindFreeObj
 		bne.s	ExItem_Main
-		_move.b	#id_Animals,0(a1) ; load animal object
+		_move.b	#id_Animals,obID(a1) ; load animal object
 		move.w	obX(a0),obX(a1)
 		move.w	obY(a0),obY(a1)
-		move.w	$3E(a0),$3E(a1)
+		move.w	objoff_3E(a0),objoff_3E(a1)
 
 ExItem_Main:	; Routine 2
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_ExplodeItem,obMap(a0)
-		move.w	#$5A0,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Explosion,0,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#1,obPriority(a0)
 		move.b	#0,obColType(a0)
@@ -72,10 +72,10 @@ ExItem_Main:	; Routine 2
 		move.b	#7,obTimeFrame(a0) ; set frame duration to 7 frames
 		move.b	#0,obFrame(a0)
 		move.w	#sfx_BreakItem,d0
-		jsr	(PlaySound_Special).l	; play breaking enemy sound
+		jsr	(QueueSound2).l	; play breaking enemy sound
 
 ExItem_Animate:	; Routine 4 (2 for ExplosionBomb)
-		subq.b	#2,obTimeFrame(a0) ; subtract 1 from frame duration
+		subq.b	#1,obTimeFrame(a0) ; subtract 1 from frame duration
 		bpl.s	.display
 		move.b	#7,obTimeFrame(a0) ; set frame duration to 7 frames
 		addq.b	#1,obFrame(a0)	; next frame
@@ -86,7 +86,7 @@ ExItem_Animate:	; Routine 4 (2 for ExplosionBomb)
 		bra.w	DisplaySprite
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Object 3F - explosion	from a destroyed boss, bomb or cannonball
+; Object 3F - explosion from a destroyed boss, bomb or cannonball
 ; ---------------------------------------------------------------------------
 
 ExplosionBomb:
@@ -102,7 +102,7 @@ ExBom_Index:	dc.w ExBom_Main-ExBom_Index
 ExBom_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_ExplodeBomb,obMap(a0)
-		move.w	#$5A0,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Explosion,0,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#1,obPriority(a0)
 		move.b	#0,obColType(a0)
@@ -110,4 +110,4 @@ ExBom_Main:	; Routine 0
 		move.b	#7,obTimeFrame(a0)
 		move.b	#0,obFrame(a0)
 		move.w	#sfx_Bomb,d0
-		jmp	(PlaySound_Special).l	; play exploding bomb sound
+		jmp	(QueueSound2).l	; play exploding bomb sound

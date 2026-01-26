@@ -16,20 +16,20 @@ Over_Index:	dc.w Over_ChkPLC-Over_Index
 Over_ChkPLC:	; Routine 0
 		tst.l	(v_plc_buffer).w ; are the pattern load cues empty?
 		beq.s	Over_Main	; if yes, branch
-		rts	
+		rts
 ; ===========================================================================
 
 Over_Main:
 		addq.b	#2,obRoutine(a0)
 		move.w	#$50,obX(a0)	; set x-position
-		btst	#0,obFrame(a0)	; is the object	"OVER"?
+		btst	#0,obFrame(a0)	; is the object "OVER"?
 		beq.s	Over_1stWord	; if not, branch
 		move.w	#$1F0,obX(a0)	; set x-position for "OVER"
 
 Over_1stWord:
 		move.w	#$F0,obScreenY(a0)
 		move.l	#Map_Over,obMap(a0)
-		move.w	#$855E,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Game_Over,0,1),obGfx(a0)
 		move.b	#0,obRender(a0)
 		move.b	#0,obPriority(a0)
 
@@ -48,7 +48,7 @@ Over_UpdatePos:
 Over_SetWait:
 		move.w	#720,obTimeFrame(a0) ; set time delay to 12 seconds
 		addq.b	#2,obRoutine(a0)
-		rts	
+		rts
 ; ===========================================================================
 
 Over_Wait:	; Routine 4

@@ -8,33 +8,18 @@ HUD:
 		move.w	HUD_Index(pc,d0.w),d1
 		jmp	HUD_Index(pc,d1.w)
 ; ===========================================================================
-HUD_Index:    dc.w HUD_Main-HUD_Index
-        dc.w HUD_MoveOnScreen-HUD_Index
-        dc.w HUD_Flash-HUD_Index
-        dc.w HUD_MoveOffScreen-HUD_Index
+HUD_Index:	dc.w HUD_Main-HUD_Index
+		dc.w HUD_Flash-HUD_Index
 ; ===========================================================================
 
-HUD_Main:                ; XREF: HUD_Main
-        addq.b    #2,obRoutine(a0)
-        move.w    #$0,obX(a0)
-        move.w    #$108,obScreenY(a0)
-        move.l    #Map_HUD,obMap(a0)
-        move.w    #$6CA,obGfx(a0)
-        move.b    #0,obRender(a0)
-        move.b    #0,obPriority(a0)
-
-HUD_MoveOnScreen:
-        addq.w    #$3,obX(a0)                ; decrease delay timer
-        cmpi.w  #$90,obX(a0)
-        bne.s   HUD_Flash
-        addq.b  #2,obRoutine(a0)
-        jmp HUD_Flash
-
-HUD_MoveOffScreen:
-        subq.w    #$3,obX(a0)                
-        cmpi.w    #$0,obX(a0)            
-        bne.w   HUD_Flash                
-        jmp     DeleteObject
+HUD_Main:	; Routine 0
+		addq.b	#2,obRoutine(a0)
+		move.w	#$90,obX(a0)
+		move.w	#$108,obScreenY(a0)
+		move.l	#Map_HUD,obMap(a0)
+		move.w	#make_art_tile(ArtTile_HUD,0,0),obGfx(a0)
+		move.b	#0,obRender(a0)
+		move.b	#0,obPriority(a0)
 
 HUD_Flash:	; Routine 2
 		tst.w	(v_rings).w	; do you have any rings?
@@ -48,10 +33,10 @@ HUD_Flash:	; Routine 2
 		btst	#3,(v_framebyte).w
 		bne.s	.display
 		addq.w	#1,d0		; make ring counter flash red
-		cmpi.b	#9,(v_timemin).w ; have	9 minutes elapsed?
+		cmpi.b	#9,(v_timemin).w ; have 9 minutes elapsed?
 		bne.s	.display	; if not, branch
 		addq.w	#2,d0		; make time counter flash red
 
 .display:
 		move.b	d0,obFrame(a0)
-		jmp	DisplaySprite
+		jmp	(DisplaySprite).l

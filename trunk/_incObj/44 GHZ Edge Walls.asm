@@ -16,12 +16,12 @@ Edge_Index:	dc.w Edge_Main-Edge_Index
 Edge_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_Edge,obMap(a0)
-		move.w	#$434C,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_GHZ_Edge_Wall,2,0),obGfx(a0)
 		ori.b	#4,obRender(a0)
 		move.b	#8,obActWid(a0)
 		move.b	#6,obPriority(a0)
 		move.b	obSubtype(a0),obFrame(a0) ; copy object type number to frame number
-		bclr	#4,obFrame(a0)	; clear	4th bit	(deduct	$10)
+		bclr	#4,obFrame(a0)	; clear 4th bit (deduct $10)
 		beq.s	Edge_Solid	; make object solid if 4th bit = 0
 		addq.b	#2,obRoutine(a0)
 		bra.s	Edge_Display	; don't make it solid if 4th bit = 1
@@ -33,6 +33,13 @@ Edge_Solid:	; Routine 2
 		bsr.w	Obj44_SolidWall
 
 Edge_Display:	; Routine 4
+	if FixBugs
+		; Objects shouldn't call DisplaySprite and DeleteObject on
+		; the same frame, or else cause a null-pointer dereference.
+		out_of_range.w	DeleteObject
+		bra.w	DisplaySprite
+	else
 		bsr.w	DisplaySprite
 		out_of_range.w	DeleteObject
-		rts	
+		rts
+	endif

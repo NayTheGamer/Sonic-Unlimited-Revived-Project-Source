@@ -11,11 +11,11 @@
 ;	bsr.w	KosDec
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 KosDec:
-	    KDebug.WriteLine "KosDec: Decompressing %<.l a0 sym> -> %<.l a1>"
+
 		subq.l	#2,sp	; make space for 2 bytes on the stack
 		move.b	(a0)+,1(sp)
 		move.b	(a0)+,(sp)
@@ -107,5 +107,5 @@ Kos_SeparateRLE2:
 
 Kos_Done:
 		addq.l	#2,sp	; restore stack pointer
-		rts	
+		rts
 ; End of function KosDec

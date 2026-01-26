@@ -1,5 +1,5 @@
 ; ---------------------------------------------------------------------------
-; Object 6C - vanishing	platforms (SBZ)
+; Object 6C - vanishing platforms (SBZ)
 ; ---------------------------------------------------------------------------
 
 VanishPlatform:
@@ -13,20 +13,20 @@ VanP_Index:	dc.w VanP_Main-VanP_Index
 		dc.w VanP_Appear-VanP_Index
 		dc.w loc_16068-VanP_Index
 
-vanp_timer = $30		; counter for time until event
-vanp_timelen = $32		; time between events (general)
+vanp_timer = objoff_30		; counter for time until event
+vanp_timelen = objoff_32	; time between events (general)
 ; ===========================================================================
 
 VanP_Main:	; Routine 0
 		addq.b	#6,obRoutine(a0)
 		move.l	#Map_VanP,obMap(a0)
-		move.w	#$44C3,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_SBZ_Vanishing_Block,2,0),obGfx(a0)
 		ori.b	#4,obRender(a0)
 		move.b	#$10,obActWid(a0)
 		move.b	#4,obPriority(a0)
 		moveq	#0,d0
 		move.b	obSubtype(a0),d0 ; get object type
-		andi.w	#$F,d0		; read only the	2nd digit
+		andi.w	#$F,d0		; read only the 2nd digit
 		addq.w	#1,d0		; add 1
 		lsl.w	#7,d0		; multiply by $80
 		move.w	d0,d1
@@ -35,18 +35,18 @@ VanP_Main:	; Routine 0
 		move.w	d0,vanp_timelen(a0)
 		moveq	#0,d0
 		move.b	obSubtype(a0),d0 ; get object type
-		andi.w	#$F0,d0		; read only the	1st digit
+		andi.w	#$F0,d0		; read only the 1st digit
 		addi.w	#$80,d1
 		mulu.w	d1,d0
 		lsr.l	#8,d0
-		move.w	d0,$36(a0)
+		move.w	d0,objoff_36(a0)
 		subq.w	#1,d1
-		move.w	d1,$38(a0)
+		move.w	d1,objoff_38(a0)
 
 loc_16068:	; Routine 6
 		move.w	(v_framecount).w,d0
-		sub.w	$36(a0),d0
-		and.w	$38(a0),d0
+		sub.w	objoff_36(a0),d0
+		and.w	objoff_38(a0),d0
 		bne.s	.animate
 		subq.b	#4,obRoutine(a0) ; goto VanP_Vanish next
 		bra.s	VanP_Vanish

@@ -19,7 +19,7 @@ TSon_Main:	; Routine 0
 		move.w	#$F0,obX(a0)
 		move.w	#$DE,obScreenY(a0) ; position is fixed to screen
 		move.l	#Map_TSon,obMap(a0)
-		move.w	#$2300,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Title_Sonic,1,0),obGfx(a0)
 		move.b	#1,obPriority(a0)
 		move.b	#29,obDelayAni(a0) ; set time delay to 0.5 seconds
 		lea	(Ani_TSon).l,a1
@@ -32,7 +32,7 @@ TSon_Delay:	;Routine 2
 		bra.w	DisplaySprite
 
 .wait:
-		rts	
+		rts
 ; ===========================================================================
 
 TSon_Move:	; Routine 4
@@ -44,7 +44,7 @@ TSon_Move:	; Routine 4
 .display:
 		bra.w	DisplaySprite
 
-		rts	
+		rts
 ; ===========================================================================
 
 TSon_Animate:	; Routine 6
@@ -52,4 +52,4 @@ TSon_Animate:	; Routine 6
 		bsr.w	AnimateSprite
 		bra.w	DisplaySprite
 
-		rts	
+		rts

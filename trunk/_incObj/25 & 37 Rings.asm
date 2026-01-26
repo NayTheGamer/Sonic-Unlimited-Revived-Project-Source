@@ -81,26 +81,26 @@ Ring_MakeRings:
 		bne.s	loc_9C0E
 
 loc_9BBA:
-		_move.b	#id_Rings,0(a1)	; load ring object
+		_move.b	#id_Rings,obID(a1)	; load ring object
 		addq.b	#2,obRoutine(a1)
 		move.w	d2,obX(a1)	; set x-axis position based on d2
-		move.w	obX(a0),$32(a1)
+		move.w	obX(a0),objoff_32(a1)
 		move.w	d3,obY(a1)	; set y-axis position based on d3
 		move.l	#Map_Ring,obMap(a1)
-		move.w	#$27B2,obGfx(a1)
+		move.w	#make_art_tile(ArtTile_Ring,1,0),obGfx(a1)
 		move.b	#4,obRender(a1)
 		move.b	#2,obPriority(a1)
 		move.b	#$47,obColType(a1)
 		move.b	#8,obActWid(a1)
 		move.b	obRespawnNo(a0),obRespawnNo(a1)
-		move.b	d1,$34(a1)
+		move.b	d1,objoff_34(a1)
 
 loc_9C02:
 		addq.w	#1,d1
 		add.w	d5,d2		; add ring spacing value to d2
 		add.w	d6,d3		; add ring spacing value to d3
 		swap	d1
-		dbf	d1,Ring_MakeRings ; repeat for	number of rings
+		dbf	d1,Ring_MakeRings ; repeat for number of rings
 
 loc_9C0E:
 		btst	#0,(a2)
@@ -109,8 +109,8 @@ loc_9C0E:
 Ring_Animate:	; Routine 2
 		move.b	(v_ani1_frame).w,obFrame(a0) ; set frame
 		bsr.w	DisplaySprite
-		out_of_range.s	Ring_Delete,$32(a0)
-		rts	
+		out_of_range.s	Ring_Delete,objoff_32(a0)
+		rts
 ; ===========================================================================
 
 Ring_Collect:	; Routine 4
@@ -121,7 +121,7 @@ Ring_Collect:	; Routine 4
 		lea	(v_objstate).w,a2
 		moveq	#0,d0
 		move.b	obRespawnNo(a0),d0
-		move.b	$34(a0),d1
+		move.b	objoff_34(a0),d1
 		bset	d1,2(a2,d0.w)
 
 Ring_Sparkle:	; Routine 6
@@ -133,7 +133,7 @@ Ring_Sparkle:	; Routine 6
 Ring_Delete:	; Routine 8
 		bra.w	DeleteObject
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 CollectRing:
@@ -141,11 +141,11 @@ CollectRing:
 		ori.b	#1,(f_ringcount).w ; update the rings counter
 		move.w	#sfx_Ring,d0	; play ring sound
 		cmpi.w	#100,(v_rings).w ; do you have < 100 rings?
-		bcs.s	.playsnd	; if yes, branch
+		blo.s	.playsnd	; if yes, branch
 		bset	#1,(v_lifecount).w ; update lives counter
 		beq.s	.got100
 		cmpi.w	#200,(v_rings).w ; do you have < 200 rings?
-		bcs.s	.playsnd	; if yes, branch
+		blo.s	.playsnd	; if yes, branch
 		bset	#2,(v_lifecount).w ; update lives counter
 		bne.s	.playsnd
 
@@ -155,12 +155,12 @@ CollectRing:
 		move.w	#bgm_ExtraLife,d0 ; play extra life music
 
 .playsnd:
-		jmp	(PlaySound_Special).l
+		jmp	(QueueSound2).l
 ; End of function CollectRing
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
-; Object 37 - rings flying out of Sonic	when he's hit
+; Object 37 - rings flying out of Sonic when he's hit
 ; ---------------------------------------------------------------------------
 
 RingLoss:
@@ -182,7 +182,7 @@ RLoss_Count:	; Routine 0
 		move.w	(v_rings).w,d5	; check number of rings you have
 		moveq	#32,d0
 		cmp.w	d0,d5		; do you have 32 or more?
-		bcs.s	.belowmax	; if not, branch
+		blo.s	.belowmax	; if not, branch
 		move.w	d0,d5		; if yes, set d5 to 32
 
 .belowmax:
@@ -196,14 +196,14 @@ RLoss_Count:	; Routine 0
 		bne.w	.resetcounter
 
 .makerings:
-		_move.b	#id_RingLoss,0(a1) ; load bouncing ring object
+		_move.b	#id_RingLoss,obID(a1) ; load bouncing ring object
 		addq.b	#2,obRoutine(a1)
 		move.b	#8,obHeight(a1)
 		move.b	#8,obWidth(a1)
 		move.w	obX(a0),obX(a1)
 		move.w	obY(a0),obY(a1)
 		move.l	#Map_Ring,obMap(a1)
-		move.w	#$27B2,obGfx(a1)
+		move.w	#make_art_tile(ArtTile_Ring,1,0),obGfx(a1)
 		move.b	#4,obRender(a1)
 		move.b	#3,obPriority(a1)
 		move.b	#$47,obColType(a1)
@@ -212,7 +212,7 @@ RLoss_Count:	; Routine 0
 		tst.w	d4
 		bmi.s	.loc_9D62
 		move.w	d4,d0
-		bsr.w	Calcsine
+		bsr.w	CalcSine
 		move.w	d4,d2
 		lsr.w	#8,d2
 		asl.w	d2,d0
@@ -237,7 +237,7 @@ RLoss_Count:	; Routine 0
 		move.b	#$80,(f_ringcount).w ; update ring counter
 		move.b	#0,(v_lifecount).w
 		move.w	#sfx_RingLoss,d0
-		jsr	(PlaySound_Special).l	; play ring loss sound
+		jsr	(QueueSound2).l	; play ring loss sound
 
 RLoss_Bounce:	; Routine 2
 		move.b	(v_ani3_frame).w,obFrame(a0)
@@ -263,7 +263,7 @@ RLoss_Bounce:	; Routine 2
 		move.w	(v_limitbtm2).w,d0
 		addi.w	#$E0,d0
 		cmp.w	obY(a0),d0	; has object moved below level boundary?
-		bcs.s	RLoss_Delete	; if yes, branch
+		blo.s	RLoss_Delete	; if yes, branch
 		bra.w	DisplaySprite
 ; ===========================================================================
 
@@ -281,6 +281,3 @@ RLoss_Sparkle:	; Routine 6
 
 RLoss_Delete:	; Routine 8
 		bra.w	DeleteObject
-
-Calcsine:
-   jmp CalcSine

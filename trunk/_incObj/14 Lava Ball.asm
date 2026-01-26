@@ -6,8 +6,12 @@ LavaBall:
 		moveq	#0,d0
 		move.b	obRoutine(a0),d0
 		move.w	LBall_Index(pc,d0.w),d1
+	if FixBugs
+		jmp	LBall_Index(pc,d1.w)
+	else
 		jsr	LBall_Index(pc,d1.w)
 		bra.w	DisplaySprite
+	endif
 ; ===========================================================================
 LBall_Index:	dc.w LBall_Main-LBall_Index
 		dc.w LBall_Action-LBall_Index
@@ -22,17 +26,17 @@ LBall_Main:	; Routine 0
 		move.b	#8,obHeight(a0)
 		move.b	#8,obWidth(a0)
 		move.l	#Map_Fire,obMap(a0)
-		move.w	#$345,obGfx(a0)
-		cmpi.b	#3,(v_zone).w	; check if level is SLZ
+		move.w	#make_art_tile(ArtTile_MZ_Fireball,0,0),obGfx(a0)
+		cmpi.b	#id_SLZ,(v_zone).w	; check if level is SLZ
 		bne.s	.notSLZ
-		move.w	#$480,obGfx(a0)	; SLZ specific code
+		move.w	#make_art_tile(ArtTile_SLZ_Fireball,0,0),obGfx(a0)	; SLZ specific code
 
 .notSLZ:
 		move.b	#4,obRender(a0)
 		move.b	#3,obPriority(a0)
 		move.b	#$8B,obColType(a0)
-		move.w	obY(a0),$30(a0)
-		tst.b	$29(a0)
+		move.w	obY(a0),objoff_30(a0)
+		tst.b	objoff_29(a0)
 		beq.s	.speed
 		addq.b	#2,obPriority(a0)
 
@@ -43,7 +47,7 @@ LBall_Main:	; Routine 0
 		move.w	LBall_Speeds(pc,d0.w),obVelY(a0) ; load object speed (vertical)
 		move.b	#8,obActWid(a0)
 		cmpi.b	#6,obSubtype(a0) ; is object type below $6 ?
-		bcs.s	.sound		; if yes, branch
+		blo.s	.sound		; if yes, branch
 
 		move.b	#$10,obActWid(a0)
 		move.b	#2,obAnim(a0)	; use horizontal animation
@@ -52,7 +56,7 @@ LBall_Main:	; Routine 0
 
 .sound:
 		move.w	#sfx_Fireball,d0
-		jsr	(PlaySound_Special).l	; play lava ball sound
+		jsr	(QueueSound2).l	; play lava ball sound
 
 LBall_Action:	; Routine 2
 		moveq	#0,d0
@@ -66,7 +70,11 @@ LBall_Action:	; Routine 2
 
 LBall_ChkDel:
 		out_of_range.w	DeleteObject
-		rts	
+	if FixBugs
+		bra.w	DisplaySprite
+	else
+		rts
+	endif
 ; ===========================================================================
 LBall_TypeIndex:dc.w LBall_Type00-LBall_TypeIndex, LBall_Type00-LBall_TypeIndex
 		dc.w LBall_Type00-LBall_TypeIndex, LBall_Type00-LBall_TypeIndex
@@ -78,9 +86,9 @@ LBall_TypeIndex:dc.w LBall_Type00-LBall_TypeIndex, LBall_Type00-LBall_TypeIndex
 
 LBall_Type00:
 		addi.w	#$18,obVelY(a0)	; increase object's downward speed
-		move.w	$30(a0),d0
-		cmp.w	obY(a0),d0	; has object fallen back to its	original position?
-		bcc.s	loc_E41E	; if not, branch
+		move.w	objoff_30(a0),d0
+		cmp.w	obY(a0),d0	; has object fallen back to its original position?
+		bhs.s	loc_E41E	; if not, branch
 		addq.b	#2,obRoutine(a0)	; goto "LBall_Delete" routine
 
 loc_E41E:
@@ -90,9 +98,9 @@ loc_E41E:
 		bset	#1,obStatus(a0)
 
 locret_E430:
-		rts	
+		rts
 ; ===========================================================================
-; lavaball type	04 flies up until it hits the ceiling
+; lavaball type 04 flies up until it hits the ceiling
 
 LBall_Type04:
 		bset	#1,obStatus(a0)
@@ -104,9 +112,9 @@ LBall_Type04:
 		move.w	#0,obVelY(a0)	; stop the object when it touches the ceiling
 
 locret_E452:
-		rts	
+		rts
 ; ===========================================================================
-; lavaball type	05 falls down until it hits the	floor
+; lavaball type 05 falls down until it hits the floor
 
 LBall_Type05:
 		bclr	#1,obStatus(a0)
@@ -118,7 +126,7 @@ LBall_Type05:
 		move.w	#0,obVelY(a0)	; stop the object when it touches the floor
 
 locret_E474:
-		rts	
+		rts
 ; ===========================================================================
 ; lavaball types 06-07 move sideways
 
@@ -130,10 +138,10 @@ LBall_Type06:
 		bpl.s	locret_E498
 		move.b	#8,obSubtype(a0)
 		move.b	#3,obAnim(a0)
-		move.w	#0,obVelX(a0)	; stop object when it touches a	wall
+		move.w	#0,obVelX(a0)	; stop object when it touches a wall
 
 locret_E498:
-		rts	
+		rts
 ; ===========================================================================
 
 LBall_Type07:
@@ -144,14 +152,14 @@ LBall_Type07:
 		bpl.s	locret_E4BC
 		move.b	#8,obSubtype(a0)
 		move.b	#3,obAnim(a0)
-		move.w	#0,obVelX(a0)	; stop object when it touches a	wall
+		move.w	#0,obVelX(a0)	; stop object when it touches a wall
 
 locret_E4BC:
-		rts	
+		rts
 ; ===========================================================================
 
 LBall_Type08:
-		rts	
+		rts
 ; ===========================================================================
 
 LBall_Delete:

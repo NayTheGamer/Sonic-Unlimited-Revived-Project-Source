@@ -2,13 +2,10 @@
 ; Object pointers
 ; ---------------------------------------------------------------------------
 ptr_SonicPlayer:	dc.l SonicPlayer	; $01
-;ptr_SpinDashDust:	 dc.l NullObject   ; $02
-;ptr_Obj02:		dc.l NullObject
 ptr_Obj02:		dc.l NullObject
-ptr_Obj03:		dc.l NullObject
+ptr_PathSwapper:	dc.l PathSwapper
 ptr_Obj04:		dc.l NullObject
-;ptr_Obj05:		dc.l NullObject
-ptr_Obj05:		dc.l SpinDash_dust
+ptr_Obj05:		dc.l NullObject
 ptr_Obj06:		dc.l NullObject
 ptr_Obj07:		dc.l NullObject
 ptr_Splash:		dc.l Splash		; $08
@@ -146,12 +143,11 @@ ptr_EndEggman:		dc.l EndEggman
 ptr_TryChaos:		dc.l TryChaos
 
 NullObject:
-		jmp	(DeleteObject).l	; It would be safer to have this instruction here, but instead it just falls through to ObjectFall
+		;jmp	(DeleteObject).l	; It would be safer to have this instruction here, but instead it just falls through to ObjectFall
 
 id_SonicPlayer:		equ ((ptr_SonicPlayer-Obj_Index)/4)+1		; $01
-;id_SpinDashDust:	equ ((ptr_SpinDashDust-Obj_Index)/4)+1
 id_Obj02:		equ ((ptr_Obj02-Obj_Index)/4)+1
-id_Obj03:		equ ((ptr_Obj03-Obj_Index)/4)+1
+id_PathSwapper:		equ ((ptr_PathSwapper-Obj_Index)/4)+1
 id_Obj04:		equ ((ptr_Obj04-Obj_Index)/4)+1
 id_Obj05:		equ ((ptr_Obj05-Obj_Index)/4)+1
 id_Obj06:		equ ((ptr_Obj06-Obj_Index)/4)+1

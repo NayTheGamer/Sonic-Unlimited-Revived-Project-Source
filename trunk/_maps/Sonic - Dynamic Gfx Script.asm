@@ -1,1326 +1,605 @@
-SonicDPLC:
-	dc.w	SonicDPLC_01AC-SonicDPLC
-	dc.w	SonicDPLC_01AE-SonicDPLC
-	dc.w	SonicDPLC_01B8-SonicDPLC
-	dc.w	SonicDPLC_01BE-SonicDPLC
-	dc.w	SonicDPLC_01C8-SonicDPLC
-	dc.w	SonicDPLC_01D2-SonicDPLC
-	dc.w	SonicDPLC_01DE-SonicDPLC
-	dc.w	SonicDPLC_01E6-SonicDPLC
-	dc.w	SonicDPLC_01EC-SonicDPLC
-	dc.w	SonicDPLC_01F2-SonicDPLC
-	dc.w	SonicDPLC_01F8-SonicDPLC
-	dc.w	SonicDPLC_01FE-SonicDPLC
-	dc.w	SonicDPLC_0208-SonicDPLC
-	dc.w	SonicDPLC_0212-SonicDPLC
-	dc.w	SonicDPLC_021A-SonicDPLC
-	dc.w	SonicDPLC_0224-SonicDPLC
-	dc.w	SonicDPLC_022C-SonicDPLC
-	dc.w	SonicDPLC_0232-SonicDPLC
-	dc.w	SonicDPLC_023A-SonicDPLC
-	dc.w	SonicDPLC_0244-SonicDPLC
-	dc.w	SonicDPLC_024C-SonicDPLC
-	dc.w	SonicDPLC_0252-SonicDPLC
-	dc.w	SonicDPLC_025C-SonicDPLC
-	dc.w	SonicDPLC_0268-SonicDPLC
-	dc.w	SonicDPLC_0272-SonicDPLC
-	dc.w	SonicDPLC_027C-SonicDPLC
-	dc.w	SonicDPLC_0288-SonicDPLC
-	dc.w	SonicDPLC_0294-SonicDPLC
-	dc.w	SonicDPLC_029E-SonicDPLC
-	dc.w	SonicDPLC_02AA-SonicDPLC
-	dc.w	SonicDPLC_02B2-SonicDPLC
-	dc.w	SonicDPLC_02BA-SonicDPLC
-	dc.w	SonicDPLC_02C2-SonicDPLC
-	dc.w	SonicDPLC_02C8-SonicDPLC
-	dc.w	SonicDPLC_02D0-SonicDPLC
-	dc.w	SonicDPLC_02D8-SonicDPLC
-	dc.w	SonicDPLC_02E0-SonicDPLC
-	dc.w	SonicDPLC_02E6-SonicDPLC
-	dc.w	SonicDPLC_02F0-SonicDPLC
-	dc.w	SonicDPLC_02FC-SonicDPLC
-	dc.w	SonicDPLC_0306-SonicDPLC
-	dc.w	SonicDPLC_0310-SonicDPLC
-	dc.w	SonicDPLC_031A-SonicDPLC
-	dc.w	SonicDPLC_0326-SonicDPLC
-	dc.w	SonicDPLC_0330-SonicDPLC
-	dc.w	SonicDPLC_033A-SonicDPLC
-	dc.w	SonicDPLC_0340-SonicDPLC
-	dc.w	SonicDPLC_0346-SonicDPLC
-	dc.w	SonicDPLC_034C-SonicDPLC
-	dc.w	SonicDPLC_0352-SonicDPLC
-	dc.w	SonicDPLC_035C-SonicDPLC
-	dc.w	SonicDPLC_0364-SonicDPLC
-	dc.w	SonicDPLC_036E-SonicDPLC
-	dc.w	SonicDPLC_0376-SonicDPLC
-	dc.w	SonicDPLC_037C-SonicDPLC
-	dc.w	SonicDPLC_0382-SonicDPLC
-	dc.w	SonicDPLC_0388-SonicDPLC
-	dc.w	SonicDPLC_038E-SonicDPLC
-	dc.w	SonicDPLC_0396-SonicDPLC
-	dc.w	SonicDPLC_039C-SonicDPLC
-	dc.w	SonicDPLC_03A4-SonicDPLC
-	dc.w	SonicDPLC_03AA-SonicDPLC
-	dc.w	SonicDPLC_03AE-SonicDPLC
-	dc.w	SonicDPLC_03B2-SonicDPLC
-	dc.w	SonicDPLC_03B6-SonicDPLC
-	dc.w	SonicDPLC_03BA-SonicDPLC
-	dc.w	SonicDPLC_03BE-SonicDPLC
-	dc.w	SonicDPLC_03C2-SonicDPLC
-	dc.w	SonicDPLC_03C6-SonicDPLC
-	dc.w	SonicDPLC_03CA-SonicDPLC
-	dc.w	SonicDPLC_03CE-SonicDPLC
-	dc.w	SonicDPLC_03D2-SonicDPLC
-	dc.w	SonicDPLC_03D6-SonicDPLC
-	dc.w	SonicDPLC_03DE-SonicDPLC
-	dc.w	SonicDPLC_03E6-SonicDPLC
-	dc.w	SonicDPLC_03EE-SonicDPLC
-	dc.w	SonicDPLC_03F6-SonicDPLC
-	dc.w	SonicDPLC_03FA-SonicDPLC
-	dc.w	SonicDPLC_03FE-SonicDPLC
-	dc.w	SonicDPLC_0404-SonicDPLC
-	dc.w	SonicDPLC_040A-SonicDPLC
-	dc.w	SonicDPLC_0412-SonicDPLC
-	dc.w	SonicDPLC_041A-SonicDPLC
-	dc.w	SonicDPLC_0420-SonicDPLC
-	dc.w	SonicDPLC_0426-SonicDPLC
-	dc.w	SonicDPLC_042E-SonicDPLC
-	dc.w	SonicDPLC_0426-SonicDPLC
-	dc.w	SonicDPLC_0434-SonicDPLC
-	dc.w	SonicDPLC_0434-SonicDPLC
-	dc.w	SonicDPLC_043C-SonicDPLC
-	dc.w	SonicDPLC_0444-SonicDPLC
-	dc.w	SonicDPLC_044C-SonicDPLC
-	dc.w	SonicDPLC_0452-SonicDPLC
-	dc.w	SonicDPLC_045C-SonicDPLC
-	dc.w	SonicDPLC_0466-SonicDPLC
-	dc.w	SonicDPLC_046E-SonicDPLC
-	dc.w	SonicDPLC_0476-SonicDPLC
-	dc.w	SonicDPLC_047E-SonicDPLC
-	dc.w	SonicDPLC_0484-SonicDPLC
-	dc.w	SonicDPLC_0488-SonicDPLC
-	dc.w	SonicDPLC_048E-SonicDPLC
-	dc.w	SonicDPLC_0496-SonicDPLC
-	dc.w	SonicDPLC_049E-SonicDPLC
-	dc.w	SonicDPLC_04A6-SonicDPLC
-	dc.w	SonicDPLC_04AC-SonicDPLC
-	dc.w	SonicDPLC_04B2-SonicDPLC
-	dc.w	SonicDPLC_04BA-SonicDPLC
-	dc.w	SonicDPLC_04C0-SonicDPLC
-	dc.w	SonicDPLC_04C8-SonicDPLC
-	dc.w	SonicDPLC_04D0-SonicDPLC
-	dc.w	SonicDPLC_04D4-SonicDPLC
-	dc.w	SonicDPLC_04DC-SonicDPLC
-	dc.w	SonicDPLC_04E4-SonicDPLC
-	dc.w	SonicDPLC_04F0-SonicDPLC
-	dc.w	SonicDPLC_04FC-SonicDPLC
-	dc.w	SonicDPLC_0502-SonicDPLC
-	dc.w	SonicDPLC_0508-SonicDPLC
-	dc.w	SonicDPLC_050E-SonicDPLC
-	dc.w	SonicDPLC_0516-SonicDPLC
-	dc.w	SonicDPLC_0520-SonicDPLC
-	dc.w	SonicDPLC_0528-SonicDPLC
-	dc.w	SonicDPLC_052E-SonicDPLC
-	dc.w	SonicDPLC_0536-SonicDPLC
-	dc.w	SonicDPLC_0540-SonicDPLC
-	dc.w	SonicDPLC_0548-SonicDPLC
-	dc.w	SonicDPLC_054E-SonicDPLC
-	dc.w	SonicDPLC_0558-SonicDPLC
-	dc.w	SonicDPLC_0564-SonicDPLC
-	dc.w	SonicDPLC_0570-SonicDPLC
-	dc.w	SonicDPLC_057C-SonicDPLC
-	dc.w	SonicDPLC_058A-SonicDPLC
-	dc.w	SonicDPLC_0598-SonicDPLC
-	dc.w	SonicDPLC_05A4-SonicDPLC
-	dc.w	SonicDPLC_05B0-SonicDPLC
-	dc.w	SonicDPLC_05B8-SonicDPLC
-	dc.w	SonicDPLC_05C0-SonicDPLC
-	dc.w	SonicDPLC_05C8-SonicDPLC
-	dc.w	SonicDPLC_05CE-SonicDPLC
-	dc.w	SonicDPLC_05D6-SonicDPLC
-	dc.w	SonicDPLC_05DE-SonicDPLC
-	dc.w	SonicDPLC_05E6-SonicDPLC
-	dc.w	SonicDPLC_05EC-SonicDPLC
-	dc.w	SonicDPLC_05F6-SonicDPLC
-	dc.w	SonicDPLC_0602-SonicDPLC
-	dc.w	SonicDPLC_060C-SonicDPLC
-	dc.w	SonicDPLC_0616-SonicDPLC
-	dc.w	SonicDPLC_0620-SonicDPLC
-	dc.w	SonicDPLC_062C-SonicDPLC
-	dc.w	SonicDPLC_0636-SonicDPLC
-	dc.w	SonicDPLC_0640-SonicDPLC
-	dc.w	SonicDPLC_0648-SonicDPLC
-	dc.w	SonicDPLC_0652-SonicDPLC
-	dc.w	SonicDPLC_065A-SonicDPLC
-	dc.w	SonicDPLC_0660-SonicDPLC
-	dc.w	SonicDPLC_0668-SonicDPLC
-	dc.w	SonicDPLC_0672-SonicDPLC
-	dc.w	SonicDPLC_067A-SonicDPLC
-	dc.w	SonicDPLC_0680-SonicDPLC
-	dc.w	SonicDPLC_068C-SonicDPLC
-	dc.w	SonicDPLC_069A-SonicDPLC
-	dc.w	SonicDPLC_06A6-SonicDPLC
-	dc.w	SonicDPLC_06B2-SonicDPLC
-	dc.w	SonicDPLC_06C0-SonicDPLC
-	dc.w	SonicDPLC_06CE-SonicDPLC
-	dc.w	SonicDPLC_06DA-SonicDPLC
-	dc.w	SonicDPLC_06E8-SonicDPLC
-	dc.w	SonicDPLC_06F0-SonicDPLC
-	dc.w	SonicDPLC_06F8-SonicDPLC
-	dc.w	SonicDPLC_0700-SonicDPLC
-	dc.w	SonicDPLC_0706-SonicDPLC
-	dc.w	SonicDPLC_070E-SonicDPLC
-	dc.w	SonicDPLC_0716-SonicDPLC
-	dc.w	SonicDPLC_071E-SonicDPLC
-	dc.w	SonicDPLC_0724-SonicDPLC
-	dc.w	SonicDPLC_072E-SonicDPLC
-	dc.w	SonicDPLC_073A-SonicDPLC
-	dc.w	SonicDPLC_0746-SonicDPLC
-	dc.w	SonicDPLC_0750-SonicDPLC
-	dc.w	SonicDPLC_075A-SonicDPLC
-	dc.w	SonicDPLC_0766-SonicDPLC
-	dc.w	SonicDPLC_0772-SonicDPLC
-	dc.w	SonicDPLC_077E-SonicDPLC
-	dc.w	SonicDPLC_0788-SonicDPLC
-	dc.w	SonicDPLC_0792-SonicDPLC
-	dc.w	SonicDPLC_079C-SonicDPLC
-	dc.w	SonicDPLC_07A8-SonicDPLC
-	dc.w	SonicDPLC_07B2-SonicDPLC
-	dc.w	SonicDPLC_07BC-SonicDPLC
-	dc.w	SonicDPLC_07C6-SonicDPLC
-	dc.w	SonicDPLC_07D2-SonicDPLC
-	dc.w	SonicDPLC_07DC-SonicDPLC
-	dc.w	SonicDPLC_07E6-SonicDPLC
-	dc.w	SonicDPLC_07F0-SonicDPLC
-	dc.w	SonicDPLC_07FA-SonicDPLC
-	dc.w	SonicDPLC_0800-SonicDPLC
-	dc.w	SonicDPLC_0808-SonicDPLC
-	dc.w	SonicDPLC_0810-SonicDPLC
-	dc.w	SonicDPLC_0818-SonicDPLC
-	dc.w	SonicDPLC_0820-SonicDPLC
-	dc.w	SonicDPLC_0828-SonicDPLC
-	dc.w	SonicDPLC_0830-SonicDPLC
-	dc.w	SonicDPLC_0838-SonicDPLC
-	dc.w	SonicDPLC_0840-SonicDPLC
-	dc.w	SonicDPLC_0848-SonicDPLC
-	dc.w	SonicDPLC_0854-SonicDPLC
-	dc.w	SonicDPLC_085E-SonicDPLC
-	dc.w	SonicDPLC_0868-SonicDPLC
-	dc.w	SonicDPLC_0872-SonicDPLC
-	dc.w	SonicDPLC_087A-SonicDPLC
-	dc.w	SonicDPLC_0882-SonicDPLC
-	dc.w	SonicDPLC_088A-SonicDPLC
-	dc.w	SonicDPLC_0894-SonicDPLC
-	dc.w	SonicDPLC_089E-SonicDPLC
-	dc.w	SonicDPLC_08A8-SonicDPLC
-
-SonicDPLC_01AC:	dc.b 0
-
-SonicDPLC_01AE:	dc.b 4
-	dc.b $30, 0
-	dc.b $30, 4
-	dc.b $50, 8
-	dc.b $50, $E
-
-SonicDPLC_01B8:	dc.b 2
-	dc.b $B0, $14
-	dc.b $50, $20
-
-SonicDPLC_01BE:	dc.b 4
-	dc.b $30, $26
-	dc.b $30, $2A
-	dc.b $30, $2E
-	dc.b $50, $32
-
-SonicDPLC_01C8:	dc.b 4
-	dc.b $30, $26
-	dc.b $30, $38
-	dc.b $30, $2E
-	dc.b $50, $32
-
-SonicDPLC_01D2:	dc.b 5
-	dc.b $30, $26
-	dc.b $30, $38
-	dc.b $30, $2E
-	dc.b $10, $32
-	dc.b $30, $3C
-
-SonicDPLC_01DE:	dc.b 3
-	dc.b $30, $26
-	dc.b $70, $40
-	dc.b $50, $32
-
-SonicDPLC_01E6:	dc.b 2
-	dc.b $B0, $48
-	dc.b $10, $54
-
-SonicDPLC_01EC:	dc.b 2
-	dc.b $B0, $56
-	dc.b $30, $62
-
-SonicDPLC_01F2:	dc.b 2
-	dc.b $B0, $56
-	dc.b $30, $66
-
-SonicDPLC_01F8:	dc.b 2
-	dc.b $B0, $6A
-	dc.b $70, $76
-
-SonicDPLC_01FE:	dc.b 4
-	dc.b $30, $7E
-	dc.b $30, $82
-	dc.b $50, $86
-	dc.b $50, $E
-
-SonicDPLC_0208:	dc.b 4
-	dc.b $30, $8C
-	dc.b $30, $90
-	dc.b $30, $94
-	dc.b $50, $E
-
-SonicDPLC_0212:	dc.b 3
-	dc.b $70, $98
-	dc.b $10, $A0
-	dc.b $F0, $A2
-
-SonicDPLC_021A:	dc.b 4
-	dc.b $70, $98
-	dc.b $10, $B2
-	dc.b $B0, $B4
-	dc.b $10, $C0
-
-SonicDPLC_0224:	dc.b 3
-	dc.b $70, $C2
-	dc.b $50, $CA
-	dc.b $30, $D0
-
-SonicDPLC_022C:	dc.b 2
-	dc.b $50, $D4
-	dc.b $F0, $DA
-
-SonicDPLC_0232:	dc.b 3
-	dc.b $50, $D4
-	dc.b $F0, $EA
-	dc.b $10, $FA
-
-SonicDPLC_023A:	dc.b 4
-	dc.b $50, $D4
-	dc.b $10, $FC
-	dc.b $B0, $FE
-	dc.b $11, $A
-
-SonicDPLC_0244:	dc.b 3
-	dc.b $70, $C2
-	dc.b $51, $C
-	dc.b $31, $12
-
-SonicDPLC_024C:	dc.b 2
-	dc.b $70, $98
-	dc.b $B1, $16
-
-SonicDPLC_0252:	dc.b 4
-	dc.b $51, $22
-	dc.b $51, $28
-	dc.b $31, $2E
-	dc.b $11, $32
-
-SonicDPLC_025C:	dc.b 5
-	dc.b $51, $22
-	dc.b $11, $34
-	dc.b $71, $36
-	dc.b $31, $3E
-	dc.b $11, $42
-
-SonicDPLC_0268:	dc.b 4
-	dc.b $71, $44
-	dc.b $31, $4C
-	dc.b $11, $50
-	dc.b $31, $52
-
-SonicDPLC_0272:	dc.b 4
-	dc.b $51, $56
-	dc.b $11, $5C
-	dc.b $31, $5E
-	dc.b $B1, $62
-
-SonicDPLC_027C:	dc.b 5
-	dc.b $51, $56
-	dc.b $11, $6E
-	dc.b $71, $70
-	dc.b $11, $78
-	dc.b $31, $7A
-
-SonicDPLC_0288:	dc.b 5
-	dc.b $51, $56
-	dc.b $11, $7E
-	dc.b $71, $80
-	dc.b $31, $88
-	dc.b $11, $8C
-
-SonicDPLC_0294:	dc.b 4
-	dc.b $71, $44
-	dc.b $31, $8E
-	dc.b $11, $92
-	dc.b $31, $94
-
-SonicDPLC_029E:	dc.b 5
-	dc.b $51, $22
-	dc.b $51, $98
-	dc.b $11, $9E
-	dc.b $11, $A0
-	dc.b $31, $A2
-
-SonicDPLC_02AA:	dc.b 3
-	dc.b $71, $A6
-	dc.b $B1, $AE
-	dc.b $31, $BA
-
-SonicDPLC_02B2:	dc.b 3
-	dc.b $71, $A6
-	dc.b $B1, $BE
-	dc.b $31, $CA
-
-SonicDPLC_02BA:	dc.b 3
-	dc.b $71, $CE
-	dc.b $31, $D6
-	dc.b $31, $DA
-
-SonicDPLC_02C2:	dc.b 2
-	dc.b $71, $DE
-	dc.b $B1, $E6
-
-SonicDPLC_02C8:	dc.b 3
-	dc.b $71, $DE
-	dc.b $31, $F2
-	dc.b $B1, $F6
-
-SonicDPLC_02D0:	dc.b 3
-	dc.b $71, $DE
-	dc.b $B2, 2
-	dc.b $32, $E
-
-SonicDPLC_02D8:	dc.b 3
-	dc.b $71, $CE
-	dc.b $32, $12
-	dc.b $32, $16
-
-SonicDPLC_02E0:	dc.b 2
-	dc.b $71, $A6
-	dc.b $B2, $1A
-
-SonicDPLC_02E6:	dc.b 4
-	dc.b $32, $26
-	dc.b $72, $2A
-	dc.b $72, $32
-	dc.b $12, $3A
-
-SonicDPLC_02F0:	dc.b 5
-	dc.b $32, $3C
-	dc.b $52, $40
-	dc.b $72, $2A
-	dc.b $72, $46
-	dc.b $12, $3A
-
-SonicDPLC_02FC:	dc.b 4
-	dc.b $72, $4E
-	dc.b $72, $56
-	dc.b $32, $5E
-	dc.b $12, $62
-
-SonicDPLC_0306:	dc.b 4
-	dc.b $72, $64
-	dc.b $72, $6C
-	dc.b $52, $74
-	dc.b $12, $7A
-
-SonicDPLC_0310:	dc.b 4
-	dc.b $52, $7C
-	dc.b $72, $6C
-	dc.b $72, $82
-	dc.b $12, $7A
-
-SonicDPLC_031A:	dc.b 5
-	dc.b $32, $8A
-	dc.b $52, $8E
-	dc.b $72, $6C
-	dc.b $72, $94
-	dc.b $12, $7A
-
-SonicDPLC_0326:	dc.b 4
-	dc.b $72, $9C
-	dc.b $72, $56
-	dc.b $32, $A4
-	dc.b $12, $62
-
-SonicDPLC_0330:	dc.b 4
-	dc.b $72, $A8
-	dc.b $72, $2A
-	dc.b $52, $B0
-	dc.b $12, $3A
-
-SonicDPLC_033A:	dc.b 2
-	dc.b $52, $B6
-	dc.b $F2, $BC
-
-SonicDPLC_0340:	dc.b 2
-	dc.b $52, $CC
-	dc.b $F2, $D2
-
-SonicDPLC_0346:	dc.b 2
-	dc.b $52, $B6
-	dc.b $F2, $E2
-
-SonicDPLC_034C:	dc.b 2
-	dc.b $52, $CC
-	dc.b $F2, $F2
-
-SonicDPLC_0352:	dc.b 4
-	dc.b $53, 2
-	dc.b $13, 8
-	dc.b $73, $A
-	dc.b $53, $12
-
-SonicDPLC_035C:	dc.b 3
-	dc.b $73, $18
-	dc.b $73, $20
-	dc.b $53, $28
-
-SonicDPLC_0364:	dc.b 4
-	dc.b $53, 2
-	dc.b $13, $2E
-	dc.b $73, $30
-	dc.b $53, $38
-
-SonicDPLC_036E:	dc.b 3
-	dc.b $73, $18
-	dc.b $73, $3E
-	dc.b $53, $46
-
-SonicDPLC_0376:	dc.b 2
-	dc.b $73, $4C
-	dc.b $B3, $54
-
-SonicDPLC_037C:	dc.b 2
-	dc.b $73, $60
-	dc.b $B3, $68
-
-SonicDPLC_0382:	dc.b 2
-	dc.b $73, $4C
-	dc.b $B3, $74
-
-SonicDPLC_0388:	dc.b 2
-	dc.b $73, $60
-	dc.b $B3, $80
-
-SonicDPLC_038E:	dc.b 3
-	dc.b $13, $8C
-	dc.b $73, $8E
-	dc.b $B3, $96
-
-SonicDPLC_0396:	dc.b 2
-	dc.b $73, $A2
-	dc.b $B3, $AA
-
-SonicDPLC_039C:	dc.b 3
-	dc.b $13, $B6
-	dc.b $73, $8E
-	dc.b $B3, $C0
-
-SonicDPLC_03A4:	dc.b 2
-	dc.b $73, $A2
-	dc.b $B3, $CC
-
-SonicDPLC_03AA:	dc.b 1
-	dc.b $F4, 0
-
-SonicDPLC_03AE:	dc.b 1
-	dc.b $F4, $10
-
-SonicDPLC_03B2:	dc.b 1
-	dc.b $F4, $20
-
-SonicDPLC_03B6:	dc.b 1
-	dc.b $F4, $30
-
-SonicDPLC_03BA:	dc.b 1
-	dc.b $F4, $40
-
-SonicDPLC_03BE:	dc.b 1
-	dc.b $F4, $50
-
-SonicDPLC_03C2:	dc.b 1
-	dc.b $F4, $60
-
-SonicDPLC_03C6:	dc.b 1
-	dc.b $F4, $70
-
-SonicDPLC_03CA:	dc.b 1
-	dc.b $F4, $80
-
-SonicDPLC_03CE:	dc.b 1
-	dc.b $F4, $90
-
-SonicDPLC_03D2:	dc.b 1
-	dc.b $F4, $A0
-
-SonicDPLC_03D6:	dc.b 3
-	dc.b $53, $D8
-	dc.b $53, $DE
-	dc.b $73, $E4
-
-SonicDPLC_03DE:	dc.b 3
-	dc.b $53, $D8
-	dc.b $53, $EC
-	dc.b $53, $F2
-
-SonicDPLC_03E6:	dc.b 3
-	dc.b $53, $D8
-	dc.b $53, $DE
-	dc.b $73, $B8
-
-SonicDPLC_03EE:	dc.b 3
-	dc.b $53, $D8
-	dc.b $53, $EC
-	dc.b $54, $B0
-
-SonicDPLC_03F6:	dc.b 1
-	dc.b $B4, $B6
-
-SonicDPLC_03FA:	dc.b 1
-	dc.b $F4, $C2
-
-SonicDPLC_03FE:	dc.b 2
-	dc.b $14, $D2
-	dc.b $F4, $D4
-
-SonicDPLC_0404:	dc.b 2
-	dc.b $34, $E4
-	dc.b $F4, $E8
-
-SonicDPLC_040A:	dc.b 3
-	dc.b $F4, $F8
-	dc.b $15, 8
-	dc.b $35, $A
-
-SonicDPLC_0412:	dc.b 3
-	dc.b $F5, $E
-	dc.b $15, $1E
-	dc.b $35, $20
-
-SonicDPLC_041A:	dc.b 2
-	dc.b $B5, $24
-	dc.b $55, $30
-
-SonicDPLC_0420:	dc.b 2
-	dc.b $B5, $36
-	dc.b $55, $42
-
-SonicDPLC_0426:	dc.b 3
-	dc.b $35, $48
-	dc.b $B5, $4C
-	dc.b $15, $58
-
-SonicDPLC_042E:	dc.b 2
-	dc.b $15, $5A
-	dc.b $75, $5C
-
-SonicDPLC_0434:	dc.b 3
-	dc.b $15, $64
-	dc.b $B5, $66
-	dc.b $15, $72
-
-SonicDPLC_043C:	dc.b 3
-	dc.b $35, $74
-	dc.b $B5, $78
-	dc.b $15, $84
-
-SonicDPLC_0444:	dc.b 3
-	dc.b $55, $86
-	dc.b $F5, $8C
-	dc.b $15, $9C
-
-SonicDPLC_044C:	dc.b 2
-	dc.b $B5, $9E
-	dc.b $35, $AA
-
-SonicDPLC_0452:	dc.b 4
-	dc.b $15, $AE
-	dc.b $B5, $B0
-	dc.b $15, $BC
-	dc.b $75, $BE
-
-SonicDPLC_045C:	dc.b 4
-	dc.b $15, $AE
-	dc.b $B5, $C6
-	dc.b $15, $BC
-	dc.b $75, $BE
-
-SonicDPLC_0466:	dc.b 3
-	dc.b $75, $D2
-	dc.b $15, $DA
-	dc.b $B5, $DC
-
-SonicDPLC_046E:	dc.b 3
-	dc.b $55, $E8
-	dc.b $B5, $EE
-	dc.b $15, $FA
-
-SonicDPLC_0476:	dc.b 3
-	dc.b $B5, $FC
-	dc.b $16, 8
-	dc.b $36, $A
-
-SonicDPLC_047E:	dc.b 2
-	dc.b $B6, $E
-	dc.b $16, $1A
-
-SonicDPLC_0484:	dc.b 1
-	dc.b $F6, $1C
-
-SonicDPLC_0488:	dc.b 2
-	dc.b $B6, $2C
-	dc.b $16, $38
-
-SonicDPLC_048E:	dc.b 3
-	dc.b $16, $3A
-	dc.b $B6, $3C
-	dc.b $16, $48
-
-SonicDPLC_0496:	dc.b 3
-	dc.b $56, $4A
-	dc.b $B6, $50
-	dc.b $36, $5C
-
-SonicDPLC_049E:	dc.b 3
-	dc.b $36, $60
-	dc.b $B6, $64
-	dc.b $16, $70
-
-SonicDPLC_04A6:	dc.b 2
-	dc.b $B6, $72
-	dc.b $16, $7E
-
-SonicDPLC_04AC:	dc.b 2
-	dc.b $16, $80
-	dc.b $B6, $82
-
-SonicDPLC_04B2:	dc.b 3
-	dc.b $36, $8E
-	dc.b $B6, $92
-	dc.b $16, $9E
-
-SonicDPLC_04BA:	dc.b 2
-	dc.b $36, $A0
-	dc.b $F6, $A4
-
-SonicDPLC_04C0:	dc.b 3
-	dc.b $76, $B4
-	dc.b $36, $BC
-	dc.b $56, $C0
-
-SonicDPLC_04C8:	dc.b 3
-	dc.b $76, $C6
-	dc.b $36, $BC
-	dc.b $56, $CE
-
-SonicDPLC_04D0:	dc.b 1
-	dc.b $B7, $D6
-
-SonicDPLC_04D4:	dc.b 3
-	dc.b $B7, $E2
-	dc.b $17, $EE
-	dc.b $57, $F0
-
-SonicDPLC_04DC:	dc.b 3
-	dc.b $87, $F6
-	dc.b $A, $18
-	dc.b $88, 0
-
-SonicDPLC_04E4:	dc.b 5
-	dc.b $28, 9
-	dc.b $18, $C
-	dc.b $38, $E
-	dc.b $88, $12
-	dc.b 8, $1B
-
-SonicDPLC_04F0:	dc.b 5
-	dc.b $28, $1C
-	dc.b $18, $1F
-	dc.b $38, $E
-	dc.b $88, $12
-	dc.b 8, $1B
-
-SonicDPLC_04FC:	dc.b 2
-	dc.b $88, $21
-	dc.b $88, $2A
-
-SonicDPLC_0502:	dc.b 2
-	dc.b $88, $33
-	dc.b $88, $2A
-
-SonicDPLC_0508:	dc.b 2
-	dc.b $88, $3C
-	dc.b $88, $2A
-
-SonicDPLC_050E:	dc.b 3
-	dc.b $B6, $D4
-	dc.b $10, $A0
-	dc.b $F0, $A2
-
-SonicDPLC_0516:	dc.b 4
-	dc.b $B6, $D4
-	dc.b $10, $B2
-	dc.b $B0, $B4
-	dc.b $10, $C0
-
-SonicDPLC_0520:	dc.b 3
-	dc.b $B6, $E0
-	dc.b $50, $CA
-	dc.b $30, $D0
-
-SonicDPLC_0528:	dc.b 2
-	dc.b $86, $EC
-	dc.b $F0, $DA
-
-SonicDPLC_052E:	dc.b 3
-	dc.b $86, $EC
-	dc.b $F0, $EA
-	dc.b $10, $FA
-
-SonicDPLC_0536:	dc.b 4
-	dc.b $86, $EC
-	dc.b $10, $FC
-	dc.b $B0, $FE
-	dc.b $11, $A
-
-SonicDPLC_0540:	dc.b 3
-	dc.b $B6, $E0
-	dc.b $51, $C
-	dc.b $31, $12
-
-SonicDPLC_0548:	dc.b 2
-	dc.b $B6, $D4
-	dc.b $B1, $16
-
-SonicDPLC_054E:	dc.b 4
-	dc.b $76, $F5
-	dc.b $31, $2E
-	dc.b $51, $28
-	dc.b $11, $32
-
-SonicDPLC_0558:	dc.b 5
-	dc.b $76, $F5
-	dc.b $11, $34
-	dc.b $71, $36
-	dc.b $31, $3E
-	dc.b $11, $42
-
-SonicDPLC_0564:	dc.b 5
-	dc.b $86, $FD
-	dc.b $31, $4C
-	dc.b 7, 6
-	dc.b $11, $50
-	dc.b $31, $52
-
-SonicDPLC_0570:	dc.b 5
-	dc.b 7, 7
-	dc.b $77, 8
-	dc.b $11, $5C
-	dc.b $31, $5E
-	dc.b $B1, $62
-
-SonicDPLC_057C:	dc.b 6
-	dc.b 7, 7
-	dc.b $77, 8
-	dc.b $11, $6E
-	dc.b $11, $78
-	dc.b $71, $70
-	dc.b $31, $7A
-
-SonicDPLC_058A:	dc.b 6
-	dc.b 7, 7
-	dc.b $77, 8
-	dc.b $11, $7E
-	dc.b $71, $80
-	dc.b $31, $88
-	dc.b $11, $8C
-
-SonicDPLC_0598:	dc.b 5
-	dc.b $86, $FD
-	dc.b $31, $8E
-	dc.b 7, 6
-	dc.b $11, $92
-	dc.b $31, $94
-
-SonicDPLC_05A4:	dc.b 5
-	dc.b $76, $F5
-	dc.b $11, $9E
-	dc.b $51, $98
-	dc.b 1, $A0
-	dc.b $31, $A2
-
-SonicDPLC_05B0:	dc.b 3
-	dc.b $B7, $10
-	dc.b $B1, $AE
-	dc.b $31, $BA
-
-SonicDPLC_05B8:	dc.b 3
-	dc.b $B7, $10
-	dc.b $B1, $BE
-	dc.b $31, $CA
-
-SonicDPLC_05C0:	dc.b 3
-	dc.b $B7, $1C
-	dc.b $31, $D6
-	dc.b $31, $DA
-
-SonicDPLC_05C8:	dc.b 2
-	dc.b $87, $28
-	dc.b $B1, $E6
-
-SonicDPLC_05CE:	dc.b 3
-	dc.b $87, $28
-	dc.b $31, $F2
-	dc.b $B1, $F6
-
-SonicDPLC_05D6:	dc.b 3
-	dc.b $87, $28
-	dc.b $B2, 2
-	dc.b $32, $E
-
-SonicDPLC_05DE:	dc.b 3
-	dc.b $B7, $1C
-	dc.b $32, $12
-	dc.b $32, $16
-
-SonicDPLC_05E6:	dc.b 2
-	dc.b $B7, $10
-	dc.b $B2, $1A
-
-SonicDPLC_05EC:	dc.b 4
-	dc.b $32, $26
-	dc.b $77, $31
-	dc.b $72, $32
-	dc.b 7, $39
-
-SonicDPLC_05F6:	dc.b 5
-	dc.b $32, $3C
-	dc.b $52, $40
-	dc.b $77, $31
-	dc.b $72, $46
-	dc.b 7, $39
-
-SonicDPLC_0602:	dc.b 4
-	dc.b $72, $4E
-	dc.b $77, $3A
-	dc.b $32, $5E
-	dc.b $17, $42
-
-SonicDPLC_060C:	dc.b 4
-	dc.b $72, $64
-	dc.b $B7, $44
-	dc.b $52, $74
-	dc.b 7, $50
-
-SonicDPLC_0616:	dc.b 4
-	dc.b $52, $7C
-	dc.b $B7, $44
-	dc.b $72, $82
-	dc.b 7, $50
-
-SonicDPLC_0620:	dc.b 5
-	dc.b $32, $8A
-	dc.b $52, $8E
-	dc.b $B7, $44
-	dc.b $72, $94
-	dc.b 7, $50
-
-SonicDPLC_062C:	dc.b 4
-	dc.b $72, $9C
-	dc.b $77, $3A
-	dc.b $32, $A4
-	dc.b $17, $42
-
-SonicDPLC_0636:	dc.b 4
-	dc.b $72, $A8
-	dc.b $77, $31
-	dc.b $52, $B0
-	dc.b 7, $39
-
-SonicDPLC_0640:	dc.b 3
-	dc.b $B7, $51
-	dc.b $10, $A0
-	dc.b $F0, $A2
-
-SonicDPLC_0648:	dc.b 4
-	dc.b $B7, $51
-	dc.b $10, $B2
-	dc.b $B0, $B4
-	dc.b $10, $C0
-
-SonicDPLC_0652:	dc.b 3
-	dc.b $B7, $5D
-	dc.b $50, $CA
-	dc.b $30, $D0
-
-SonicDPLC_065A:	dc.b 2
-	dc.b $87, $69
-	dc.b $F0, $DA
-
-SonicDPLC_0660:	dc.b 3
-	dc.b $87, $69
-	dc.b $F0, $EA
-	dc.b $10, $FA
-
-SonicDPLC_0668:	dc.b 4
-	dc.b $87, $69
-	dc.b $10, $FC
-	dc.b $B0, $FE
-	dc.b $11, $A
-
-SonicDPLC_0672:	dc.b 3
-	dc.b $B7, $5D
-	dc.b $51, $C
-	dc.b $31, $12
-
-SonicDPLC_067A:	dc.b 2
-	dc.b $B7, $51
-	dc.b $B1, $16
-
-SonicDPLC_0680:	dc.b 5
-	dc.b $17, $72
-	dc.b $77, $74
-	dc.b $51, $28
-	dc.b $31, $2E
-	dc.b $11, $32
-
-SonicDPLC_068C:	dc.b 6
-	dc.b $17, $72
-	dc.b $77, $74
-	dc.b $11, $34
-	dc.b $71, $36
-	dc.b $31, $3E
-	dc.b $11, $42
-
-SonicDPLC_069A:	dc.b 5
-	dc.b $57, $7C
-	dc.b $37, $82
-	dc.b $31, $4C
-	dc.b $11, $50
-	dc.b $31, $52
-
-SonicDPLC_06A6:	dc.b 5
-	dc.b $17, $86
-	dc.b $77, $88
-	dc.b $11, $5C
-	dc.b $31, $5E
-	dc.b $B1, $62
-
-SonicDPLC_06B2:	dc.b 6
-	dc.b $17, $86
-	dc.b $77, $88
-	dc.b $11, $6E
-	dc.b $11, $78
-	dc.b $71, $70
-	dc.b $31, $7A
-
-SonicDPLC_06C0:	dc.b 6
-	dc.b $17, $86
-	dc.b $77, $88
-	dc.b $11, $7E
-	dc.b $71, $80
-	dc.b $31, $88
-	dc.b $11, $8C
-
-SonicDPLC_06CE:	dc.b 5
-	dc.b $57, $7C
-	dc.b $37, $82
-	dc.b $31, $8E
-	dc.b $11, $92
-	dc.b $31, $94
-
-SonicDPLC_06DA:	dc.b 6
-	dc.b $17, $72
-	dc.b $77, $74
-	dc.b $51, $98
-	dc.b $11, $9E
-	dc.b $31, $A2
-	dc.b $11, $A0
-
-SonicDPLC_06E8:	dc.b 3
-	dc.b $B7, $90
-	dc.b $B1, $AE
-	dc.b $31, $BA
-
-SonicDPLC_06F0:	dc.b 3
-	dc.b $B7, $90
-	dc.b $B1, $BE
-	dc.b $31, $CA
-
-SonicDPLC_06F8:	dc.b 3
-	dc.b $B7, $9C
-	dc.b $31, $D6
-	dc.b $31, $DA
-
-SonicDPLC_0700:	dc.b 2
-	dc.b $87, $A8
-	dc.b $B1, $E6
-
-SonicDPLC_0706:	dc.b 3
-	dc.b $87, $A8
-	dc.b $31, $F2
-	dc.b $B1, $F6
-
-SonicDPLC_070E:	dc.b 3
-	dc.b $87, $A8
-	dc.b $B2, 2
-	dc.b $32, $E
-
-SonicDPLC_0716:	dc.b 3
-	dc.b $B7, $9C
-	dc.b $32, $12
-	dc.b $32, $16
-
-SonicDPLC_071E:	dc.b 2
-	dc.b $B7, $90
-	dc.b $B2, $1A
-
-SonicDPLC_0724:	dc.b 4
-	dc.b $32, $26
-	dc.b $B7, $B1
-	dc.b $72, $32
-	dc.b 7, $BD
-
-SonicDPLC_072E:	dc.b 5
-	dc.b $32, $3C
-	dc.b $52, $40
-	dc.b $B7, $B1
-	dc.b $72, $46
-	dc.b 7, $BD
-
-SonicDPLC_073A:	dc.b 5
-	dc.b $72, $4E
-	dc.b $17, $BE
-	dc.b $77, $C0
-	dc.b $32, $5E
-	dc.b 7, $C8
-
-SonicDPLC_0746:	dc.b 4
-	dc.b $72, $64
-	dc.b $B7, $C9
-	dc.b $52, $74
-	dc.b 7, $D5
-
-SonicDPLC_0750:	dc.b 4
-	dc.b $52, $7C
-	dc.b $B7, $C9
-	dc.b $72, $82
-	dc.b 7, $D5
-
-SonicDPLC_075A:	dc.b 5
-	dc.b $32, $8A
-	dc.b $52, $8E
-	dc.b $B7, $C9
-	dc.b $72, $94
-	dc.b 7, $D5
-
-SonicDPLC_0766:	dc.b 5
-	dc.b $72, $9C
-	dc.b $17, $BE
-	dc.b $77, $C0
-	dc.b $32, $A4
-	dc.b 7, $C8
-
-SonicDPLC_0772:	dc.b 5
-	dc.b $72, $A8
-	dc.b $17, $B2
-	dc.b $77, $B5
-	dc.b $52, $B0
-	dc.b 7, $BD
-
-SonicDPLC_077E:	dc.b 4
-	dc.b $28, $45
-	dc.b 8, $48
-	dc.b $38, $49
-	dc.b $58, $4D
-
-SonicDPLC_0788:	dc.b 4
-	dc.b $18, $53
-	dc.b $B8, $55
-	dc.b $28, $61
-	dc.b $18, $64
-
-SonicDPLC_0792:	dc.b 4
-	dc.b $28, $66
-	dc.b $38, $69
-	dc.b $28, $6D
-	dc.b $38, $70
-
-SonicDPLC_079C:	dc.b 5
-	dc.b $28, $74
-	dc.b $78, $77
-	dc.b $38, $7F
-	dc.b $18, $83
-	dc.b 8, $85
-
-SonicDPLC_07A8:	dc.b 4
-	dc.b $58, $86
-	dc.b 8, $8C
-	dc.b $38, $49
-	dc.b $58, $8D
-
-SonicDPLC_07B2:	dc.b 4
-	dc.b $18, $93
-	dc.b $B8, $95
-	dc.b $28, $61
-	dc.b 8, $A1
-
-SonicDPLC_07BC:	dc.b 4
-	dc.b $58, $A2
-	dc.b $38, $69
-	dc.b 8, $A8
-	dc.b $58, $A9
-
-SonicDPLC_07C6:	dc.b 5
-	dc.b $28, $74
-	dc.b $78, $AF
-	dc.b $38, $B7
-	dc.b $18, $BB
-	dc.b 8, $85
-
-SonicDPLC_07D2:	dc.b 4
-	dc.b $58, $BD
-	dc.b $38, $C3
-	dc.b $38, $C7
-	dc.b $78, $CB
-
-SonicDPLC_07DC:	dc.b 4
-	dc.b $58, $D3
-	dc.b $38, $D9
-	dc.b $38, $C7
-	dc.b $78, $DD
-
-SonicDPLC_07E6:	dc.b 4
-	dc.b $58, $BD
-	dc.b $38, $C3
-	dc.b $38, $C7
-	dc.b $78, $E5
-
-SonicDPLC_07F0:	dc.b 4
-	dc.b $58, $D3
-	dc.b $38, $D9
-	dc.b $38, $C7
-	dc.b $78, $ED
-
-SonicDPLC_07FA:	dc.b 2
-	dc.b $28, $F5
-	dc.b $B8, $F8
-
-SonicDPLC_0800:	dc.b 3
-	dc.b $89, 4
-	dc.b $29, $D
-	dc.b $39, $10
-
-SonicDPLC_0808:	dc.b 3
-	dc.b $88, $33
-	dc.b $29, $D
-	dc.b $39, $10
-
-SonicDPLC_0810:	dc.b 3
-	dc.b $88, $3C
-	dc.b $29, $D
-	dc.b $39, $10
-
-SonicDPLC_0818:	dc.b 3
-	dc.b $89, 4
-	dc.b $29, $D
-	dc.b $39, $14
-
-SonicDPLC_0820:	dc.b 3
-	dc.b $88, $33
-	dc.b $29, $D
-	dc.b $39, $14
-
-SonicDPLC_0828:	dc.b 3
-	dc.b $88, $3C
-	dc.b $29, $D
-	dc.b $39, $14
-
-SonicDPLC_0830:	dc.b 3
-	dc.b $B9, $18
-	dc.b $39, $24
-	dc.b $39, $28
-
-SonicDPLC_0838:	dc.b 3
-	dc.b $B9, $2C
-	dc.b $39, $38
-	dc.b $39, $28
-
-SonicDPLC_0840:	dc.b 3
-	dc.b $B9, $3C
-	dc.b $39, $48
-	dc.b $39, $28
-
-SonicDPLC_0848:	dc.b 5
-	dc.b $B9, $4C
-	dc.b $19, $24
-	dc.b $19, $58
-	dc.b $19, $3A
-	dc.b $39, $28
-
-SonicDPLC_0854:	dc.b 4
-	dc.b $79, $5A
-	dc.b $59, $62
-	dc.b $39, $68
-	dc.b $59, $6C
-
-SonicDPLC_085E:	dc.b 4
-	dc.b $79, $72
-	dc.b $59, $62
-	dc.b $39, $7A
-	dc.b $59, $7E
-
-SonicDPLC_0868:	dc.b 4
-	dc.b $79, $84
-	dc.b $59, $62
-	dc.b $59, $8C
-	dc.b $59, $92
-
-SonicDPLC_0872:	dc.b 3
-	dc.b $39, $98
-	dc.b $B9, $9C
-	dc.b $39, $A8
-
-SonicDPLC_087A:	dc.b 3
-	dc.b $39, $AC
-	dc.b $B9, $B0
-	dc.b $39, $BC
-
-SonicDPLC_0882:	dc.b 3
-	dc.b $39, $C0
-	dc.b $B9, $C4
-	dc.b $39, $BC
-
-SonicDPLC_088A:	dc.b 4
-	dc.b $79, $D0
-	dc.b $79, $D8
-	dc.b $19, $E0
-	dc.b $39, $E2
-
-SonicDPLC_0894:	dc.b 4
-	dc.b $79, $E6
-	dc.b $79, $EE
-	dc.b $19, $E0
-	dc.b $39, $E2
-
-SonicDPLC_089E:	dc.b 4
-	dc.b $79, $F6
-	dc.b $79, $FE
-	dc.b $19, $E0
-	dc.b $39, $E2
-
-SonicDPLC_08A8:	dc.b 2
-	dc.b $5A, 6
-	dc.b $BA, $C
+; ---------------------------------------------------------------------------
+; Uncompressed graphics loading array for Sonic
+; ---------------------------------------------------------------------------
+SonicDynPLC_internal:	mappingsTable
+	mappingsTableEntry.w	SonPLC_Null
+	mappingsTableEntry.w	SonPLC_Stand
+	mappingsTableEntry.w	SonPLC_Wait1
+	mappingsTableEntry.w	SonPLC_Wait2
+	mappingsTableEntry.w	SonPLC_Wait3
+	mappingsTableEntry.w	SonPLC_LookUp
+	mappingsTableEntry.w	SonPLC_Walk11
+	mappingsTableEntry.w	SonPLC_Walk12
+	mappingsTableEntry.w	SonPLC_Walk13
+	mappingsTableEntry.w	SonPLC_Walk14
+	mappingsTableEntry.w	SonPLC_Walk15
+	mappingsTableEntry.w	SonPLC_Walk16
+	mappingsTableEntry.w	SonPLC_Walk21
+	mappingsTableEntry.w	SonPLC_Walk22
+	mappingsTableEntry.w	SonPLC_Walk23
+	mappingsTableEntry.w	SonPLC_Walk24
+	mappingsTableEntry.w	SonPLC_Walk25
+	mappingsTableEntry.w	SonPLC_Walk26
+	mappingsTableEntry.w	SonPLC_Walk31
+	mappingsTableEntry.w	SonPLC_Walk32
+	mappingsTableEntry.w	SonPLC_Walk33
+	mappingsTableEntry.w	SonPLC_Walk34
+	mappingsTableEntry.w	SonPLC_Walk35
+	mappingsTableEntry.w	SonPLC_Walk36
+	mappingsTableEntry.w	SonPLC_Walk41
+	mappingsTableEntry.w	SonPLC_Walk42
+	mappingsTableEntry.w	SonPLC_Walk43
+	mappingsTableEntry.w	SonPLC_Walk44
+	mappingsTableEntry.w	SonPLC_Walk45
+	mappingsTableEntry.w	SonPLC_Walk46
+	mappingsTableEntry.w	SonPLC_Run11
+	mappingsTableEntry.w	SonPLC_Run12
+	mappingsTableEntry.w	SonPLC_Run13
+	mappingsTableEntry.w	SonPLC_Run14
+	mappingsTableEntry.w	SonPLC_Run21
+	mappingsTableEntry.w	SonPLC_Run22
+	mappingsTableEntry.w	SonPLC_Run23
+	mappingsTableEntry.w	SonPLC_Run24
+	mappingsTableEntry.w	SonPLC_Run31
+	mappingsTableEntry.w	SonPLC_Run32
+	mappingsTableEntry.w	SonPLC_Run33
+	mappingsTableEntry.w	SonPLC_Run34
+	mappingsTableEntry.w	SonPLC_Run41
+	mappingsTableEntry.w	SonPLC_Run42
+	mappingsTableEntry.w	SonPLC_Run43
+	mappingsTableEntry.w	SonPLC_Run44
+	mappingsTableEntry.w	SonPLC_Roll1
+	mappingsTableEntry.w	SonPLC_Roll2
+	mappingsTableEntry.w	SonPLC_Roll3
+	mappingsTableEntry.w	SonPLC_Roll4
+	mappingsTableEntry.w	SonPLC_Roll5
+	mappingsTableEntry.w	SonPLC_Warp1
+	mappingsTableEntry.w	SonPLC_Warp2
+	mappingsTableEntry.w	SonPLC_Warp3
+	mappingsTableEntry.w	SonPLC_Warp4
+	mappingsTableEntry.w	SonPLC_Stop1
+	mappingsTableEntry.w	SonPLC_Stop2
+	mappingsTableEntry.w	SonPLC_Duck
+	mappingsTableEntry.w	SonPLC_Balance1
+	mappingsTableEntry.w	SonPLC_Balance2
+	mappingsTableEntry.w	SonPLC_Float1
+	mappingsTableEntry.w	SonPLC_Float2
+	mappingsTableEntry.w	SonPLC_Float3
+	mappingsTableEntry.w	SonPLC_Float4
+	mappingsTableEntry.w	SonPLC_Spring
+	mappingsTableEntry.w	SonPLC_Hang1
+	mappingsTableEntry.w	SonPLC_Hang2
+	mappingsTableEntry.w	SonPLC_Leap1
+	mappingsTableEntry.w	SonPLC_Leap2
+	mappingsTableEntry.w	SonPLC_Push1
+	mappingsTableEntry.w	SonPLC_Push2
+	mappingsTableEntry.w	SonPLC_Push3
+	mappingsTableEntry.w	SonPLC_Push4
+	mappingsTableEntry.w	SonPLC_Surf
+	mappingsTableEntry.w	SonPLC_BubStand
+	mappingsTableEntry.w	SonPLC_Death
+	mappingsTableEntry.w	SonPLC_Drown
+	mappingsTableEntry.w	SonPLC_Burnt
+	mappingsTableEntry.w	SonPLC_Shrink1
+	mappingsTableEntry.w	SonPLC_Shrink2
+	mappingsTableEntry.w	SonPLC_Shrink3
+	mappingsTableEntry.w	SonPLC_Shrink4
+	mappingsTableEntry.w	SonPLC_Shrink5
+	mappingsTableEntry.w	SonPLC_Float1
+	mappingsTableEntry.w	SonPLC_Float3
+	mappingsTableEntry.w	SonPLC_Injury
+	mappingsTableEntry.w	SonPLC_GetAir
+	mappingsTableEntry.w	SonPLC_WaterSlide
+
+SonPLC_Null:	dplcHeader
+SonPLC_Null_End
+
+SonPLC_Stand:	dplcHeader
+	dplcEntry	3, 0
+	dplcEntry	8, 3
+	dplcEntry	3, $B
+	dplcEntry	3, $E
+SonPLC_Stand_End
+
+SonPLC_Wait1:	dplcHeader
+	dplcEntry	6, $11
+	dplcEntry	6, $17
+	dplcEntry	3, $1D
+SonPLC_Wait1_End
+
+SonPLC_Wait2:	dplcHeader
+	dplcEntry	6, $20
+	dplcEntry	6, $17
+	dplcEntry	3, $1D
+SonPLC_Wait2_End
+
+SonPLC_Wait3:	dplcHeader
+	dplcEntry	6, $20
+	dplcEntry	6, $17
+	dplcEntry	3, $26
+SonPLC_Wait3_End
+
+SonPLC_LookUp:	dplcHeader
+	dplcEntry	9, $29
+	dplcEntry	3, $B
+	dplcEntry	3, $E
+SonPLC_LookUp_End
+
+SonPLC_Walk11:	dplcHeader
+	dplcEntry	8, $32
+	dplcEntry	6, $3A
+	dplcEntry	6, $40
+	dplcEntry	2, $46
+SonPLC_Walk11_End
+
+SonPLC_Walk12:	dplcHeader
+	dplcEntry	8, $32
+	dplcEntry	$C, $48
+SonPLC_Walk12_End
+
+SonPLC_Walk13:	dplcHeader
+	dplcEntry	6, $54
+	dplcEntry	9, $5A
+SonPLC_Walk13_End
+
+SonPLC_Walk14:	dplcHeader
+	dplcEntry	6, $54
+	dplcEntry	6, $63
+	dplcEntry	6, $69
+	dplcEntry	2, $6F
+SonPLC_Walk14_End
+
+SonPLC_Walk15:	dplcHeader
+	dplcEntry	6, $54
+	dplcEntry	$C, $71
+SonPLC_Walk15_End
+
+SonPLC_Walk16:	dplcHeader
+	dplcEntry	8, $32
+	dplcEntry	4, $7D
+	dplcEntry	6, $81
+SonPLC_Walk16_End
+
+SonPLC_Walk21:	dplcHeader
+	dplcEntry	6, $87
+	dplcEntry	6, $8D
+	dplcEntry	3, $93
+	dplcEntry	6, $96
+	dplcEntry	1, $9C
+SonPLC_Walk21_End
+
+SonPLC_Walk22:	dplcHeader
+	dplcEntry	6, $87
+	dplcEntry	2, $9D
+	dplcEntry	4, $9F
+	dplcEntry	6, $A3
+	dplcEntry	4, $A9
+	dplcEntry	1, $AD
+SonPLC_Walk22_End
+
+SonPLC_Walk23:	dplcHeader
+	dplcEntry	6, $AE
+	dplcEntry	2, $B4
+	dplcEntry	8, $B6
+	dplcEntry	3, $BE
+SonPLC_Walk23_End
+
+SonPLC_Walk24:	dplcHeader
+	dplcEntry	6, $C1
+	dplcEntry	4, $C7
+	dplcEntry	8, $CB
+	dplcEntry	3, $D3
+	dplcEntry	2, $D6
+SonPLC_Walk24_End
+
+SonPLC_Walk25:	dplcHeader
+	dplcEntry	6, $C1
+	dplcEntry	2, $D8
+	dplcEntry	8, $DA
+	dplcEntry	3, $E2
+SonPLC_Walk25_End
+
+SonPLC_Walk26:	dplcHeader
+	dplcEntry	6, $87
+	dplcEntry	2, $9D
+	dplcEntry	1, $93
+	dplcEntry	8, $E5
+	dplcEntry	3, $ED
+SonPLC_Walk26_End
+
+SonPLC_Walk31:	dplcHeader
+	dplcEntry	8, $F0
+	dplcEntry	6, $F8
+	dplcEntry	2, $FE
+	dplcEntry	6, $100
+SonPLC_Walk31_End
+
+SonPLC_Walk32:	dplcHeader
+	dplcEntry	8, $F0
+	dplcEntry	$C, $106
+SonPLC_Walk32_End
+
+SonPLC_Walk33:	dplcHeader
+	dplcEntry	6, $112
+	dplcEntry	9, $118
+SonPLC_Walk33_End
+
+SonPLC_Walk34:	dplcHeader
+	dplcEntry	6, $112
+	dplcEntry	6, $121
+	dplcEntry	2, $127
+	dplcEntry	6, $129
+SonPLC_Walk34_End
+
+SonPLC_Walk35:	dplcHeader
+	dplcEntry	6, $112
+	dplcEntry	$C, $12F
+SonPLC_Walk35_End
+
+SonPLC_Walk36:	dplcHeader
+	dplcEntry	8, $F0
+	dplcEntry	1, $106
+	dplcEntry	9, $13B
+SonPLC_Walk36_End
+
+SonPLC_Walk41:	dplcHeader
+	dplcEntry	6, $144
+	dplcEntry	2, $14A
+	dplcEntry	2, $14C
+	dplcEntry	9, $14E
+	dplcEntry	1, $157
+	dplcEntry	1, $158
+SonPLC_Walk41_End
+
+SonPLC_Walk42:	dplcHeader
+	dplcEntry	6, $144
+	dplcEntry	3, $159
+	dplcEntry	2, $15C
+	dplcEntry	2, $15E
+	dplcEntry	9, $160
+	dplcEntry	1, $157
+SonPLC_Walk42_End
+
+SonPLC_Walk43:	dplcHeader
+	dplcEntry	6, $169
+	dplcEntry	2, $16F
+	dplcEntry	9, $171
+	dplcEntry	2, $17A
+SonPLC_Walk43_End
+
+SonPLC_Walk44:	dplcHeader
+	dplcEntry	6, $17C
+	dplcEntry	3, $182
+	dplcEntry	2, $185
+	dplcEntry	8, $187
+	dplcEntry	3, $18F
+SonPLC_Walk44_End
+
+SonPLC_Walk45:	dplcHeader
+	dplcEntry	6, $17C
+	dplcEntry	2, $192
+	dplcEntry	9, $194
+	dplcEntry	2, $19D
+SonPLC_Walk45_End
+
+SonPLC_Walk46:	dplcHeader
+	dplcEntry	6, $144
+	dplcEntry	9, $19F
+	dplcEntry	2, $15E
+	dplcEntry	2, $1A8
+	dplcEntry	1, $157
+SonPLC_Walk46_End
+
+SonPLC_Run11:	dplcHeader
+	dplcEntry	6, $1AA
+	dplcEntry	$C, $1B0
+SonPLC_Run11_End
+
+SonPLC_Run12:	dplcHeader
+	dplcEntry	6, $54
+	dplcEntry	$C, $1BC
+SonPLC_Run12_End
+
+SonPLC_Run13:	dplcHeader
+	dplcEntry	6, $1AA
+	dplcEntry	$C, $1C8
+SonPLC_Run13_End
+
+SonPLC_Run14:	dplcHeader
+	dplcEntry	6, $54
+	dplcEntry	$C, $1D4
+SonPLC_Run14_End
+
+SonPLC_Run21:	dplcHeader
+	dplcEntry	6, $1E0
+	dplcEntry	2, $1E6
+	dplcEntry	$C, $1E8
+	dplcEntry	1, $1F4
+SonPLC_Run21_End
+
+SonPLC_Run22:	dplcHeader
+	dplcEntry	6, $1F5
+	dplcEntry	2, $1FB
+	dplcEntry	$C, $1FD
+SonPLC_Run22_End
+
+SonPLC_Run23:	dplcHeader
+	dplcEntry	6, $1E0
+	dplcEntry	2, $209
+	dplcEntry	$C, $20B
+	dplcEntry	1, $1F4
+SonPLC_Run23_End
+
+SonPLC_Run24:	dplcHeader
+	dplcEntry	6, $1F5
+	dplcEntry	2, $1FB
+	dplcEntry	$C, $217
+SonPLC_Run24_End
+
+SonPLC_Run31:	dplcHeader
+	dplcEntry	6, $223
+	dplcEntry	$C, $229
+SonPLC_Run31_End
+
+SonPLC_Run32:	dplcHeader
+	dplcEntry	6, $112
+	dplcEntry	$C, $235
+SonPLC_Run32_End
+
+SonPLC_Run33:	dplcHeader
+	dplcEntry	6, $223
+	dplcEntry	$C, $241
+SonPLC_Run33_End
+
+SonPLC_Run34:	dplcHeader
+	dplcEntry	6, $112
+	dplcEntry	$C, $24D
+SonPLC_Run34_End
+
+SonPLC_Run41:	dplcHeader
+	dplcEntry	6, $259
+	dplcEntry	2, $25F
+	dplcEntry	$C, $261
+	dplcEntry	1, $26D
+SonPLC_Run41_End
+
+SonPLC_Run42:	dplcHeader
+	dplcEntry	8, $26E
+	dplcEntry	$C, $276
+SonPLC_Run42_End
+
+SonPLC_Run43:	dplcHeader
+	dplcEntry	6, $259
+	dplcEntry	2, $282
+	dplcEntry	$C, $284
+	dplcEntry	1, $26D
+SonPLC_Run43_End
+
+SonPLC_Run44:	dplcHeader
+	dplcEntry	8, $26E
+	dplcEntry	$C, $290
+SonPLC_Run44_End
+
+SonPLC_Roll1:	dplcHeader
+	dplcEntry	$10, $29C
+SonPLC_Roll1_End
+
+SonPLC_Roll2:	dplcHeader
+	dplcEntry	$10, $2AC
+SonPLC_Roll2_End
+
+SonPLC_Roll3:	dplcHeader
+	dplcEntry	$10, $2BC
+SonPLC_Roll3_End
+
+SonPLC_Roll4:	dplcHeader
+	dplcEntry	$10, $2CC
+SonPLC_Roll4_End
+
+SonPLC_Roll5:	dplcHeader
+	dplcEntry	$10, $2DC
+SonPLC_Roll5_End
+
+SonPLC_Warp1:	dplcHeader
+	dplcEntry	$C, $2EC
+	dplcEntry	3, $2F8
+SonPLC_Warp1_End
+
+SonPLC_Warp2:	dplcHeader
+	dplcEntry	$10, $2FB
+SonPLC_Warp2_End
+
+SonPLC_Warp3:	dplcHeader
+	dplcEntry	$C, $30B
+	dplcEntry	3, $317
+SonPLC_Warp3_End
+
+SonPLC_Warp4:	dplcHeader
+	dplcEntry	$10, $31A
+SonPLC_Warp4_End
+
+SonPLC_Stop1:	dplcHeader
+	dplcEntry	6, $32A
+	dplcEntry	$C, $330
+SonPLC_Stop1_End
+
+SonPLC_Stop2:	dplcHeader
+	dplcEntry	6, $33C
+	dplcEntry	8, $342
+	dplcEntry	2, $34A
+	dplcEntry	1, $34C
+SonPLC_Stop2_End
+
+SonPLC_Duck:	dplcHeader
+	dplcEntry	2, $34D
+	dplcEntry	8, $34F
+	dplcEntry	3, $357
+	dplcEntry	1, $35A
+SonPLC_Duck_End
+
+SonPLC_Balance1:	dplcHeader
+	dplcEntry	3, $35B
+	dplcEntry	3, $35E
+	dplcEntry	$10, $361
+SonPLC_Balance1_End
+
+SonPLC_Balance2:	dplcHeader
+	dplcEntry	$C, $371
+	dplcEntry	8, $37D
+	dplcEntry	1, $71
+SonPLC_Balance2_End
+
+SonPLC_Float1:	dplcHeader
+	dplcEntry	8, $385
+	dplcEntry	4, $38D
+	dplcEntry	3, $391
+SonPLC_Float1_End
+
+SonPLC_Float2:	dplcHeader
+	dplcEntry	9, $394
+SonPLC_Float2_End
+
+SonPLC_Float3:	dplcHeader
+	dplcEntry	8, $39D
+	dplcEntry	1, $3A5
+	dplcEntry	4, $3A6
+SonPLC_Float3_End
+
+SonPLC_Float4:	dplcHeader
+	dplcEntry	8, $3AA
+	dplcEntry	4, $3B2
+	dplcEntry	3, $3B6
+SonPLC_Float4_End
+
+SonPLC_Spring:	dplcHeader
+	dplcEntry	$C, $3B9
+	dplcEntry	2, $3C5
+	dplcEntry	1, $3C7
+SonPLC_Spring_End
+
+SonPLC_Hang1:	dplcHeader
+	dplcEntry	$C, $3C8
+	dplcEntry	4, $3D4
+	dplcEntry	1, $3D8
+	dplcEntry	1, $3D9
+SonPLC_Hang1_End
+
+SonPLC_Hang2:	dplcHeader
+	dplcEntry	$C, $3DA
+	dplcEntry	4, $3E6
+	dplcEntry	1, $3EA
+	dplcEntry	1, $3EB
+SonPLC_Hang2_End
+
+SonPLC_Leap1:	dplcHeader
+	dplcEntry	9, $3EC
+	dplcEntry	2, $3F5
+	dplcEntry	6, $3F7
+	dplcEntry	2, $3FD
+	dplcEntry	1, $3FF
+SonPLC_Leap1_End
+
+SonPLC_Leap2:	dplcHeader
+	dplcEntry	9, $400
+	dplcEntry	2, $409
+	dplcEntry	6, $3F7
+	dplcEntry	2, $3FD
+	dplcEntry	1, $3FF
+SonPLC_Leap2_End
+
+SonPLC_Push1:	dplcHeader
+	dplcEntry	9, $40B
+	dplcEntry	8, $414
+SonPLC_Push1_End
+
+SonPLC_Push2:	dplcHeader
+	dplcEntry	9, $41C
+	dplcEntry	3, $425
+	dplcEntry	2, $428
+SonPLC_Push2_End
+
+SonPLC_Push3:	dplcHeader
+	dplcEntry	9, $42A
+	dplcEntry	8, $433
+SonPLC_Push3_End
+
+SonPLC_Push4:	dplcHeader
+	dplcEntry	9, $41C
+	dplcEntry	3, $43B
+	dplcEntry	2, $43E
+SonPLC_Push4_End
+
+SonPLC_Surf:	dplcHeader
+	dplcEntry	6, $440
+	dplcEntry	$C, $446
+SonPLC_Surf_End
+
+SonPLC_BubStand:	dplcHeader
+	dplcEntry	9, $452
+	dplcEntry	4, $45B
+	dplcEntry	1, $45F
+SonPLC_BubStand_End
+
+SonPLC_Death:	dplcHeader
+	dplcEntry	8, $460
+	dplcEntry	2, $468
+	dplcEntry	$C, $46A
+SonPLC_Death_End
+
+SonPLC_Drown:	dplcHeader
+	dplcEntry	8, $476
+	dplcEntry	2, $47E
+	dplcEntry	6, $480
+	dplcEntry	4, $486
+	dplcEntry	1, $48A
+SonPLC_Drown_End
+
+SonPLC_Burnt:	dplcHeader
+	dplcEntry	8, $48B
+	dplcEntry	2, $47E
+	dplcEntry	6, $493
+	dplcEntry	4, $486
+	dplcEntry	1, $48A
+SonPLC_Burnt_End
+
+SonPLC_Shrink1:	dplcHeader
+	dplcEntry	3, $499
+	dplcEntry	$10, $49C
+SonPLC_Shrink1_End
+
+SonPLC_Shrink2:	dplcHeader
+	dplcEntry	3, $4AC
+	dplcEntry	$C, $4AF
+	dplcEntry	3, $4BB
+SonPLC_Shrink2_End
+
+SonPLC_Shrink3:	dplcHeader
+	dplcEntry	$C, $4BE
+SonPLC_Shrink3_End
+
+SonPLC_Shrink4:	dplcHeader
+	dplcEntry	6, $4CA
+SonPLC_Shrink4_End
+
+SonPLC_Shrink5:	dplcHeader
+	dplcEntry	2, $4D0
+SonPLC_Shrink5_End
+
+SonPLC_Injury:	dplcHeader
+	dplcEntry	$C, $4D2
+	dplcEntry	2, $4DE
+	dplcEntry	4, $4E0
+SonPLC_Injury_End
+
+SonPLC_GetAir:	dplcHeader
+	dplcEntry	6, $4E4
+	dplcEntry	$C, $4EA
+	dplcEntry	2, $6D
+SonPLC_GetAir_End
+
+SonPLC_WaterSlide:	dplcHeader
+	dplcEntry	$10, $4F6
+	dplcEntry	3, $506
+SonPLC_WaterSlide_End
 
 	even

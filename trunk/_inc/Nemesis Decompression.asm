@@ -1,5 +1,5 @@
 ; ---------------------------------------------------------------------------
-; Nemesis decompression	subroutine, decompresses art directly to VRAM
+; Nemesis decompression subroutine, decompresses art directly to VRAM
 ; Inputs:
 ; a0 = art address
 
@@ -30,7 +30,7 @@ NemDecMain:
 		move.w	(a0)+,d2	; get number of patterns
 		lsl.w	#1,d2
 		bcc.s	loc_146A	; branch if the sign bit isn't set
-		adda.w	#NemPCD_WriteRowToVDP_XOR-NemPCD_WriteRowToVDP,a3	; otherwise the file uses XOR mode	
+		adda.w	#NemPCD_WriteRowToVDP_XOR-NemPCD_WriteRowToVDP,a3	; otherwise the file uses XOR mode
 
 loc_146A:
 		lsl.w	#2,d2	; get number of 8-pixel rows in the uncompressed data
@@ -45,16 +45,14 @@ loc_146A:
 		move.w	#$10,d6	; set initial shift value
 		bsr.s	NemDec_ProcessCompressedData
 		movem.l	(sp)+,d0-a1/a3-a5
-		
-	    KDebug.WriteLine "NemDec: Decompressing %<.l a0 sym> -> %<.l a1>"			
-		rts	
+		rts
 ; End of function NemDec
 
 ; ---------------------------------------------------------------------------
 ; Part of the Nemesis decompressor, processes the actual compressed data
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 NemDec_ProcessCompressedData:
@@ -63,14 +61,14 @@ NemDec_ProcessCompressedData:
 		move.w	d5,d1
 		lsr.w	d7,d1	; shift so that high bit of the code is in bit position 7
 		cmpi.b	#%11111100,d1	; are the high 6 bits set?
-		bcc.s	NemPCD_InlineData	; if they are, it signifies inline data
+		bhs.s	NemPCD_InlineData	; if they are, it signifies inline data
 		andi.w	#$FF,d1
 		add.w	d1,d1
 		move.b	(a1,d1.w),d0	; get the length of the code in bits
 		ext.w	d0
 		sub.w	d0,d6	; subtract from shift value so that the next code is read next time around
 		cmpi.w	#9,d6	; does a new byte need to be read?
-		bcc.s	loc_14B2	; if not, branch
+		bhs.s	loc_14B2	; if not, branch
 		addq.w	#8,d6
 		asl.w	#8,d5
 		move.b	(a0)+,d5	; read next byte
@@ -93,7 +91,7 @@ NemPCD_WritePixel:
 ; End of function NemDec_ProcessCompressedData
 
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 NemPCD_NewRow:
@@ -108,7 +106,7 @@ NemPCD_WritePixel_Loop:
 NemPCD_InlineData:
 		subq.w	#6,d6	; 6 bits needed to signal inline data
 		cmpi.w	#9,d6
-		bcc.s	loc_14E4
+		bhs.s	loc_14E4
 		addq.w	#8,d6
 		asl.w	#8,d5
 		move.b	(a0)+,d5
@@ -121,7 +119,7 @@ loc_14E4:
 		andi.w	#$F,d1	; get palette index for pixel
 		andi.w	#$70,d0	; high nybble is repeat count for pixel
 		cmpi.w	#9,d6
-		bcc.s	NemPCD_ProcessCompressedData
+		bhs.s	NemPCD_ProcessCompressedData
 		addq.w	#8,d6
 		asl.w	#8,d5
 		move.b	(a0)+,d5
@@ -135,7 +133,7 @@ NemPCD_WriteRowToVDP:
 		subq.w	#1,a5
 		move.w	a5,d4	; have all the 8-pixel rows been written?
 		bne.s	NemPCD_NewRow	; if not, branch
-		rts		; otherwise the decompression is finished
+		rts	; otherwise the decompression is finished
 ; ===========================================================================
 NemPCD_WriteRowToVDP_XOR:
 		eor.l	d4,d2	; XOR the previous row by the current row
@@ -143,7 +141,7 @@ NemPCD_WriteRowToVDP_XOR:
 		subq.w	#1,a5
 		move.w	a5,d4
 		bne.s	NemPCD_NewRow
-		rts	
+		rts
 ; ===========================================================================
 
 NemPCD_WriteRowToRAM:
@@ -151,7 +149,7 @@ NemPCD_WriteRowToRAM:
 		subq.w	#1,a5
 		move.w	a5,d4
 		bne.s	NemPCD_NewRow
-		rts	
+		rts
 ; ===========================================================================
 NemPCD_WriteRowToRAM_XOR:
 		eor.l	d4,d2
@@ -159,9 +157,9 @@ NemPCD_WriteRowToRAM_XOR:
 		subq.w	#1,a5
 		move.w	a5,d4
 		bne.s	NemPCD_NewRow
-		rts	
+		rts
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 ; ---------------------------------------------------------------------------
 ; Part of the Nemesis decompressor, builds the code table (in RAM)
 ; ---------------------------------------------------------------------------
@@ -182,7 +180,7 @@ NemBCT_NewPALIndex:
 NemBCT_Loop:
 		move.b	(a0)+,d0	; read next byte
 		cmpi.b	#$80,d0	; sign bit being set signifies a new palette index
-		bcc.s	NemBCT_ChkEnd	; a bmi could have been used instead of a compare and bcc
+		bhs.s	NemBCT_ChkEnd	; a bmi could have been used instead of a compare and bcc
 		
 		move.b	d0,d1
 		andi.w	#$F,d7	; get palette index

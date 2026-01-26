@@ -1,37 +1,24 @@
 ; ---------------------------------------------------------------------------
 ; Set a VRAM address via the VDP control port.
-; input: 16-bit VRAM address, control port (default is ($C00004).l)
+; input: 16-bit VRAM address, control port (default is (vdp_control_port).l)
 ; ---------------------------------------------------------------------------
 
-locVRAM:	macro loc,controlport
-		if ("controlport"=="")
-		move.l	#($40000000+((loc&$3FFF)<<16)+((loc&$C000)>>14)),(vdp_control_port).l
-		else
-		move.l	#($40000000+((loc&$3FFF)<<16)+((loc&$C000)>>14)),controlport
-		endif
-		endm
-		
-locVRAMnew:	macro loc,controlport
-		if ("controlport"=="")
-		move.l	#($40000000+(((loc)&$3FFF)<<16)+(((loc)&$C000)>>14)),(vdp_control_port).l
-		else
+locVRAM:	macro loc,controlport=(vdp_control_port).l
 		move.l	#($40000000+(((loc)&$3FFF)<<16)+(((loc)&$C000)>>14)),controlport
-		endif
-		endm		
-
+		endm
 
 ; ---------------------------------------------------------------------------
 ; DMA copy data from 68K (ROM/RAM) to the VRAM
 ; input: source, length, destination
 ; ---------------------------------------------------------------------------
 
-writeVRAM:	macro source,length,destination
+writeVRAM:	macro source,destination
 		lea	(vdp_control_port).l,a5
-		move.l	#$94000000+(((length>>1)&$FF00)<<8)+$9300+((length>>1)&$FF),(a5)
+		move.l	#$94000000+((((source_end-source)>>1)&$FF00)<<8)+$9300+(((source_end-source)>>1)&$FF),(a5)
 		move.l	#$96000000+(((source>>1)&$FF00)<<8)+$9500+((source>>1)&$FF),(a5)
 		move.w	#$9700+((((source>>1)&$FF0000)>>16)&$7F),(a5)
-		move.w	#$4000+(destination&$3FFF),(a5)
-		move.w	#$80+((destination&$C000)>>14),(v_vdp_buffer2).w
+		move.w	#$4000+((destination)&$3FFF),(a5)
+		move.w	#$80+(((destination)&$C000)>>14),(v_vdp_buffer2).w
 		move.w	(v_vdp_buffer2).w,(a5)
 		endm
 
@@ -40,9 +27,9 @@ writeVRAM:	macro source,length,destination
 ; input: source, length, destination
 ; ---------------------------------------------------------------------------
 
-writeCRAM:	macro source,length,destination
+writeCRAM:	macro source,destination
 		lea	(vdp_control_port).l,a5
-		move.l	#$94000000+(((length>>1)&$FF00)<<8)+$9300+((length>>1)&$FF),(a5)
+		move.l	#$94000000+((((source_end-source)>>1)&$FF00)<<8)+$9300+(((source_end-source)>>1)&$FF),(a5)
 		move.l	#$96000000+(((source>>1)&$FF00)<<8)+$9500+((source>>1)&$FF),(a5)
 		move.w	#$9700+((((source>>1)&$FF0000)>>16)&$7F),(a5)
 		move.w	#$C000+(destination&$3FFF),(a5)
@@ -55,13 +42,45 @@ writeCRAM:	macro source,length,destination
 ; input: value, length, destination
 ; ---------------------------------------------------------------------------
 
-fillVRAM:	macro value,length,loc
+fillVRAM:	macro byte,start,end
 		lea	(vdp_control_port).l,a5
-		move.w	#$8F01,(a5)
-		move.l	#$94000000+((length&$FF00)<<8)+$9300+(length&$FF),(a5)
+		move.w	#$8F01,(a5) ; Set increment to 1, since DMA fill writes bytes
+		move.l	#$94000000+((((end)-(start)-1)&$FF00)<<8)+$9300+(((end)-(start)-1)&$FF),(a5)
 		move.w	#$9780,(a5)
-		move.l	#$40000080+((loc&$3FFF)<<16)+((loc&$C000)>>14),(a5)
-		move.w	#value,(vdp_data_port).l
+		move.l	#$40000080+(((start)&$3FFF)<<16)+(((start)&$C000)>>14),(a5)
+		move.w	#(byte)|(byte)<<8,(vdp_data_port).l
+.wait:		move.w	(a5),d1
+		btst	#1,d1
+		bne.s	.wait
+		move.w	#$8F02,(a5) ; Set increment back to 2, since the VDP usually operates on words
+		endm
+
+; ---------------------------------------------------------------------------
+; Fill portion of RAM with 0
+; input: start, end
+; ---------------------------------------------------------------------------
+
+clearRAM:	macro startAddress,endAddress
+	if "endAddress"<>""
+.length := (endAddress)-(startAddress)
+	else
+.length := startAddress_end-startAddress
+	endif
+		lea	(startAddress).w,a1
+		moveq	#0,d0
+		move.w	#.length/4-1,d1
+
+.loop:
+		move.l	d0,(a1)+
+		dbf	d1,.loop
+
+	if (endAddress-startAddress)&2
+		move.w	d0,(a1)+
+	endif
+
+	if (endAddress-startAddress)&1
+		move.b	d0,(a1)+
+	endif
 		endm
 
 ; ---------------------------------------------------------------------------
@@ -69,28 +88,20 @@ fillVRAM:	macro value,length,loc
 ; input: source, destination, width [cells], height [cells]
 ; ---------------------------------------------------------------------------
 
-copyTilemap:	macro source,loc,width,height
+copyTilemap:	macro source,destination,width,height
 		lea	(source).l,a1
-		move.l	#$40000000+((loc&$3FFF)<<16)+((loc&$C000)>>14),d0
-		moveq	#width,d1
-		moveq	#height,d2
-		bsr.w	TilemapToVRAM
-		endm
-		
-copyTilemapNew:	macro source,destination,width,height
-		lea	(source).l,a1
-		locVRAMnew	destination,d0
+		locVRAM	destination,d0
 		moveq	#(width)-1,d1
 		moveq	#(height)-1,d2
 		bsr.w	TilemapToVRAM
-		endm		
+		endm
 
 ; ---------------------------------------------------------------------------
 ; stop the Z80
 ; ---------------------------------------------------------------------------
 
 stopZ80:	macro
-		move.w	#$100,(z80_bus_request).l		
+		move.w	#$100,(z80_bus_request).l
 		endm
 
 ; ---------------------------------------------------------------------------
@@ -99,19 +110,19 @@ stopZ80:	macro
 
 waitZ80:	macro
 .wait:	btst	#0,(z80_bus_request).l
-		bne.s	.wait		
+		bne.s	.wait
 		endm
 
 ; ---------------------------------------------------------------------------
 ; reset the Z80
 ; ---------------------------------------------------------------------------
 
-resetZ80:	macro
-		move.w	#$100,(z80_reset).l		
+deassertZ80Reset:	macro
+		move.w	#$100,(z80_reset).l
 		endm
 
-resetZ80a:	macro
-		move.w	#0,(z80_reset).l		
+assertZ80Reset:	macro
+		move.w	#0,(z80_reset).l
 		endm
 
 ; ---------------------------------------------------------------------------
@@ -119,7 +130,7 @@ resetZ80a:	macro
 ; ---------------------------------------------------------------------------
 
 startZ80:	macro
-		move.w	#0,(z80_bus_request).l	
+		move.w	#0,(z80_bus_request).l
 		endm
 
 ; ---------------------------------------------------------------------------
@@ -136,7 +147,27 @@ disable_ints:	macro
 
 enable_ints:	macro
 		move	#$2300,sr
-		endm		
+		endm
+
+; ---------------------------------------------------------------------------
+; disable display
+; ---------------------------------------------------------------------------
+
+disable_display:	macro
+		move.w	(v_vdp_buffer1).w,d0		; get buffered copy of VDP register $81
+		andi.b	#%10111111,d0			; clear bit 6 (disable display; fill with background color)
+		move.w	d0,(vdp_control_port).l		; write to VDP
+		endm
+
+; ---------------------------------------------------------------------------
+; enable display
+; ---------------------------------------------------------------------------
+
+enable_display:	macro
+		move.w	(v_vdp_buffer1).w,d0		; get buffered copy of VDP register $81
+		ori.b	#%01000000,d0			; set bit 6 (enable display)
+		move.w	d0,(vdp_control_port).l		; write to VDP
+		endm
 
 ; ---------------------------------------------------------------------------
 ; long conditional jumps
@@ -248,11 +279,11 @@ out_of_range:	macro exit,pos
 ; ---------------------------------------------------------------------------
 
 gotoSRAM:	macro
-		move.b  #1,($A130F1).l
+		move.b	#1,(sram_port).l
 		endm
 
 gotoROM:	macro
-		move.b  #0,($A130F1).l
+		move.b	#0,(sram_port).l
 		endm
 
 ; ---------------------------------------------------------------------------
@@ -267,82 +298,17 @@ zonewarning:	macro loc,elementsize
 		warning "Size of loc (\{(._end-loc)/elementsize}) does not match ZoneCount (\{ZoneCount})."
 		endif
 		endm
-		
-; macro formatting text for the game's menus
-menutxt	macro	text
-	dc.b	strlen(text)-1
-	dc.b	text
-	endm
-	
-
-titleLetters macro letters
-     ;  ". ZYXWVUTSRQPONMLKJIHGFEDCBA"
-used := %0110000000000110000000010000	; set to initial state
-    irpc char,letters
-	if ~~(used&1<<strstr(llookup,"char"))	; has the letter been used already?
-used := used|1<<strstr(llookup,"char")	; if not, mark it as used
-	dc.b "char"			; output letter code
-	if "char"=="."
-	dc.b 2			; output character size
-	else
-	dc.b lowstring("char")	; output letter size
-	endif
-	endif
-    endm
-	dc.w $FFFF	; output string terminator
-    endm	
-	
-; macro to declare an offset table
-offsetTable macro {INTLABEL}
-current_offset_table := __LABEL__
-__LABEL__ label *
-    endm
-
-; macro to declare an entry in an offset table
-offsetTableEntry macro ptr
-	dc.ATTRIBUTE ptr-current_offset_table
-    endm
-
-VRAMLOC    MACRO    LOC
-        MOVE.L    #$40000000+((LOC&$3FFF)<<16)+((LOC&$C000)>>14),    ($C00004)
-        ENDM
-		
-; ---------------------------------------------------------------------------
-; disable interrupts
-; ---------------------------------------------------------------------------
-
-disable_ints_save macro
-	move.w	sr,-(sp)		; save current interrupt mask
-	disableInts			; mask off interrupts
-    endm
 
 ; ---------------------------------------------------------------------------
-; enable interrupts
+; produce a packed art-tile
 ; ---------------------------------------------------------------------------
 
-enableIntsSave macro
-	move.w	(sp)+,sr		; restore interrupts to previous state
-    endm	
+make_art_tile function addr,pal,pri,((pri&1)<<15)|((pal&3)<<13)|addr
 
-; macros to convert from tile index to art tiles, block mapping or VRAM address.
-make_art_tile function addr,pal,pri,((pri&1)<<15)|((pal&3)<<13)|(addr&tile_mask)
-tiles_to_bytes function addr,((addr&$7FF)<<5)
+; ---------------------------------------------------------------------------
+; sprite mappings and DPLCs macros
+; ---------------------------------------------------------------------------
 
-; function to calculate the location of a tile in plane mappings
-planeLoc function width,col,line,(((width * line) + col) * 2)
-
-; function to calculate the location of a tile in plane mappings with a width of 40 cells
-planeLocH32 function col,line,(($40 * line) + (2 * col))
-
-; function to calculate the location of a tile in plane mappings with a width of 40 cells
-planeLocH28 function col,line,(($50 * line) + (2 * col))
-
-; function to calculate the location of a tile in plane mappings with a width of 64 cells
-planeLocH40 function col,line,(($80 * line) + (2 * col))
-
-; function to calculate the location of a tile in plane mappings with a width of 128 cells
-planeLocH80 function col,line,(($100 * line) + (2 * col))
-
-vdpCommDelta function addr,((addr&$3FFF)<<16)|((addr&$C000)>>14)
-
-bytesToXcnt function n,x,n/x-1	
+SonicMappingsVer = 1
+SonicDplcVer = 1
+		include	"_maps/MapMacros.asm"

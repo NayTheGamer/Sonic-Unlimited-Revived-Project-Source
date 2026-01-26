@@ -1,9 +1,9 @@
 ; ---------------------------------------------------------------------------
-; Object 5A - platforms	moving in circles (SLZ)
+; Object 5A - platforms moving in circles (SLZ)
 ; ---------------------------------------------------------------------------
 
-circ_origX = $32		; original x-axis position
-circ_origY = $30		; original y-axis position
+circ_origX = objoff_32		; original x-axis position
+circ_origY = objoff_30		; original y-axis position
 
 CirclingPlatform:
 		moveq	#0,d0
@@ -22,7 +22,7 @@ Circ_Index:	dc.w Circ_Main-Circ_Index
 Circ_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_Circ,obMap(a0)
-		move.w	#$4000,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Level,2,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#4,obPriority(a0)
 		move.b	#$18,obActWid(a0)
@@ -81,7 +81,7 @@ Circ_Types:
 		move.w	d1,obX(a0)
 		add.w	circ_origY(a0),d2
 		move.w	d2,obY(a0)
-		rts	
+		rts
 ; ===========================================================================
 
 .type04:
@@ -108,4 +108,4 @@ Circ_Types:
 		move.w	d1,obX(a0)
 		add.w	circ_origY(a0),d2
 		move.w	d2,obY(a0)
-		rts	
+		rts

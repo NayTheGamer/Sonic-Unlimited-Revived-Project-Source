@@ -16,7 +16,7 @@ Newt_Index:	dc.w Newt_Main-Newt_Index
 Newt_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
 		move.l	#Map_Newt,obMap(a0)
-		move.w	#$49B,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Newtron,0,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#4,obPriority(a0)
 		move.b	#$14,obActWid(a0)
@@ -48,25 +48,25 @@ Newt_Action:	; Routine 2
 		bclr	#0,obStatus(a0)
 
 .sonicisright:
-		cmpi.w	#$80,d0		; is Sonic within $80 pixels of	the newtron?
-		bcc.s	.outofrange	; if not, branch
+		cmpi.w	#$80,d0		; is Sonic within $80 pixels of the newtron?
+		bhs.s	.outofrange	; if not, branch
 		addq.b	#2,ob2ndRout(a0) ; goto .type00 next
 		move.b	#1,obAnim(a0)
-		tst.b	obSubtype(a0)	; check	object type
+		tst.b	obSubtype(a0)	; check object type
 		beq.s	.istype00	; if type is 00, branch
 
-		move.w	#$249B,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Newtron,1,0),obGfx(a0)
 		move.b	#8,ob2ndRout(a0) ; goto .type01 next
-		move.b	#4,obAnim(a0)	; use different	animation
+		move.b	#4,obAnim(a0)	; use different animation
 
 .outofrange:
 .istype00:
-		rts	
+		rts
 ; ===========================================================================
 
 .type00:
 		cmpi.b	#4,obFrame(a0)	; has "appearing" animation finished?
-		bcc.s	.fall		; is yes, branch
+		bhs.s	.fall		; is yes, branch
 		bset	#0,obStatus(a0)
 		move.w	(v_player+obX).w,d0
 		sub.w	obX(a0),d0
@@ -74,7 +74,7 @@ Newt_Action:	; Routine 2
 		bclr	#0,obStatus(a0)
 
 .sonicisright2:
-		rts	
+		rts
 ; ===========================================================================
 
 .fall:
@@ -93,10 +93,10 @@ Newt_Action:	; Routine 2
 		addq.b	#2,ob2ndRout(a0)
 		move.b	#2,obAnim(a0)
 		btst	#5,obGfx(a0)
-		beq.s	.pppppppp
+		beq.s	.notgreen
 		addq.b	#1,obAnim(a0)
 
-.pppppppp:
+.notgreen:
 		move.b	#$D,obColType(a0)
 		move.w	#$200,obVelX(a0) ; move newtron horizontally
 		btst	#0,obStatus(a0)
@@ -104,7 +104,7 @@ Newt_Action:	; Routine 2
 		neg.w	obVelX(a0)
 
 .keepfalling:
-		rts	
+		rts
 ; ===========================================================================
 
 .matchfloor:
@@ -114,18 +114,18 @@ Newt_Action:	; Routine 2
 		blt.s	.nextroutine
 		cmpi.w	#$C,d1
 		bge.s	.nextroutine
-		add.w	d1,obY(a0)	; match	newtron's position with floor
-		rts	
+		add.w	d1,obY(a0)	; match newtron's position with floor
+		rts
 ; ===========================================================================
 
 .nextroutine:
 		addq.b	#2,ob2ndRout(a0) ; goto .speed next
-		rts	
+		rts
 ; ===========================================================================
 
 .speed:
 		bsr.w	SpeedToPos
-		rts	
+		rts
 ; ===========================================================================
 
 .type01:
@@ -136,12 +136,12 @@ Newt_Action:	; Routine 2
 .firemissile:
 		cmpi.b	#2,obFrame(a0)
 		bne.s	.fail
-		tst.b	$32(a0)
+		tst.b	objoff_32(a0)
 		bne.s	.fail
-		move.b	#1,$32(a0)
+		move.b	#1,objoff_32(a0)
 		bsr.w	FindFreeObj
 		bne.s	.fail
-		_move.b	#id_Missile,0(a1) ; load missile object
+		_move.b	#id_Missile,obID(a1) ; load missile object
 		move.w	obX(a0),obX(a1)
 		move.w	obY(a0),obY(a1)
 		subq.w	#8,obY(a1)
@@ -158,7 +158,7 @@ Newt_Action:	; Routine 2
 		move.b	#1,obSubtype(a1)
 
 .fail:
-		rts	
+		rts
 ; ===========================================================================
 
 Newt_Delete:	; Routine 4

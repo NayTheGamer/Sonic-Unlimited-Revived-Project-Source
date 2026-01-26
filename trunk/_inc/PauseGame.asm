@@ -1,13 +1,13 @@
 ; ---------------------------------------------------------------------------
-; Subroutine to	pause the game
+; Subroutine to pause the game
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 PauseGame:
 		nop	
-		tst.b	(v_lives).w	; do you have any lives	left?
+		tst.b	(v_lives).w	; do you have any lives left?
 		beq.s	Unpause		; if not, branch
 		tst.w	(f_pause).w	; is game already paused?
 		bne.s	Pause_StopGame	; if yes, branch
@@ -16,7 +16,7 @@ PauseGame:
 
 Pause_StopGame:
 		move.w	#1,(f_pause).w	; freeze time
-		SMPS_Pause
+		move.b	#1,(v_snddriver_ram.f_pausemusic).w ; pause music
 
 Pause_Loop:
 		move.b	#$10,(v_vbla_routine).w
@@ -41,17 +41,17 @@ Pause_ChkStart:
 		beq.s	Pause_Loop	; if not, branch
 
 Pause_EndMusic:
-		SMPS_Unpause
+		move.b	#$80,(v_snddriver_ram.f_pausemusic).w	; unpause the music
 
 Unpause:
 		move.w	#0,(f_pause).w	; unpause the game
 
 Pause_DoNothing:
-		rts	
+		rts
 ; ===========================================================================
 
 Pause_SlowMo:
 		move.w	#1,(f_pause).w
-		SMPS_Unpause
-		rts	
+		move.b	#$80,(v_snddriver_ram.f_pausemusic).w	; Unpause the music
+		rts
 ; End of function PauseGame

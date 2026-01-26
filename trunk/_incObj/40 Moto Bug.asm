@@ -16,7 +16,7 @@ Moto_Index:	dc.w Moto_Main-Moto_Index
 
 Moto_Main:	; Routine 0
 		move.l	#Map_Moto,obMap(a0)
-		move.w	#$4F0,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Moto_Bug,0,0),obGfx(a0)
 		move.b	#4,obRender(a0)
 		move.b	#4,obPriority(a0)
 		move.b	#$14,obActWid(a0)
@@ -29,13 +29,13 @@ Moto_Main:	; Routine 0
 		jsr	(ObjFloorDist).l
 		tst.w	d1
 		bpl.s	.notonfloor
-		add.w	d1,obY(a0)	; match	object's position with the floor
+		add.w	d1,obY(a0)	; match object's position with the floor
 		move.w	#0,obVelY(a0)
 		addq.b	#2,obRoutine(a0) ; goto Moto_Action next
 		bchg	#0,obStatus(a0)
 
 .notonfloor:
-		rts	
+		rts
 ; ===========================================================================
 
 .smoke:
@@ -57,12 +57,12 @@ Moto_Action:	; Routine 2
 Moto_ActIndex:	dc.w .move-Moto_ActIndex
 		dc.w .findfloor-Moto_ActIndex
 
-.time = $30
-.smokedelay = $33
+.time = objoff_30
+.smokedelay = objoff_33
 ; ===========================================================================
 
 .move:
-		subq.w	#1,.time(a0)	; subtract 1 from pause	time
+		subq.w	#1,.time(a0)	; subtract 1 from pause time
 		bpl.s	.wait		; if time remains, branch
 		addq.b	#2,ob2ndRout(a0)
 		move.w	#-$100,obVelX(a0) ; move object to the left
@@ -72,7 +72,7 @@ Moto_ActIndex:	dc.w .move-Moto_ActIndex
 		neg.w	obVelX(a0)	; change direction
 
 .wait:
-		rts	
+		rts
 ; ===========================================================================
 
 .findfloor:
@@ -82,27 +82,27 @@ Moto_ActIndex:	dc.w .move-Moto_ActIndex
 		blt.s	.pause
 		cmpi.w	#$C,d1
 		bge.s	.pause
-		add.w	d1,obY(a0)	; match	object's position with the floor
+		add.w	d1,obY(a0)	; match object's position with the floor
 		subq.b	#1,.smokedelay(a0)
 		bpl.s	.nosmoke
 		move.b	#$F,.smokedelay(a0)
 		bsr.w	FindFreeObj
 		bne.s	.nosmoke
-		_move.b	#id_MotoBug,0(a1) ; load exhaust smoke object
+		_move.b	#id_MotoBug,obID(a1) ; load exhaust smoke object
 		move.w	obX(a0),obX(a1)
 		move.w	obY(a0),obY(a1)
 		move.b	obStatus(a0),obStatus(a1)
 		move.b	#2,obAnim(a1)
 
 .nosmoke:
-		rts	
+		rts
 
 .pause:
 		subq.b	#2,ob2ndRout(a0)
 		move.w	#59,.time(a0)	; set pause time to 1 second
 		move.w	#0,obVelX(a0)	; stop the object moving
 		move.b	#0,obAnim(a0)
-		rts	
+		rts
 ; ===========================================================================
 
 Moto_Animate:	; Routine 4

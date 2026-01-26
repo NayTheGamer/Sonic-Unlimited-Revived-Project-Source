@@ -31,11 +31,6 @@
 		binclude	"startpos/sbz2.bin"
 		binclude	"startpos/fz.bin"
 		dc.w	$80,$A8
-		
-;		binclude	"startpos/hpz.bin"
-;		binclude	"startpos/hpz.bin"
-;		binclude	"startpos/hpz.bin"		
-;		dc.w	$80,$A8		
 
 		zonewarning StartLocArray,$10
 

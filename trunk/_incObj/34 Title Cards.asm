@@ -13,8 +13,8 @@ Card_Index:	dc.w Card_CheckSBZ3-Card_Index
 		dc.w Card_Wait-Card_Index
 		dc.w Card_Wait-Card_Index
 
-card_mainX = $30		; position for card to display on
-card_finalX = $32		; position for card to finish on
+card_mainX = objoff_30		; position for card to display on
+card_finalX = objoff_32		; position for card to finish on
 ; ===========================================================================
 
 Card_CheckSBZ3:	; Routine 0
@@ -40,7 +40,7 @@ Card_LoadConfig:
 		moveq	#3,d1
 
 Card_Loop:
-		_move.b	#id_TitleCard,0(a1)
+		_move.b	#id_TitleCard,obID(a1)
 		move.w	(a3),obX(a1)	; load start x-position
 		move.w	(a3)+,card_finalX(a1) ; load finish x-position (same as start)
 		move.w	(a3)+,card_mainX(a1) ; load main x-position
@@ -59,14 +59,14 @@ Card_ActNumber:
 		subq.b	#1,d0
 
 Card_MakeSprite:
-		move.b	d0,obFrame(a1)	; display frame	number d0
+		move.b	d0,obFrame(a1)	; display frame number d0
 		move.l	#Map_Card,obMap(a1)
-		move.w	#$8580,obGfx(a1)
+		move.w	#make_art_tile(ArtTile_Title_Card,0,1),obGfx(a1)
 		move.b	#$78,obActWid(a1)
 		move.b	#0,obRender(a1)
 		move.b	#0,obPriority(a1)
 		move.w	#60,obTimeFrame(a1) ; set time delay to 1 second
-		lea	$40(a1),a1	; next object
+		lea	object_size(a1),a1	; next object
 		dbf	d1,Card_Loop	; repeat sequence another 3 times
 
 Card_ChkPos:	; Routine 2
@@ -83,13 +83,13 @@ Card_Move:
 Card_NoMove:
 		move.w	obX(a0),d0
 		bmi.s	locret_C3D8
-		cmpi.w	#$200,d0	; has item moved beyond	$200 on	x-axis?
-		bcc.s	locret_C3D8	; if yes, branch
+		cmpi.w	#$200,d0	; has item moved beyond $200 on x-axis?
+		bhs.s	locret_C3D8	; if yes, branch
 		bra.w	DisplaySprite
 ; ===========================================================================
 
 locret_C3D8:
-		rts	
+		rts
 ; ===========================================================================
 
 Card_Wait:	; Routine 4/6
@@ -113,13 +113,13 @@ Card_Move2:
 		add.w	d1,obX(a0)	; change item's position
 		move.w	obX(a0),d0
 		bmi.s	locret_C412
-		cmpi.w	#$200,d0	; has item moved beyond	$200 on	x-axis?
-		bcc.s	locret_C412	; if yes, branch
+		cmpi.w	#$200,d0	; has item moved beyond $200 on x-axis?
+		bhs.s	locret_C412	; if yes, branch
 		bra.w	DisplaySprite
 ; ===========================================================================
 
 locret_C412:
-		rts	
+		rts
 ; ===========================================================================
 
 Card_ChangeArt:
@@ -136,7 +136,7 @@ Card_Delete:
 		bra.w	DeleteObject
 ; ===========================================================================
 Card_ItemData:	dc.w $D0	; y-axis position
-		dc.b 2,	0	; routine number, frame	number (changes)
+		dc.b 2,	0	; routine number, frame number (changes)
 		dc.w $E4
 		dc.b 2,	6
 		dc.w $EA
@@ -144,7 +144,7 @@ Card_ItemData:	dc.w $D0	; y-axis position
 		dc.w $E0
 		dc.b 2,	$A
 ; ---------------------------------------------------------------------------
-; Title	card configuration data
+; Title card configuration data
 ; Format:
 ; 4 bytes per item (YYYY XXXX)
 ; 4 items per level (GREEN HILL, ZONE, ACT X, oval)

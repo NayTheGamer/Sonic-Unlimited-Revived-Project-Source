@@ -1,16 +1,16 @@
 ; ---------------------------------------------------------------------------
-; Subroutine to	load level boundaries and start	locations
+; Subroutine to load level boundaries and start locations
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 LevelSizeLoad:
 		moveq	#0,d0
-		move.b	d0,($FFFFF740).w
-		move.b	d0,($FFFFF741).w
-		move.b	d0,($FFFFF746).w
-		move.b	d0,($FFFFF748).w
+		move.b	d0,(v_unused7).w
+		move.b	d0,(v_unused8).w
+		move.b	d0,(v_unused9).w
+		move.b	d0,(v_unused10).w
 		move.b	d0,(v_dle_routine).w
 		move.w	(v_zone).w,d0
 		lsl.b	#6,d0
@@ -18,9 +18,9 @@ LevelSizeLoad:
 		move.w	d0,d1
 		add.w	d0,d0
 		add.w	d1,d0
-		lea	LevelSizeArray(pc,d0.w),a0 ; load level	boundaries
+		lea	LevelSizeArray(pc,d0.w),a0 ; load level boundaries
 		move.w	(a0)+,d0
-		move.w	d0,($FFFFF730).w
+		move.w	d0,(v_unused11).w
 		move.l	(a0)+,d0
 		move.l	d0,(v_limitleft2).w
 		move.l	d0,(v_limitleft1).w
@@ -30,7 +30,7 @@ LevelSizeLoad:
 		move.w	(v_limitleft2).w,d0
 		addi.w	#$240,d0
 		move.w	d0,(v_limitleft3).w
-		move.w	#$1010,($FFFFF74A).w
+		move.w	#$1010,(v_fg_xblock).w ; and v_fg_yblock
 		move.w	(a0)+,d0
 		move.w	d0,(v_lookshift).w
 		bra.w	LevSz_ChkLamp
@@ -39,7 +39,12 @@ LevelSizeLoad:
 ; Level size array
 ; ---------------------------------------------------------------------------
 LevelSizeArray:
-		; GHZ
+		;    |----------------------------------------Unused
+		;    |      |---------------------------------Left boundary
+		;    |      |      |--------------------------Right boundary
+		;    |      |      |      |-------------------Top boundary
+		;    |      |      |      |      |------------Bottom boundary
+		; GHZ|      |      |      |      |      |-----Vertical screen shift (redundant)
 		dc.w $0004, $0000, $24BF, $0000, $0300, $0060
 		dc.w $0004, $0000, $1EBF, $0000, $0300, $0060
 		dc.w $0004, $0000, $2960, $0000, $0300, $0060
@@ -69,12 +74,6 @@ LevelSizeArray:
 		dc.w $0004, $0000, $1E40, $FF00, $0800, $0060
 		dc.w $0004, $2080, $2460, $0510, $0510, $0060
 		dc.w $0004, $0000, $3EC0, $0000, $0720, $0060
-        ; HPZ		
-;		dc.w $0004, $0000, $24BF, $0000, $0300, $0060
-;		dc.w $0004, $0000, $24BF, $0000, $0300, $0060
-;;		dc.w $0004, $0000, $24BF, $0000, $0300, $0060		
-;		dc.w $0004, $0000, $2ABF, $0000, $0300, $0060		
-				
 		zonewarning LevelSizeArray,$30
 		; Ending
 		dc.w $0004, $0000, $0500, $0110, $0110, $0060
@@ -120,6 +119,14 @@ LevSz_SonicPos:
 		moveq	#0,d0
 		move.w	(a1),d0
 		move.w	d0,(v_player+obY).w ; set Sonic's position on y-axis
+		move.b	(v_gamemode).w,d2			; MJ: load game mode
+		andi.w	#$FC,d2					; MJ: keep in range
+		cmpi.b	#4,d2					; MJ: is screen mode at title?
+		bne.s	SetScreen				; MJ: if not, branch
+		move.w	#$50,d1					; MJ: set positions for title screen
+		move.w	#$3B0,d0				; MJ: ''
+		move.w	d1,(v_player+obX).w			; MJ: save to object 1 so title screen follows
+		move.w	d0,(v_player+obY).w			; MJ: ''
 
 SetScreen:
 LevSz_SkipStartPos:
@@ -130,7 +137,7 @@ LevSz_SkipStartPos:
 SetScr_WithinLeft:
 		move.w	(v_limitright2).w,d2
 		cmp.w	d2,d1		; is Sonic inside the right edge?
-		bcs.s	SetScr_WithinRight ; if yes, branch
+		blo.s	SetScr_WithinRight ; if yes, branch
 		move.w	d2,d1
 
 SetScr_WithinRight:
@@ -147,12 +154,7 @@ SetScr_WithinTop:
 
 SetScr_WithinBottom:
 		move.w	d0,(v_screenposy).w ; set vertical screen position
-		bsr.w	BgScrollSpeed
-		moveq	#0,d0
-		move.b	(v_zone).w,d0
-		lsl.b	#2,d0
-		move.l	LoopTileNums(pc,d0.w),(v_256loop1).w
-		rts
+		bra.w	BgScrollSpeed
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
 ; Sonic start location array
@@ -160,29 +162,10 @@ SetScr_WithinBottom:
 StartLocArray:	include	"_inc/Start Location Array - Levels.asm"
 
 ; ---------------------------------------------------------------------------
-; Which	256x256	tiles contain loops or roll-tunnels
+; Subroutine to set scroll speed of some backgrounds
 ; ---------------------------------------------------------------------------
 
-LoopTileNums:
-
-; 		loop	loop	tunnel	tunnel
-
-	dc.b	$B5,	$7F,	$1F,	$20	; Green Hill
-	dc.b	$7F,	$7F,	$7F,	$7F	; Labyrinth
-	dc.b	$7F,	$7F,	$7F,	$7F	; Marble
-	dc.b	$AA,	$B4,	$7F,	$7F	; Star Light
-	dc.b	$7F,	$7F,	$7F,	$7F	; Spring Yard
-	dc.b	$7F,	$7F,	$7F,	$7F	; Scrap Brain
-	zonewarning LoopTileNums,4
-	dc.b	$7F,	$7F,	$7F,	$7F	; Ending (Green Hill)
-
-		even
-
-; ---------------------------------------------------------------------------
-; Subroutine to	set scroll speed of some backgrounds
-; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 BgScrollSpeed:
@@ -215,7 +198,7 @@ BgScroll_GHZ:
 		clr.l	(v_bgscreenposy).w
 		clr.l	(v_bg2screenposy).w
 		clr.l	(v_bg3screenposy).w
-		lea	($FFFFA800).w,a2
+		lea	(v_bgscroll_buffer).w,a2
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
@@ -225,7 +208,7 @@ BgScroll_GHZ:
 BgScroll_LZ:
 		asr.l	#1,d0
 		move.w	d0,(v_bgscreenposy).w
-		rts	
+		rts
 ; ===========================================================================
 
 BgScroll_MZ:
@@ -237,7 +220,7 @@ BgScroll_SLZ:
 		addi.w	#$C0,d0
 		move.w	d0,(v_bgscreenposy).w
 		clr.l	(v_bgscreenposx).w
-		rts	
+		rts
 ; ===========================================================================
 
 BgScroll_SYZ:
@@ -249,7 +232,7 @@ BgScroll_SYZ:
 		addq.w	#1,d0
 		move.w	d0,(v_bgscreenposy).w
 		clr.l	(v_bgscreenposx).w
-		rts	
+		rts
 ; ===========================================================================
 
 BgScroll_SBZ:
@@ -257,7 +240,7 @@ BgScroll_SBZ:
 		asr.w	#3,d0
 		addq.w	#1,d0
 		move.w	d0,(v_bgscreenposy).w
-		rts	
+		rts
 ; ===========================================================================
 
 BgScroll_End:
@@ -273,18 +256,8 @@ BgScroll_End:
 		clr.l	(v_bgscreenposy).w
 		clr.l	(v_bg2screenposy).w
 		clr.l	(v_bg3screenposy).w
-		lea	($FFFFA800).w,a2
+		lea	(v_bgscroll_buffer).w,a2
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
 		rts
-		
-;BgScroll_HPZ:
-;        clr.l    (v_bgscreenposx).w
- ;       clr.l    (v_bgscreenposy).w
-  ;      clr.l    (v_bg2screenposx).w
-   ;     clr.l    (v_bg2screenposy).w
-    ;    clr.l    (v_bg3screenposx).w
-     ;   clr.l    (v_bg3screenposy).w
-	;	rts		
-	

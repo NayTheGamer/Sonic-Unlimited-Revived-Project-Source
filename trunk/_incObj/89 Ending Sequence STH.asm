@@ -1,10 +1,10 @@
 ; ---------------------------------------------------------------------------
-; Object 89 - "SONIC THE HEDGEHOG" text	on the ending sequence
+; Object 89 - "SONIC THE HEDGEHOG" text on the ending sequence
 ; ---------------------------------------------------------------------------
 
 EndSTH:
 		moveq	#0,d0
-		move.b	$24(a0),d0
+		move.b	obRoutine(a0),d0
 		move.w	ESth_Index(pc,d0.w),d1
 		if Revision=0
 		jmp	ESth_Index(pc,d1.w)
@@ -17,15 +17,15 @@ ESth_Index:	dc.w ESth_Main-ESth_Index
 		dc.w ESth_Move-ESth_Index
 		dc.w ESth_GotoCredits-ESth_Index
 
-esth_time = $30		; time until exit
+esth_time = objoff_30		; time until exit
 ; ===========================================================================
 
 ESth_Main:	; Routine 0
 		addq.b	#2,obRoutine(a0)
-		move.w	#-$20,obX(a0)	; object starts	outside	the level boundary
+		move.w	#-$20,obX(a0)	; object starts outside the level boundary
 		move.w	#$D8,obScreenY(a0)
 		move.l	#Map_ESth,obMap(a0)
-		move.w	#$5C5,obGfx(a0)
+		move.w	#make_art_tile(ArtTile_Ending_STH,0,0),obGfx(a0)
 		move.b	#0,obRender(a0)
 		move.b	#0,obPriority(a0)
 
